@@ -12,6 +12,44 @@ function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+export async function submitReview(
+  _prev: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  const author = String(formData.get("author_name") ?? "").trim();
+  const rating = Number(formData.get("rating") ?? 0);
+  const body = String(formData.get("body") ?? "").trim();
+  const serviceSlug = String(formData.get("service_slug") ?? "").trim() || null;
+  const locale = String(formData.get("locale") ?? "nl");
+  const honeypot = String(formData.get("hp") ?? "");
+  if (honeypot) return { ok: true, message: "ok" };
+  if (!author || !body || rating < 1 || rating > 5) {
+    return { ok: false, message: "missing-fields" };
+  }
+  if (!hasSupabaseConfig()) {
+    console.warn("[review] Supabase not configured — discarded:", {
+      author,
+      rating,
+      body,
+    });
+    return { ok: true, message: "logged" };
+  }
+  const sb = getSupabaseServiceClient();
+  const { error } = await sb.from("reviews").insert({
+    author_name: author,
+    rating,
+    body,
+    service_slug: serviceSlug,
+    locale,
+    status: "pending",
+  });
+  if (error) {
+    console.error("[review] insert failed", error);
+    return { ok: false, message: "supabase-failed" };
+  }
+  return { ok: true, message: "submitted" };
+}
+
 export async function submitContact(
   _prev: FormState,
   formData: FormData,

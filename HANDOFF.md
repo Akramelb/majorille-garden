@@ -2,6 +2,11 @@
 
 Everything else is built. This list is the only stuff that needs your accounts, credentials, or human judgment.
 
+> ⏰ **Reminders (added 2026-05-22):**
+> - **Add your parents' email to Cal.com** (as team member / for booking notifications). Account: `minekram43@gmail.com`, username `majorillegarden`.
+> - **Add your parents' email to `ADMIN_EMAILS`** (Vercel env + `.env.local`) so they can log into `/admin`. Currently only `minekram43@gmail.com`.
+> - For reviews/blog/admin to work: run the **reviews + blog_posts SQL** in Supabase, and add the **Auth redirect URLs** (`http://localhost:3000/auth/callback`, `https://majorille-garden.vercel.app/auth/callback`) under Supabase → Authentication → URL Configuration.
+
 Total estimated time if you sit down and do it all: **~2 hours**, mostly waiting for DNS.
 
 ## Critical (must do before going live)

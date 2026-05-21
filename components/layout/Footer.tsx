@@ -75,6 +75,14 @@ export function Footer({
             </li>
             <li>
               <Link
+                href={`${base}/reviews`}
+                className="hover:text-terracotta transition"
+              >
+                Reviews
+              </Link>
+            </li>
+            <li>
+              <Link
                 href={`${base}/contact`}
                 className="hover:text-terracotta transition"
               >

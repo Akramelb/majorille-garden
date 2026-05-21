@@ -17,6 +17,8 @@ import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { NewsletterForm } from "@/components/sections/NewsletterForm";
 import { buildMetadata } from "@/lib/seo";
+import { getApprovedReviews } from "@/lib/reviews";
+import { ReviewsList } from "@/components/sections/ReviewsList";
 
 export async function generateMetadata(
   props: PageProps<"/[lang]">,
@@ -41,6 +43,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
+  const reviews = await getApprovedReviews(3);
 
   return (
     <>
@@ -249,18 +252,45 @@ export default async function Home(props: PageProps<"/[lang]">) {
         </Container>
       </section>
 
-      {/* TESTIMONIAL */}
+      {/* TESTIMONIAL / REVIEWS */}
       <section className="py-32 lg:py-48 bg-cream">
-        <Container size="md">
-          <div className="text-center">
-            <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
-            <blockquote className="mt-10 display text-3xl lg:text-5xl text-deep-brown leading-[1.2] max-w-4xl mx-auto">
-              &ldquo;{localized(TESTIMONIAL.quote, lang)}&rdquo;
-            </blockquote>
-            <p className="mt-12 text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
-              — {TESTIMONIAL.author}
-            </p>
-          </div>
+        <Container size={reviews.length > 0 ? "lg" : "md"}>
+          {reviews.length > 0 ? (
+            <>
+              <div className="text-center mb-14">
+                <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
+              </div>
+              <ReviewsList reviews={reviews} locale={lang} />
+              <div className="mt-12 text-center">
+                <Link
+                  href={`/${lang}/reviews`}
+                  className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-deep-brown hover:text-terracotta"
+                >
+                  {lang === "nl" ? "Alle reviews" : "All reviews"}
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center">
+              <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
+              <blockquote className="mt-10 display text-3xl lg:text-5xl text-deep-brown leading-[1.2] max-w-4xl mx-auto">
+                &ldquo;{localized(TESTIMONIAL.quote, lang)}&rdquo;
+              </blockquote>
+              <p className="mt-12 text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
+                — {TESTIMONIAL.author}
+              </p>
+              <div className="mt-12">
+                <Link
+                  href={`/${lang}/reviews`}
+                  className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-deep-brown hover:text-terracotta"
+                >
+                  {lang === "nl" ? "Laat een review achter" : "Leave a review"}
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          )}
         </Container>
       </section>
 
