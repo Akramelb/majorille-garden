@@ -68,6 +68,12 @@ export default async function AdminHome() {
           <div className="flex items-center gap-4 text-sm">
             <span className="text-muted hidden sm:inline">{user.email}</span>
             <a
+              href="/admin/blog"
+              className="text-muted hover:text-deep-brown"
+            >
+              Journal
+            </a>
+            <a
               href="/admin/reviews"
               className="text-muted hover:text-deep-brown"
             >
