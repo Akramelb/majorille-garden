@@ -1,26 +1,216 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Moroccan luxury palette */
+  --color-cream: #FAF5EC;
+  --color-sand: #E8DCC4;
+  --color-sand-dark: #D4C19E;
+  --color-terracotta: #C4633A;
+  --color-terracotta-dark: #A04E2A;
+  --color-olive: #4A5D3A;
+  --color-olive-dark: #2F3D24;
+  --color-deep-brown: #2A1810;
+  --color-gold: #C9A961;
+
+  /* Semantic tokens */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-deep-brown);
+  --color-muted: #6B5A4B;
+  --color-border: #E0D3B8;
+  --color-accent: var(--color-terracotta);
+  --color-primary: var(--color-deep-brown);
+
+  /* Fonts (variables set in layout.tsx via next/font) */
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+
+  /* Radii */
+  --radius-arch: 9999px 9999px 0 0;
+
+  /* Easings */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-deep-brown);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-serif), Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  ::selection {
+    background: var(--color-terracotta);
+    color: var(--color-cream);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .serif {
+    font-family: var(--font-serif), Georgia, serif;
+  }
+
+  /* Display heading — used for hero and section headlines */
+  .display {
+    font-family: var(--font-serif), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+
+  /* Moroccan arch frame */
+  .arch {
+    border-radius: 9999px 9999px 0 0;
+    overflow: hidden;
+  }
+
+  /* Subtle zellige divider (geometric SVG-like) */
+  .zellige-divider {
+    display: block;
+    width: 100%;
+    height: 24px;
+    background-image:
+      linear-gradient(45deg, var(--color-terracotta) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--color-terracotta) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--color-terracotta) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--color-terracotta) 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+    opacity: 0.18;
+  }
+
+  /*
+    Riad trellis — a clean, seamless Moroccan quatrefoil lattice built from
+    pure geometry: a central square with four semicircular lobes reaching
+    each edge midpoint. Tiles perfectly (lobes kiss at the midpoints,
+    forming the ogee lattice; cusps frame the small star gaps at corners).
+    Rendered on a ::before pseudo-element so it sits behind content.
+    `-dark` = gold on deep-brown sections; `-light` = terracotta on cream.
+  */
+  .riad-trellis-dark,
+  .riad-trellis-light {
+    position: relative;
+    isolation: isolate;
+  }
+  .riad-trellis-dark::before,
+  .riad-trellis-light::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-repeat: repeat;
+    background-size: 120px 120px;
+    pointer-events: none;
+  }
+  .riad-trellis-dark::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><path d='M25 25 A25 25 0 0 1 75 25 A25 25 0 0 1 75 75 A25 25 0 0 1 25 75 A25 25 0 0 1 25 25 Z' fill='none' stroke='%23C9A961' stroke-width='1.3'/></svg>");
+    opacity: 0.3;
+  }
+  .riad-trellis-light::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><path d='M25 25 A25 25 0 0 1 75 25 A25 25 0 0 1 75 75 A25 25 0 0 1 25 75 A25 25 0 0 1 25 25 Z' fill='none' stroke='%23C4633A' stroke-width='1.3'/></svg>");
+    opacity: 0.16;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-deep-brown);
+    color: var(--color-cream);
+    padding: 0.95rem 1.85rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all 250ms var(--ease-soft);
+  }
+  .btn-primary:hover {
+    background: var(--color-terracotta);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--color-deep-brown);
+    border: 1px solid var(--color-deep-brown);
+    padding: 0.95rem 1.85rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all 250ms var(--ease-soft);
+  }
+  .btn-secondary:hover {
+    background: var(--color-deep-brown);
+    color: var(--color-cream);
+  }
+
+  /* Bamford-style editorial link — uppercase, thin underline, no box */
+  .link-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-deep-brown);
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--color-deep-brown);
+    transition: all 250ms var(--ease-soft);
+  }
+  .link-edit:hover {
+    color: var(--color-terracotta);
+    border-bottom-color: var(--color-terracotta);
+  }
+  .link-edit--light {
+    color: var(--color-cream);
+    border-bottom-color: var(--color-cream);
+  }
+  .link-edit--light:hover {
+    color: var(--color-gold);
+    border-bottom-color: var(--color-gold);
+  }
+
+  /* Horizontal-scroll rail (Rituals collection rail). Hide scrollbar but keep behavior. */
+  .rail {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 1rem;
+  }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  @media (min-width: 768px) {
+    .rail { gap: 1.75rem; }
+  }
+
+  .container-px {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media (min-width: 768px) { .container-px { padding-left: 2.5rem; padding-right: 2.5rem; } }
+  @media (min-width: 1280px) { .container-px { padding-left: 4rem; padding-right: 4rem; } }
 }

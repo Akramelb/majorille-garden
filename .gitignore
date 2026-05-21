@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
+
+# Claude Code local-only settings (keep shared settings.json + skills tracked)
+.claude/settings.local.json

@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "Over ons",
+    "services": "Behandelingen",
+    "booking": "Reserveren",
+    "shop": "Shop",
+    "contact": "Contact",
+    "bookNow": "Boek nu"
+  },
+  "hero": {
+    "eyebrow": "Nieuw & Exclusief",
+    "title": "Een reis naar diepe ontspanning en haargrondige luxe",
+    "subtitle": "Ontsnap aan de dagelijkse drukte en gun uzelf de ultieme verwennerij van onze gloednieuwe Private Luxury Headspa. Ervaar de perfecte harmonie tussen Marokkaanse traditie en moderne wellness.",
+    "ctaPrimary": "Reserveer uw moment",
+    "ctaSecondary": "Ontdek behandelingen"
+  },
+  "intro": {
+    "eyebrow": "De kracht van de natuur",
+    "title": "Ontdek de helende kracht van natuurlijke therapie",
+    "body": "Welkom bij Majorille Garden, waar we geloven in de helende kracht van de natuur. Onze natuurlijke behandelingen en biologische producten zijn ontworpen om balans en welzijn te bevorderen. Een unieke combinatie van massage, natuur en ziel om je weer in balans te brengen."
+  },
+  "servicesSection": {
+    "eyebrow": "Onze rituelen",
+    "title": "Authentieke rituelen, biologische producten",
+    "subtitle": "Eeuwenoude Marokkaanse tradities, vertaald naar een serene moderne setting.",
+    "viewAll": "Alle behandelingen",
+    "minutes": "min",
+    "from": "vanaf",
+    "incl": "incl. btw",
+    "bookCta": "Reserveer deze behandeling",
+    "discoverCta": "Meer informatie"
+  },
+  "about": {
+    "eyebrow": "Over Majorille Garden",
+    "title": "Marokkaanse traditie, biologisch en eerlijk",
+    "cta": "Lees ons verhaal"
+  },
+  "products": {
+    "eyebrow": "Producten",
+    "title": "Biologische schatten uit Marokko",
+    "subtitle": "Kies voor biologische producten van Majorille Garden en ondersteun je gezondheid op een natuurlijke manier.",
+    "viewAll": "Bekijk shop",
+    "buy": "In winkelwagen",
+    "sale": "Aanbieding"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Veelgestelde vragen"
+  },
+  "testimonial": {
+    "eyebrow": "Wat gasten zeggen"
+  },
+  "contactSection": {
+    "eyebrow": "Contact",
+    "title": "Neem contact met ons op",
+    "subtitle": "Vragen, afspraken of meer informatie? Wij beantwoorden u graag.",
+    "name": "Naam",
+    "email": "E-mailadres",
+    "phone": "Telefoonnummer",
+    "message": "Bericht",
+    "send": "Verzenden",
+    "sending": "Verzenden…",
+    "success": "Bedankt! We nemen binnen 24 uur contact met u op.",
+    "error": "Er ging iets mis. Probeer het opnieuw of bel ons direct."
+  },
+  "newsletter": {
+    "title": "Blijf op de hoogte",
+    "subtitle": "Ontvang aankondigingen van nieuwe rituelen, seizoensaanbiedingen en wellness-tips.",
+    "placeholder": "uw@email.com",
+    "subscribe": "Aanmelden",
+    "success": "Bedankt voor uw aanmelding.",
+    "error": "Aanmelden mislukt — probeer opnieuw."
+  },
+  "booking": {
+    "title": "Reserveer uw moment",
+    "subtitle": "Kies voor wie, selecteer een behandeling en plan direct een geschikt moment.",
+    "audience": "Voor wie is de behandeling?",
+    "step1": "Kies een behandeling",
+    "step2": "Selecteer datum & tijd",
+    "noService": "Kies eerst voor wie en een behandeling om beschikbaarheid te zien.",
+    "byAppointment": "Onze diensten zijn op afspraak, men-to-men & woman-to-woman.",
+    "hoursTitle": "Openingstijden",
+    "hoursWomen": "Vrouwen: maandag t/m zondag 10:00–20:00",
+    "hoursMen": "Mannen: ma–wo 09:00–20:00, do–zo 09:00–12:30"
+  },
+  "shop": {
+    "title": "Onze producten",
+    "subtitle": "Ontdek de natuurlijke therapieproducten van Majorille Garden, zorgvuldig samengesteld om uw welzijn te bevorderen.",
+    "comingSoon": "Online betalen is binnenkort beschikbaar. Neem voor nu contact met ons op om te bestellen.",
+    "contactToOrder": "Contact om te bestellen"
+  },
+  "footer": {
+    "tagline": "Marokkaanse wellness in het hart van Amsterdam.",
+    "explore": "Verkennen",
+    "info": "Informatie",
+    "address": "Adres",
+    "hours": "Openingstijden",
+    "copyright": "© {year} Majorille Garden. Alle rechten voorbehouden."
+  }
+}

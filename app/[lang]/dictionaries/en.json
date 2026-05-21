@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Treatments",
+    "booking": "Booking",
+    "shop": "Shop",
+    "contact": "Contact",
+    "bookNow": "Book now"
+  },
+  "hero": {
+    "eyebrow": "New & Exclusive",
+    "title": "A journey to deep relaxation and rooted luxury",
+    "subtitle": "Step away from the everyday and surrender to our new Private Luxury Headspa. The perfect harmony of Moroccan tradition and modern wellness, in a serene private setting.",
+    "ctaPrimary": "Reserve your moment",
+    "ctaSecondary": "Explore treatments"
+  },
+  "intro": {
+    "eyebrow": "The power of nature",
+    "title": "Discover the healing power of natural therapy",
+    "body": "Welcome to Majorille Garden. We believe in the healing power of nature — our treatments and organic products are designed to restore balance and lasting wellbeing. A unique blend of massage, nature, and soul to bring you back into balance."
+  },
+  "servicesSection": {
+    "eyebrow": "Our rituals",
+    "title": "Authentic rituals, organic ingredients",
+    "subtitle": "Centuries-old Moroccan traditions, translated into a serene modern setting.",
+    "viewAll": "All treatments",
+    "minutes": "min",
+    "from": "from",
+    "incl": "incl. VAT",
+    "bookCta": "Book this treatment",
+    "discoverCta": "Learn more"
+  },
+  "about": {
+    "eyebrow": "About Majorille Garden",
+    "title": "Moroccan tradition, organic and fair",
+    "cta": "Read our story"
+  },
+  "products": {
+    "eyebrow": "Products",
+    "title": "Organic treasures from Morocco",
+    "subtitle": "Support your wellbeing with Majorille Garden's organic, hand-pressed essentials.",
+    "viewAll": "Visit shop",
+    "buy": "Add to cart",
+    "sale": "On sale"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked"
+  },
+  "testimonial": {
+    "eyebrow": "What guests say"
+  },
+  "contactSection": {
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "subtitle": "Questions, bookings, or more information? We're happy to help.",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "send": "Send",
+    "sending": "Sending…",
+    "success": "Thank you. We'll be in touch within 24 hours.",
+    "error": "Something went wrong. Please try again or call us directly."
+  },
+  "newsletter": {
+    "title": "Stay in the loop",
+    "subtitle": "Receive new ritual announcements, seasonal offers, and wellness notes.",
+    "placeholder": "you@email.com",
+    "subscribe": "Subscribe",
+    "success": "Thanks for subscribing.",
+    "error": "Subscription failed — please try again."
+  },
+  "booking": {
+    "title": "Reserve your moment",
+    "subtitle": "Choose who it's for, pick a treatment, and book a time directly.",
+    "audience": "Who is this treatment for?",
+    "step1": "Choose a treatment",
+    "step2": "Select date & time",
+    "noService": "Choose who it's for and a treatment to see availability.",
+    "byAppointment": "Treatments are by appointment, men-to-men & woman-to-woman.",
+    "hoursTitle": "Opening hours",
+    "hoursWomen": "Women: Monday–Sunday 10:00–20:00",
+    "hoursMen": "Men: Mon–Wed 09:00–20:00, Thu–Sun 09:00–12:30"
+  },
+  "shop": {
+    "title": "Our products",
+    "subtitle": "Discover the natural therapy products of Majorille Garden, carefully composed to support your wellbeing.",
+    "comingSoon": "Online payment is coming soon. For now, get in touch to order.",
+    "contactToOrder": "Contact to order"
+  },
+  "footer": {
+    "tagline": "Moroccan wellness in the heart of Amsterdam.",
+    "explore": "Explore",
+    "info": "Information",
+    "address": "Address",
+    "hours": "Hours",
+    "copyright": "© {year} Majorille Garden. All rights reserved."
+  }
+}
