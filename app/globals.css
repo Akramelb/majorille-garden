@@ -34,6 +34,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Kills horizontal scrolling on mobile caused by any precision overflow
+       (decorative absolutes, slightly oversized images, vw values, etc).
+       `clip` is preferred over `hidden` — it doesn't create a scroll container
+       so position:sticky inside still works. */
+    overflow-x: clip;
   }
 
   body {
@@ -42,6 +47,7 @@
     font-family: var(--font-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5 {
@@ -49,6 +55,21 @@
     font-weight: 500;
     letter-spacing: -0.01em;
     line-height: 1.1;
+    /* Long Dutch words (e.g. "vermoeidheidssymptomen") would otherwise overflow
+       narrow phones; let the browser hyphenate where useful and break as a last
+       resort. `lang="nl"`/`lang="en"` on <html> picks the right hyphenation. */
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* iOS Safari auto-zooms into form inputs whose font-size is < 16px on focus.
+     Bump all form controls to 16px on mobile and let Tailwind's text-* utilities
+     take over from sm: upward. */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input, textarea, select { font-size: inherit; }
   }
 
   ::selection {

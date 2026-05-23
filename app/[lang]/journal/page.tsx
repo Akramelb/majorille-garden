@@ -50,7 +50,7 @@ export default async function JournalPage(props: PageProps<"/[lang]/journal">) {
       <Container>
         <div className="max-w-2xl mb-14">
           <Eyebrow>{t.eyebrow}</Eyebrow>
-          <h1 className="mt-4 serif text-5xl lg:text-7xl text-deep-brown leading-[1.05]">
+          <h1 className="mt-4 serif text-4xl sm:text-5xl lg:text-7xl text-deep-brown leading-[1.05]">
             {t.title}
           </h1>
           <p className="mt-6 text-lg text-muted leading-relaxed">{t.intro}</p>

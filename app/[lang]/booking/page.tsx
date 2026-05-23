@@ -37,7 +37,7 @@ export default async function BookingPage(
       <Container size="xl">
         <div className="max-w-3xl mb-16 lg:mb-20">
           <Eyebrow>{dict.nav.booking}</Eyebrow>
-          <h1 className="display mt-6 text-5xl lg:text-7xl text-deep-brown">
+          <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
             {dict.booking.title}
           </h1>
           <p className="mt-8 text-lg lg:text-xl text-muted leading-relaxed">

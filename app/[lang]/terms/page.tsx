@@ -26,7 +26,7 @@ export default async function TermsPage(props: PageProps<"/[lang]/terms">) {
         <p className="text-xs uppercase tracking-[0.22em] text-terracotta">
           {doc.updated}
         </p>
-        <h1 className="mt-4 serif text-5xl lg:text-6xl text-deep-brown leading-[1.05]">
+        <h1 className="mt-4 serif text-4xl sm:text-5xl lg:text-6xl text-deep-brown leading-[1.05]">
           {doc.title}
         </h1>
         <div className="mt-10 space-y-10">

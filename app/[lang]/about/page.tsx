@@ -34,7 +34,7 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
           <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center">
             <div>
               <Eyebrow>{dict.about.eyebrow}</Eyebrow>
-              <h1 className="display mt-6 text-5xl lg:text-7xl text-deep-brown">
+              <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
                 {dict.about.title}
               </h1>
               {localized(ABOUT.hero, lang).map((p, i) => (

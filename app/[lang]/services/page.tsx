@@ -36,7 +36,7 @@ export default async function ServicesIndex(
       <Container>
         <div className="max-w-3xl mb-16 lg:mb-24">
           <Eyebrow>{dict.servicesSection.eyebrow}</Eyebrow>
-          <h1 className="display mt-6 text-5xl lg:text-7xl text-deep-brown">
+          <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
             {dict.servicesSection.title}
           </h1>
           <p className="mt-8 text-lg lg:text-xl text-muted leading-relaxed">

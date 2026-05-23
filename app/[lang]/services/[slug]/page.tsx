@@ -79,7 +79,7 @@ export default async function ServicePage(
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-center">
             <div>
               <Eyebrow>{dict.servicesSection.eyebrow}</Eyebrow>
-              <h1 className="display mt-6 text-5xl lg:text-6xl xl:text-7xl text-deep-brown">
+              <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-deep-brown">
                 {localized(service.name, lang)}
               </h1>
               <p className="mt-6 text-xl text-muted leading-relaxed">

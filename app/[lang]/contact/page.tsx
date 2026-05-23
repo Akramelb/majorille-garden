@@ -35,7 +35,7 @@ export default async function ContactPage(
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
           <div>
             <Eyebrow>{dict.contactSection.eyebrow}</Eyebrow>
-            <h1 className="display mt-6 text-5xl lg:text-7xl text-deep-brown">
+            <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
               {dict.contactSection.title}
             </h1>
             <p className="mt-8 text-lg lg:text-xl text-muted leading-relaxed max-w-md">

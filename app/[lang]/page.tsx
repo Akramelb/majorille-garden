@@ -53,7 +53,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
   return (
     <>
       {/* HERO — full-bleed image, copy overlaid */}
-      <section className="relative -mt-[76px] lg:-mt-[88px] h-[100svh] min-h-[640px] w-full overflow-hidden">
+      <section className="relative -mt-[76px] lg:-mt-[88px] h-[100svh] min-h-[560px] sm:min-h-[640px] w-full overflow-hidden">
         <Image
           src="/images/home/hero.jpg"
           alt="A woman in white tosses arcs of warm Saharan sand at sunset"
@@ -66,18 +66,18 @@ export default async function Home(props: PageProps<"/[lang]">) {
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-deep-brown/55 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-deep-brown/80 via-deep-brown/30 to-transparent" />
 
-        <Container className="absolute inset-x-0 bottom-0 pb-20 lg:pb-28">
+        <Container className="absolute inset-x-0 bottom-0 pb-14 sm:pb-20 lg:pb-28">
           <div className="max-w-3xl">
             <p className="text-[0.72rem] uppercase tracking-[0.32em] text-cream/85">
               {dict.hero.eyebrow}
             </p>
-            <h1 className="display mt-6 text-cream text-5xl sm:text-6xl lg:text-7xl xl:text-[5.75rem]">
+            <h1 className="display mt-4 sm:mt-6 text-cream text-[2.5rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.75rem]">
               {dict.hero.title}
             </h1>
-            <p className="mt-8 text-base lg:text-lg text-cream/80 leading-relaxed max-w-xl">
+            <p className="mt-5 sm:mt-8 text-base lg:text-lg text-cream/80 leading-relaxed max-w-xl">
               {dict.hero.subtitle}
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-8">
+            <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-5 sm:gap-8">
               <Link href={`/${lang}/booking`} className="btn-primary bg-cream text-deep-brown hover:bg-terracotta hover:text-cream">
                 {dict.hero.ctaPrimary}
               </Link>
