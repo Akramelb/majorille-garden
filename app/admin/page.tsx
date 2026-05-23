@@ -80,6 +80,12 @@ export default async function AdminHome() {
               Reviews
             </a>
             <a
+              href="/admin/faq"
+              className="text-muted hover:text-deep-brown"
+            >
+              FAQ
+            </a>
+            <a
               href="/nl"
               className="text-muted hover:text-deep-brown inline-flex items-center gap-1"
             >

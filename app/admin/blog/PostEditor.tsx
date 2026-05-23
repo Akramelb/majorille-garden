@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { createPost, updatePost } from "@/lib/admin-actions";
 import type { BlogPost } from "@/lib/blog";
+import { listPublicImages } from "@/lib/image-manifest";
+import { CoverImagePicker } from "./CoverImagePicker";
 
-// Server component form. Posts to a Server Action (create or update).
-export function PostEditor({ post }: { post?: BlogPost }) {
+// Async server component form. Posts to a Server Action (create or update).
+export async function PostEditor({ post }: { post?: BlogPost }) {
   const editing = Boolean(post);
   const action = editing ? updatePost : createPost;
+  const imageGroups = await listPublicImages();
 
   return (
     <form action={action} className="space-y-8 max-w-3xl">
@@ -18,11 +21,10 @@ export function PostEditor({ post }: { post?: BlogPost }) {
         placeholder="warme-zandtherapie-uitgelegd"
         required
       />
-      <Field
-        label="Cover image URL"
-        name="cover_image"
+
+      <CoverImagePicker
         defaultValue={post?.cover_image ?? ""}
-        placeholder="/images/services/warme-zandbad/hero.jpg"
+        imageGroups={imageGroups}
       />
 
       <div className="grid md:grid-cols-2 gap-6">

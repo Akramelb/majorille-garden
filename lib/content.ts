@@ -764,6 +764,66 @@ export const FAQS: FAQ[] = [
       en: "Book directly via our booking page, or get in touch by phone (+31 6 4128 4643) or email (info@majorillegarden.nl). Treatments are by appointment — men-to-men and woman-to-woman.",
     },
   },
+  {
+    question: {
+      nl: "Wat is het annuleringsbeleid?",
+      en: "What is the cancellation policy?",
+    },
+    answer: {
+      nl: "Reserveringen kunnen tot 24 uur van tevoren kosteloos worden geannuleerd of verzet. Bij annulering binnen 24 uur kunnen wij genoodzaakt zijn de behandeling in rekening te brengen.",
+      en: "Bookings can be cancelled or rescheduled free of charge up to 24 hours in advance. Cancellations within 24 hours may be charged.",
+    },
+  },
+  {
+    question: {
+      nl: "Zijn er behandelingen die ik beter niet kan boeken?",
+      en: "Are there treatments I should avoid?",
+    },
+    answer: {
+      nl: "Sommige behandelingen — zoals moxibustie, hete steen massage en de warme zandbad-therapie — zijn niet geschikt bij koorts, acute ontstekingen of in bepaalde fases van een zwangerschap. Meld eventuele gezondheidsklachten of medicatie altijd vooraf; wij adviseren u graag persoonlijk.",
+      en: "Some treatments — such as moxibustion, hot stone massage, and the warm sand bath — aren't suitable during fever, acute inflammation, or certain phases of pregnancy. Always disclose any health concerns or medications in advance; we're happy to advise personally.",
+    },
+  },
+  {
+    question: {
+      nl: "Welke talen spreken jullie?",
+      en: "Which languages do you speak?",
+    },
+    answer: {
+      nl: "Wij ontvangen u graag in het Nederlands, Engels, Frans of Arabisch — voel u vrij om uw voorkeur aan te geven bij het reserveren.",
+      en: "We're happy to welcome you in Dutch, English, French, or Arabic — feel free to mention your preference when booking.",
+    },
+  },
+  {
+    question: {
+      nl: "Wat moet ik meenemen of voorbereiden?",
+      en: "What should I bring or prepare?",
+    },
+    answer: {
+      nl: "Niets bijzonders. Kom uitgerust en op tijd; wij zorgen voor handdoeken, badjas en alle oliën. Voor de zandbad-therapie en lichaamsscrub raden wij comfortabele kleding aan voor erna.",
+      en: "Nothing in particular. Come rested and on time; we provide towels, a robe, and all oils. For the sand bath and body scrub we recommend comfortable clothing for afterwards.",
+    },
+  },
+  {
+    question: {
+      nl: "Waar zijn jullie en is er parkeergelegenheid?",
+      en: "Where are you and is there parking?",
+    },
+    answer: {
+      nl: "Wij zijn te vinden aan de Franz Zieglerstraat 201, 1087 HN Amsterdam (IJburg). Er is betaald straatparkeren in de buurt en het is goed bereikbaar met tram 26.",
+      en: "We're at Franz Zieglerstraat 201, 1087 HN Amsterdam (IJburg). Paid street parking is available nearby, and tram 26 stops close by.",
+    },
+  },
+  {
+    question: {
+      nl: "Verkopen jullie cadeaubonnen?",
+      en: "Do you sell gift vouchers?",
+    },
+    answer: {
+      nl: "Cadeaubonnen online komen binnenkort. Voor nu kunt u ons bellen of mailen om een gepersonaliseerde cadeaubon te regelen.",
+      en: "Online gift vouchers are coming soon. For now, please call or email us to arrange a personalised voucher.",
+    },
+  },
 ];
 
 export const TESTIMONIAL: Testimonial = {

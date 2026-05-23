@@ -5,20 +5,21 @@ import { notFound } from "next/navigation";
 import { getDictionary, hasLocale } from "./dictionaries";
 import {
   SERVICES,
-  FAQS,
   TESTIMONIAL,
   PRODUCTS,
   ABOUT,
   localized,
   formatPriceEUR,
 } from "@/lib/content";
+import { getActiveFAQs } from "@/lib/faqs";
 import { Container, Eyebrow } from "@/components/ui/Container";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { NewsletterForm } from "@/components/sections/NewsletterForm";
 import { buildMetadata } from "@/lib/seo";
-import { getApprovedReviews } from "@/lib/reviews";
+import { getApprovedReviews, getReviewStats } from "@/lib/reviews";
 import { ReviewsList } from "@/components/sections/ReviewsList";
+import { StarRating } from "@/components/sections/StarRating";
 
 export async function generateMetadata(
   props: PageProps<"/[lang]">,
@@ -43,7 +44,11 @@ export default async function Home(props: PageProps<"/[lang]">) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const reviews = await getApprovedReviews(3);
+  const [reviews, stats, faqs] = await Promise.all([
+    getApprovedReviews(3),
+    getReviewStats(),
+    getActiveFAQs(),
+  ]);
 
   return (
     <>
@@ -259,6 +264,19 @@ export default async function Home(props: PageProps<"/[lang]">) {
             <>
               <div className="text-center mb-14">
                 <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
+                {stats && (
+                  <div className="mt-6 inline-flex flex-col items-center gap-3">
+                    <StarRating rating={Math.round(stats.avg)} size={22} />
+                    <p className="text-sm text-muted">
+                      <span className="serif text-2xl text-deep-brown align-middle mr-2">
+                        {stats.avg.toFixed(1)}
+                      </span>
+                      {lang === "nl"
+                        ? `gebaseerd op ${stats.count} ${stats.count === 1 ? "review" : "reviews"}`
+                        : `based on ${stats.count} ${stats.count === 1 ? "review" : "reviews"}`}
+                    </p>
+                  </div>
+                )}
               </div>
               <ReviewsList reviews={reviews} locale={lang} />
               <div className="mt-12 text-center">
@@ -303,7 +321,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
               {dict.faq.title}
             </h2>
           </div>
-          <FAQAccordion faqs={FAQS} locale={lang} />
+          <FAQAccordion faqs={faqs} locale={lang} />
         </Container>
       </section>
 
