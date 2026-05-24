@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowLeft, Plus, Pencil } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { getAdminUser } from "@/lib/supabase/auth-server";
 import { getAllFAQs } from "@/lib/faqs";
+import { AdminShell, AdminPage } from "@/components/admin/AdminShell";
 import { FAQRowControls } from "./FAQRowControls";
 
 export const dynamic = "force-dynamic";
@@ -13,45 +14,37 @@ export default async function AdminFAQ() {
   const faqs = await getAllFAQs();
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-border/60 bg-cream/95 sticky top-0 z-10">
-        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 text-sm text-muted hover:text-deep-brown"
-          >
-            <ArrowLeft size={14} /> Dashboard
-          </Link>
+    <AdminShell userEmail={user.email ?? null}>
+      <AdminPage
+        title="Veelgestelde vragen"
+        description="Zichtbaar op de homepagina. Gebruik de pijlen om te herordenen."
+        actions={
           <Link
             href="/admin/faq/new"
-            className="inline-flex items-center gap-2 text-sm bg-deep-brown text-cream px-4 py-2 hover:bg-terracotta transition-colors"
+            className="inline-flex items-center gap-2 text-sm bg-deep-brown text-cream px-4 py-2 hover:bg-terracotta transition-colors rounded-sm"
           >
             <Plus size={14} /> Nieuwe FAQ
           </Link>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-5xl px-6 py-10">
-        <h1 className="serif text-3xl text-deep-brown mb-2">Veelgestelde vragen</h1>
-        <p className="text-sm text-muted mb-8">
-          Zichtbaar op de homepagina. Sleep-loos sorteren via de pijlen.
-        </p>
-
+        }
+      >
         {faqs.length === 0 ? (
-          <p className="text-muted text-sm">
+          <p className="text-muted text-sm py-4 px-5 bg-sand/30 border border-border/30 rounded-sm">
             Nog geen FAQs. Voeg de eerste toe.
           </p>
         ) : (
           <div className="divide-y divide-border/50 border-y border-border/50">
             {faqs.map((f, i) => (
-              <div key={f.id} className="py-4 flex items-start justify-between gap-4">
+              <div
+                key={f.id}
+                className="py-4 flex items-start justify-between gap-4"
+              >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className="text-deep-brown font-medium">
                       {f.question_nl}
                     </span>
                     {!f.active && (
-                      <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-sand/60 text-muted">
+                      <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-sand/60 text-muted rounded-sm">
                         Verborgen
                       </span>
                     )}
@@ -78,7 +71,7 @@ export default async function AdminFAQ() {
             ))}
           </div>
         )}
-      </main>
-    </div>
+      </AdminPage>
+    </AdminShell>
   );
 }

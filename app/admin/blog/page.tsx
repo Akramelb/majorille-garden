@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowLeft, Plus, Pencil, ExternalLink } from "lucide-react";
+import { Plus, Pencil, ExternalLink } from "lucide-react";
 import { getAdminUser } from "@/lib/supabase/auth-server";
 import { getAllPosts } from "@/lib/blog";
+import { AdminShell, AdminPage } from "@/components/admin/AdminShell";
 import { DeletePostButton } from "./DeletePostButton";
 
 export const dynamic = "force-dynamic";
@@ -13,28 +14,21 @@ export default async function AdminBlog() {
   const posts = await getAllPosts();
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-border/60 bg-cream/95 sticky top-0 z-10">
-        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 text-sm text-muted hover:text-deep-brown"
-          >
-            <ArrowLeft size={14} /> Dashboard
-          </Link>
+    <AdminShell userEmail={user.email ?? null}>
+      <AdminPage
+        title="Journal"
+        description="Verhalen voor de site. Concepten zijn alleen zichtbaar in de admin."
+        actions={
           <Link
             href="/admin/blog/new"
-            className="inline-flex items-center gap-2 text-sm bg-deep-brown text-cream px-4 py-2 hover:bg-terracotta transition-colors"
+            className="inline-flex items-center gap-2 text-sm bg-deep-brown text-cream px-4 py-2 hover:bg-terracotta transition-colors rounded-sm"
           >
             <Plus size={14} /> Nieuw artikel
           </Link>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-5xl px-6 py-10">
-        <h1 className="serif text-3xl text-deep-brown mb-6">Journal</h1>
+        }
+      >
         {posts.length === 0 ? (
-          <p className="text-muted text-sm">
+          <p className="text-muted text-sm py-4 px-5 bg-sand/30 border border-border/30 rounded-sm">
             Nog geen artikelen. Maak het eerste aan.
           </p>
         ) : (
@@ -45,15 +39,15 @@ export default async function AdminBlog() {
                 className="py-4 flex flex-wrap items-center justify-between gap-3"
               >
                 <div className="min-w-0">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <span className="text-deep-brown font-medium">
                       {p.title_nl}
                     </span>
                     <span
                       className={
                         p.published
-                          ? "text-[10px] uppercase tracking-wider px-2 py-0.5 bg-olive/15 text-olive"
-                          : "text-[10px] uppercase tracking-wider px-2 py-0.5 bg-sand/60 text-muted"
+                          ? "text-[10px] uppercase tracking-wider px-2 py-0.5 bg-olive/15 text-olive rounded-sm"
+                          : "text-[10px] uppercase tracking-wider px-2 py-0.5 bg-sand/60 text-muted rounded-sm"
                       }
                     >
                       {p.published ? "Gepubliceerd" : "Concept"}
@@ -84,7 +78,7 @@ export default async function AdminBlog() {
             ))}
           </div>
         )}
-      </main>
-    </div>
+      </AdminPage>
+    </AdminShell>
   );
 }
