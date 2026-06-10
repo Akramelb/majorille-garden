@@ -33,15 +33,13 @@ export function Eyebrow({
   return (
     <p
       className={clsx(
-        "text-xs uppercase tracking-[0.22em] text-terracotta font-medium",
+        // terracotta-dark (#A04E2A) hits 4.85:1 on cream — meets WCAG AA for
+        // small text. Plain terracotta sat at 3.72:1 which is below threshold.
+        "text-xs uppercase tracking-[0.22em] text-terracotta-dark font-medium",
         className,
       )}
     >
       {children}
     </p>
   );
-}
-
-export function ZelligeDivider({ className }: { className?: string }) {
-  return <div className={clsx("zellige-divider", className)} aria-hidden />;
 }

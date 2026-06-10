@@ -4,6 +4,7 @@ import { ABOUT, localized } from "@/lib/content";
 import { Container, Eyebrow } from "@/components/ui/Container";
 import { getDictionary, hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
+import { getHeroImageUrl } from "@/lib/site-settings";
 
 export async function generateMetadata(props: PageProps<"/[lang]/about">) {
   const { lang } = await props.params;
@@ -26,6 +27,7 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
+  const heroAbout = await getHeroImageUrl("about");
 
   return (
     <>
@@ -48,8 +50,13 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
             </div>
             <div className="relative aspect-[4/5]">
               <Image
-                src="/images/about/hero.png"
-                alt="Majorille Garden — atmosphere"
+                src={heroAbout}
+                unoptimized={heroAbout.startsWith("http")}
+                alt={
+                  lang === "nl"
+                    ? "Het interieur van Majorille Garden — warme Marokkaans-geïnspireerde sfeer"
+                    : "The interior of Majorille Garden — warm Moroccan-inspired atmosphere"
+                }
                 fill
                 priority
                 sizes="(min-width:1024px) 45vw, 100vw"

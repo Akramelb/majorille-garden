@@ -3,6 +3,7 @@ import { Container, Eyebrow } from "@/components/ui/Container";
 import { BookingForm } from "@/components/sections/BookingForm";
 import { getDictionary, hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
+import { getPromo } from "@/lib/promos";
 
 export async function generateMetadata(props: PageProps<"/[lang]/booking">) {
   const { lang } = await props.params;
@@ -31,6 +32,15 @@ export default async function BookingPage(
   const initialSlug = typeof searchParams.service === "string"
     ? searchParams.service
     : undefined;
+  // Resolve any `?promo=...` query param. Bogus codes silently drop so the
+  // discount-active line below doesn't show for invalid input.
+  const promo = await getPromo(
+    typeof searchParams.promo === "string" ? searchParams.promo : null,
+  );
+  const initialPromoCode =
+    promo && promo.applies === "booking" ? promo.code : null;
+  const initialPromoPercent =
+    promo && promo.applies === "booking" ? promo.discountPercent : null;
 
   return (
     <section className="py-24 lg:py-36">
@@ -44,7 +54,13 @@ export default async function BookingPage(
             {dict.booking.subtitle}
           </p>
         </div>
-        <BookingForm dict={dict.booking} locale={lang} initialSlug={initialSlug} />
+        <BookingForm
+          dict={dict.booking}
+          locale={lang}
+          initialSlug={initialSlug}
+          initialPromoCode={initialPromoCode}
+          initialPromoPercent={initialPromoPercent}
+        />
       </Container>
     </section>
   );

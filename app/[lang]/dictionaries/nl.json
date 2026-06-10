@@ -82,13 +82,41 @@
     "byAppointment": "Onze diensten zijn op afspraak, men-to-men & woman-to-woman.",
     "hoursTitle": "Openingstijden",
     "hoursWomen": "Vrouwen: maandag t/m zondag 10:00–20:00",
-    "hoursMen": "Mannen: ma–wo 09:00–20:00, do–zo 09:00–12:30"
+    "hoursMen": "Mannen: ma–wo 09:00–20:00, do–zo 09:00–12:30",
+    "payNow": "Reserveren en betalen",
+    "confirming": "Betaling wordt bevestigd…",
+    "paymentFailed": "Betaling mislukt of geannuleerd.",
+    "retry": "Opnieuw proberen",
+    "afterPayment": "Na betaling kun je hieronder je tijd kiezen.",
+    "contactFields": {
+      "email": "E-mail",
+      "name": "Naam",
+      "phone": "Telefoon (optioneel)"
+    }
   },
   "shop": {
     "title": "Onze producten",
     "subtitle": "Ontdek de natuurlijke therapieproducten van Majorille Garden, zorgvuldig samengesteld om uw welzijn te bevorderen.",
     "comingSoon": "Online betalen is binnenkort beschikbaar. Neem voor nu contact met ons op om te bestellen.",
-    "contactToOrder": "Contact om te bestellen"
+    "contactToOrder": "Contact om te bestellen",
+    "buyNow": "Nu kopen",
+    "checkout": {
+      "title": "Afrekenen",
+      "shippingTitle": "Verzendadres",
+      "addressLine1": "Straat en huisnummer",
+      "addressLine2": "Toevoeging (optioneel)",
+      "postalCode": "Postcode",
+      "city": "Plaats",
+      "country": "Land",
+      "countryNL": "Nederland",
+      "pay": "Betalen met Mollie",
+      "qty": "Aantal",
+      "summary": "Overzicht",
+      "nlOnly": "We verzenden momenteel alleen binnen Nederland."
+    },
+    "orderConfirmed": "Bedankt! Je bestelling is ontvangen.",
+    "orderProcessing": "Betaling wordt verwerkt…",
+    "orderFailed": "Betaling mislukt."
   },
   "footer": {
     "tagline": "Marokkaanse wellness in het hart van Amsterdam.",

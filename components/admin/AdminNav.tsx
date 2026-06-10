@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
+  Inbox,
   Star,
   BookOpen,
   HelpCircle,
+  ShoppingBag,
+  Activity,
   ExternalLink,
+  ImageIcon,
+  Tag,
+  Megaphone,
   Menu,
   X,
 } from "lucide-react";
@@ -17,17 +23,28 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/auth-browser";
 
 const ITEMS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin/inbox", label: "Inbox", icon: Inbox },
+  { href: "/admin/workspace", label: "Workspace", icon: Activity },
+  { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
   { href: "/admin/blog", label: "Journal", icon: BookOpen },
   { href: "/admin/faq", label: "FAQ", icon: HelpCircle },
+  { href: "/admin/images", label: "Foto's", icon: ImageIcon },
+  { href: "/admin/promos", label: "Codes", icon: Tag },
+  { href: "/admin/banner", label: "Bovenbalk", icon: Megaphone },
 ];
 
 export function AdminNav({ userEmail }: { userEmail: string | null }) {
   const pathname = usePathname() ?? "";
   const [open, setOpen] = useState(false);
+  const [lastPath, setLastPath] = useState(pathname);
 
-  // Close the drawer whenever the route changes.
-  useEffect(() => setOpen(false), [pathname]);
+  // Close the drawer whenever the route changes (derived during render
+  // to satisfy react-hooks/set-state-in-effect).
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    if (open) setOpen(false);
+  }
 
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname === href || pathname.startsWith(href + "/");
@@ -39,7 +56,7 @@ export function AdminNav({ userEmail }: { userEmail: string | null }) {
   }
 
   const navList = (
-    <nav className="flex flex-col gap-1 text-sm">
+    <nav aria-label="Admin navigatie" className="flex flex-col gap-1 text-sm">
       {ITEMS.map(({ href, label, icon: Icon, exact }) => {
         const active = isActive(href, exact);
         return (
@@ -123,31 +140,34 @@ export function AdminNav({ userEmail }: { userEmail: string | null }) {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            aria-label="Open menu"
+            aria-label="Menu openen"
+            aria-expanded={open}
+            aria-controls="admin-drawer"
             className="p-2 text-deep-brown"
           >
-            <Menu size={20} />
+            <Menu size={20} aria-hidden="true" />
           </button>
         </div>
       </div>
 
       {/* Mobile drawer */}
       {open && (
-        <div className="lg:hidden fixed inset-0 z-50 flex">
+        <div id="admin-drawer" className="lg:hidden fixed inset-0 z-50 flex">
           <button
             type="button"
             onClick={() => setOpen(false)}
-            aria-label="Close menu"
+            aria-label="Menu sluiten (achtergrond)"
+            tabIndex={-1}
             className="absolute inset-0 bg-deep-brown/30"
           />
           <aside className="relative ml-auto w-72 max-w-[85%] h-full bg-cream py-7 flex flex-col shadow-2xl">
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Close menu"
+              aria-label="Menu sluiten"
               className="absolute top-5 right-5 p-2 text-deep-brown"
             >
-              <X size={18} />
+              <X size={18} aria-hidden="true" />
             </button>
             {brandBlock}
             <div className="px-3 pt-6 flex-1">{navList}</div>

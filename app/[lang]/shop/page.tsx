@@ -6,6 +6,7 @@ import { PRODUCTS, localized, formatPriceEUR } from "@/lib/content";
 import { Container, Eyebrow } from "@/components/ui/Container";
 import { getDictionary, hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
+import { getPromo } from "@/lib/promos";
 
 export async function generateMetadata(props: PageProps<"/[lang]/shop">) {
   const { lang } = await props.params;
@@ -26,6 +27,15 @@ export default async function ShopPage(props: PageProps<"/[lang]/shop">) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
+  const sp = await props.searchParams;
+  // Carry a valid promo through to each Buy Now link so the discount survives
+  // the listing → checkout hop without the visitor having to remember it.
+  const promoRaw = typeof sp.promo === "string" ? sp.promo : null;
+  const promoBanner = await getPromo(promoRaw);
+  const promoQS =
+    promoBanner && promoBanner.applies === "product"
+      ? `?promo=${promoBanner.code}`
+      : "";
 
   return (
     <section className="py-24 lg:py-36">
@@ -38,9 +48,17 @@ export default async function ShopPage(props: PageProps<"/[lang]/shop">) {
           <p className="mt-8 text-lg lg:text-xl text-muted leading-relaxed">
             {dict.shop.subtitle}
           </p>
-          <div className="mt-8 px-5 py-3 bg-sand/40 border-l-2 border-terracotta text-sm text-deep-brown inline-block">
-            {dict.shop.comingSoon}
-          </div>
+          {promoBanner && (
+            <p className="mt-6 inline-block px-4 py-2 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark">
+              {lang === "nl" ? "Kortingscode" : "Promo code"}{" "}
+              <code className="font-mono tracking-[0.18em] ml-1">
+                {promoBanner.code}
+              </code>{" "}
+              {lang === "nl"
+                ? "is actief — wordt automatisch toegepast bij het afrekenen."
+                : "is active — applied automatically at checkout."}
+            </p>
+          )}
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
           {PRODUCTS.map((p) => (
@@ -75,13 +93,19 @@ export default async function ShopPage(props: PageProps<"/[lang]/shop">) {
                   </span>
                 )}
               </div>
-              <Link
-                href={`/${lang}/contact`}
-                className="link-edit mt-6"
-              >
-                {dict.shop.contactToOrder}
-                <ArrowRight size={12} />
-              </Link>
+              {p.inStock === false ? (
+                <span className="mt-6 inline-block px-3 py-1 bg-sand/50 text-muted text-xs uppercase tracking-[0.18em]">
+                  {lang === "nl" ? "Uitverkocht" : "Out of stock"}
+                </span>
+              ) : (
+                <Link
+                  href={`/${lang}/shop/${p.slug}/checkout${promoQS}`}
+                  className="link-edit mt-6"
+                >
+                  {dict.shop.buyNow}
+                  <ArrowRight size={12} />
+                </Link>
+              )}
             </div>
           ))}
         </div>

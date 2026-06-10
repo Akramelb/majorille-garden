@@ -1,9 +1,18 @@
 import type { Locale } from "@/app/[lang]/dictionaries";
+import { SITE } from "@/lib/content";
 
 type LegalSection = {
   heading: string;
   body: string[];
 };
+
+// BTW placeholder rendered when SITE.btw is null. Kept central so it's easy to
+// audit before the live BTW number is added to lib/content.ts.
+const BTW_PLACEHOLDER = "nog te registreren";
+const BTW_PLACEHOLDER_EN = "pending registration";
+
+const kvkLineNL = `KVK: ${SITE.kvk} · BTW: ${SITE.btw ?? BTW_PLACEHOLDER}`;
+const kvkLineEN = `KVK: ${SITE.kvk} · BTW: ${SITE.btw ?? BTW_PLACEHOLDER_EN}`;
 
 export const PRIVACY: Record<Locale, { title: string; updated: string; sections: LegalSection[] }> = {
   nl: {
@@ -11,9 +20,15 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
     updated: "Laatst bijgewerkt: " + new Date().toLocaleDateString("nl-NL", { year: "numeric", month: "long" }),
     sections: [
       {
+        heading: "Bedrijfsgegevens",
+        body: [
+          `Majorille Garden, ${SITE.address.street}, ${SITE.address.postalCity}, Nederland. ${kvkLineNL}. Contact: ${SITE.email} · ${SITE.phone}.`,
+        ],
+      },
+      {
         heading: "Wie wij zijn",
         body: [
-          "Majorille Garden is gevestigd aan Franz Zieglerstraat 201, 1087 HN Amsterdam. Voor vragen over deze privacyverklaring kunt u contact met ons opnemen via info@majorillegarden.nl of +31 6 4128 4643.",
+          `Majorille Garden is gevestigd aan ${SITE.address.street}, ${SITE.address.postalCity}. Voor vragen over deze privacyverklaring kunt u contact met ons opnemen via ${SITE.email} of ${SITE.phone}.`,
         ],
       },
       {
@@ -29,21 +44,35 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
         ],
       },
       {
+        heading: "Gegevensverwerkers",
+        body: [
+          "Wij delen je gegevens met de volgende verwerkers, die elk een verwerkersovereenkomst (DPA) hebben getekend conform AVG:",
+          "Vercel (hosting en serverless infrastructuur) — gevestigd in de Verenigde Staten. Overdracht is afgedekt door Standard Contractual Clauses (SCCs). DPA: vercel.com/legal/dpa.",
+          "Supabase (database, EU-regio) — gegevens worden opgeslagen binnen de EU. DPA: supabase.com/dpa.",
+          "Mollie (betalingsverwerker) — gevestigd in Nederland en volledig AVG-conform.",
+          "Cal.com (online afsprakenplanner) — gevestigd in de Verenigde Staten. Overdracht is afgedekt door SCCs. DPA: cal.com/legal.",
+          "Resend (transactionele e-mail) — gevestigd in de Verenigde Staten. Overdracht is afgedekt door SCCs. DPA: resend.com/legal/dpa.",
+          "Upstash (rate-limiting) — EU-regio (Frankfurt), AVG-conform.",
+        ],
+      },
+      {
         heading: "Hoe lang wij uw gegevens bewaren",
         body: [
-          "Contactberichten worden bewaard zolang dit relevant is voor de behandeling van uw vraag, met een maximum van 24 maanden. Nieuwsbriefinschrijvingen worden bewaard totdat u zich afmeldt.",
+          "Orderdata (bestellingen en betalingen) bewaren wij 7 jaar in verband met de Nederlandse fiscale bewaarplicht.",
+          "Contactberichten worden bewaard zolang dit relevant is voor de behandeling van uw vraag, met een maximum van 12 maanden.",
+          "Nieuwsbriefinschrijvingen worden bewaard totdat u zich afmeldt.",
         ],
       },
       {
         heading: "Uw rechten",
         body: [
-          "U heeft het recht om uw gegevens in te zien, te corrigeren of te laten verwijderen. Stuur hiervoor een e-mail naar info@majorillegarden.nl. U heeft ook het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl).",
+          `U heeft het recht om uw gegevens in te zien, te corrigeren of te laten verwijderen. Stuur hiervoor een e-mail naar ${SITE.email} — wij reageren binnen 30 dagen. U heeft ook het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl).`,
         ],
       },
       {
         heading: "Cookies",
         body: [
-          "Wij plaatsen alleen technische cookies die noodzakelijk zijn voor het functioneren van de website. Wij gebruiken geen tracking- of marketingcookies.",
+          "Wij plaatsen alleen technische cookies die noodzakelijk zijn voor het functioneren van de website. Wij gebruiken privacyvriendelijke analytics (Vercel Analytics en Speed Insights) zonder cookies. Bij het plannen van een afspraak of het afrekenen worden ook cookies geplaatst door Cal.com en Mollie binnen hun eigen embed of checkout — zie hun respectievelijke privacyverklaringen.",
         ],
       },
     ],
@@ -53,9 +82,15 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
     updated: "Last updated: " + new Date().toLocaleDateString("en-GB", { year: "numeric", month: "long" }),
     sections: [
       {
+        heading: "Company details",
+        body: [
+          `Majorille Garden, ${SITE.address.street}, ${SITE.address.postalCity}, Netherlands. ${kvkLineEN}. Contact: ${SITE.email} · ${SITE.phone}.`,
+        ],
+      },
+      {
         heading: "Who we are",
         body: [
-          "Majorille Garden is based at Franz Zieglerstraat 201, 1087 HN Amsterdam. For questions about this policy, contact us at info@majorillegarden.nl or +31 6 4128 4643.",
+          `Majorille Garden is based at ${SITE.address.street}, ${SITE.address.postalCity}. For questions about this policy, contact us at ${SITE.email} or ${SITE.phone}.`,
         ],
       },
       {
@@ -71,21 +106,35 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
         ],
       },
       {
+        heading: "Data processors",
+        body: [
+          "We share your data with the following sub-processors, each of whom has signed a Data Processing Agreement (DPA) compliant with the GDPR:",
+          "Vercel (hosting and serverless infrastructure) — based in the United States. Transfers are covered by Standard Contractual Clauses (SCCs). DPA: vercel.com/legal/dpa.",
+          "Supabase (database, EU region) — data is stored within the EU. DPA: supabase.com/dpa.",
+          "Mollie (payment processor) — based in the Netherlands and fully GDPR-compliant.",
+          "Cal.com (online appointment scheduling) — based in the United States. Transfers are covered by SCCs. DPA: cal.com/legal.",
+          "Resend (transactional email) — based in the United States. Transfers are covered by SCCs. DPA: resend.com/legal/dpa.",
+          "Upstash (rate-limiting) — EU region (Frankfurt), GDPR-compliant.",
+        ],
+      },
+      {
         heading: "Data retention",
         body: [
-          "Contact messages are kept while relevant to your inquiry, up to a maximum of 24 months. Newsletter subscriptions are kept until you unsubscribe.",
+          "Order data (purchases and payments) is retained for 7 years to comply with Dutch tax law.",
+          "Contact messages are kept while relevant to your inquiry, up to a maximum of 12 months.",
+          "Newsletter subscriptions are kept until you unsubscribe.",
         ],
       },
       {
         heading: "Your rights",
         body: [
-          "You have the right to access, correct, or delete your data. Email info@majorillegarden.nl to exercise these rights. You may also lodge a complaint with the Dutch Data Protection Authority (autoriteitpersoonsgegevens.nl).",
+          `You have the right to access, correct, or delete your data. Email ${SITE.email} to exercise these rights — we respond within 30 days. You may also lodge a complaint with the Dutch Data Protection Authority (autoriteitpersoonsgegevens.nl).`,
         ],
       },
       {
         heading: "Cookies",
         body: [
-          "We only set technical cookies necessary for the website to function. We do not use tracking or marketing cookies.",
+          "We only set technical cookies necessary for the website to function. We use privacy-friendly analytics (Vercel Analytics and Speed Insights) without cookies. When you schedule an appointment or check out, cookies are also set by Cal.com and Mollie inside their own embed or checkout — see their respective privacy policies.",
         ],
       },
     ],
@@ -98,9 +147,15 @@ export const TERMS: Record<Locale, { title: string; updated: string; sections: L
     updated: "Laatst bijgewerkt: " + new Date().toLocaleDateString("nl-NL", { year: "numeric", month: "long" }),
     sections: [
       {
+        heading: "Bedrijfsgegevens",
+        body: [
+          `Majorille Garden, ${SITE.address.street}, ${SITE.address.postalCity}, Nederland. ${kvkLineNL}. Contact: ${SITE.email} · ${SITE.phone}.`,
+        ],
+      },
+      {
         heading: "Toepasselijkheid",
         body: [
-          "Deze voorwaarden zijn van toepassing op alle behandelingen, producten en diensten van Majorille Garden, gevestigd aan Franz Zieglerstraat 201, 1087 HN Amsterdam.",
+          `Deze voorwaarden zijn van toepassing op alle behandelingen, producten en diensten van Majorille Garden, gevestigd aan ${SITE.address.street}, ${SITE.address.postalCity}.`,
         ],
       },
       {
@@ -135,9 +190,15 @@ export const TERMS: Record<Locale, { title: string; updated: string; sections: L
     updated: "Last updated: " + new Date().toLocaleDateString("en-GB", { year: "numeric", month: "long" }),
     sections: [
       {
+        heading: "Company details",
+        body: [
+          `Majorille Garden, ${SITE.address.street}, ${SITE.address.postalCity}, Netherlands. ${kvkLineEN}. Contact: ${SITE.email} · ${SITE.phone}.`,
+        ],
+      },
+      {
         heading: "Applicability",
         body: [
-          "These terms apply to all treatments, products, and services of Majorille Garden, located at Franz Zieglerstraat 201, 1087 HN Amsterdam.",
+          `These terms apply to all treatments, products, and services of Majorille Garden, located at ${SITE.address.street}, ${SITE.address.postalCity}.`,
         ],
       },
       {

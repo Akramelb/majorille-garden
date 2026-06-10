@@ -50,6 +50,8 @@ export function ContactForm({ dict }: { dict: Dict }) {
         <SubmitButton idle={dict.send} busy={dict.sending} />
         {state && (
           <p
+            role={state.ok ? "status" : "alert"}
+            aria-live={state.ok ? "polite" : "assertive"}
             className={state.ok ? "text-olive text-sm" : "text-terracotta text-sm"}
           >
             {state.ok ? dict.success : dict.error}
@@ -83,6 +85,7 @@ function Field({
         <textarea
           name={name}
           required={required}
+          aria-required={required || undefined}
           rows={5}
           className="w-full px-4 py-3 bg-cream border border-border text-deep-brown text-sm outline-none focus:border-deep-brown focus:ring-1 focus:ring-deep-brown resize-none"
         />
@@ -91,6 +94,7 @@ function Field({
           name={name}
           type={type}
           required={required}
+          aria-required={required || undefined}
           className="w-full px-4 py-3 bg-cream border border-border text-deep-brown text-sm outline-none focus:border-deep-brown focus:ring-1 focus:ring-deep-brown"
         />
       )}

@@ -8,6 +8,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LocalBusinessJsonLd } from "@/components/JsonLd";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { getAnnouncement } from "@/lib/site-settings";
 import { LOCALES, getDictionary, hasLocale } from "./dictionaries";
 
 const fraunces = Fraunces({
@@ -50,21 +52,32 @@ export default async function RootLayout(
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
+  const announcement = await getAnnouncement(lang);
 
   return (
     <html
       lang={lang}
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-cream text-deep-brown">
+      <body
+        className={`min-h-full flex flex-col bg-cream text-deep-brown${
+          announcement ? " has-announcement" : ""
+        }`}
+      >
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-brown focus:text-cream"
         >
           {lang === "nl" ? "Naar inhoud" : "Skip to content"}
         </a>
+        {announcement && <AnnouncementBar text={announcement} lang={lang} />}
         <Header locale={lang} nav={dict.nav} />
-        <main id="main" className="flex-1 pt-[76px] lg:pt-[88px]">{props.children}</main>
+        <main
+          id="main"
+          className="flex-1 pt-[calc(76px+var(--bar-h))] lg:pt-[calc(88px+var(--bar-h))]"
+        >
+          {props.children}
+        </main>
         <Footer locale={lang} dict={dict} />
         <CookieBanner locale={lang} />
         <LocalBusinessJsonLd locale={lang} />

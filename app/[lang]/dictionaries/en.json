@@ -82,13 +82,41 @@
     "byAppointment": "Treatments are by appointment, men-to-men & woman-to-woman.",
     "hoursTitle": "Opening hours",
     "hoursWomen": "Women: Monday–Sunday 10:00–20:00",
-    "hoursMen": "Men: Mon–Wed 09:00–20:00, Thu–Sun 09:00–12:30"
+    "hoursMen": "Men: Mon–Wed 09:00–20:00, Thu–Sun 09:00–12:30",
+    "payNow": "Book and pay",
+    "confirming": "Confirming payment…",
+    "paymentFailed": "Payment failed or cancelled.",
+    "retry": "Try again",
+    "afterPayment": "After payment you can pick a time below.",
+    "contactFields": {
+      "email": "Email",
+      "name": "Name",
+      "phone": "Phone (optional)"
+    }
   },
   "shop": {
     "title": "Our products",
     "subtitle": "Discover the natural therapy products of Majorille Garden, carefully composed to support your wellbeing.",
     "comingSoon": "Online payment is coming soon. For now, get in touch to order.",
-    "contactToOrder": "Contact to order"
+    "contactToOrder": "Contact to order",
+    "buyNow": "Buy now",
+    "checkout": {
+      "title": "Checkout",
+      "shippingTitle": "Shipping address",
+      "addressLine1": "Street and number",
+      "addressLine2": "Additional (optional)",
+      "postalCode": "Postal code",
+      "city": "City",
+      "country": "Country",
+      "countryNL": "Netherlands",
+      "pay": "Pay with Mollie",
+      "qty": "Quantity",
+      "summary": "Summary",
+      "nlOnly": "We currently only ship within the Netherlands."
+    },
+    "orderConfirmed": "Thank you! Your order has been received.",
+    "orderProcessing": "Processing payment…",
+    "orderFailed": "Payment failed."
   },
   "footer": {
     "tagline": "Moroccan wellness in the heart of Amsterdam.",

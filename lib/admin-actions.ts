@@ -3,8 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getAdminUser } from "./supabase/auth-server";
-import { getSupabaseServiceClient } from "./supabase";
+import { getSupabaseServiceClient, hasSupabaseConfig } from "./supabase";
+import { centsToEuroString, getMollieClient, hasMollieConfig } from "./mollie";
+import { getOrderById, updateOrder } from "./orders";
 import type { ReviewStatus } from "./reviews";
+import { setAnnouncement, setHeroImageUrl, type HeroSlot } from "./site-settings";
+
+const HERO_SLOTS = new Set<HeroSlot>(["home", "promo", "about"]);
+const HERO_BUCKET = "site-images";
+const HERO_MAX_BYTES = 10 * 1024 * 1024; // 10 MB — sharp-compressed JPGs fit comfortably
+const HERO_MIME_WHITELIST = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+]);
 
 function postFieldsFromForm(formData: FormData) {
   const str = (k: string) => String(formData.get(k) ?? "").trim();
@@ -170,6 +182,35 @@ export async function setReviewStatus(id: string, status: ReviewStatus) {
   return { ok: true, message: "updated" };
 }
 
+export async function refundOrder(
+  orderId: string,
+): Promise<{ ok: boolean; message?: string }> {
+  const user = await getAdminUser();
+  if (!user) return { ok: false, message: "unauthorized" };
+  if (!hasMollieConfig() || !hasSupabaseConfig()) {
+    return { ok: false, message: "payments-disabled" };
+  }
+  const order = await getOrderById(orderId);
+  if (!order || !order.mollie_payment_id) return { ok: false, message: "not-found" };
+  if (order.status !== "paid") return { ok: false, message: "not-refundable" };
+  try {
+    const mollie = getMollieClient();
+    await mollie.paymentRefunds.create({
+      paymentId: order.mollie_payment_id,
+      amount: {
+        value: centsToEuroString(order.amount_cents),
+        currency: order.currency,
+      },
+    });
+    await updateOrder(orderId, { status: "refunded" });
+    revalidatePath("/admin/orders");
+    return { ok: true };
+  } catch (err) {
+    console.error("refundOrder failed", err);
+    return { ok: false, message: "internal-error" };
+  }
+}
+
 export async function setPostPublished(id: string, published: boolean) {
   const user = await getAdminUser();
   if (!user) return { ok: false, message: "unauthorized" };
@@ -183,4 +224,156 @@ export async function setPostPublished(id: string, published: boolean) {
   revalidatePath("/nl/journal");
   revalidatePath("/en/journal");
   return { ok: true, message: "updated" };
+}
+
+// ────────────────────────────────────────────────────────────────
+// Hero image override — admin can swap the home/promo/about heroes
+// without touching the repo. Files land in the `site-images` Supabase
+// Storage bucket (public read); the URL is stored on the singleton
+// `site_settings` row. Consumers read via `getHeroImageUrl(slot)` and
+// fall back to the static `/public/images/...` path baked at build.
+
+export type HeroUploadResult = {
+  ok: boolean;
+  message: string;
+} | null;
+
+export async function uploadHeroImage(
+  _prev: HeroUploadResult,
+  formData: FormData,
+): Promise<HeroUploadResult> {
+  const user = await getAdminUser();
+  if (!user) return { ok: false, message: "unauthorized" };
+
+  const slotRaw = String(formData.get("slot") ?? "");
+  const file = formData.get("file");
+  if (!HERO_SLOTS.has(slotRaw as HeroSlot)) {
+    return { ok: false, message: "invalid-slot" };
+  }
+  if (!(file instanceof File) || file.size === 0) {
+    return { ok: false, message: "no-file" };
+  }
+  if (file.size > HERO_MAX_BYTES) {
+    return { ok: false, message: "file-too-large" };
+  }
+  if (!HERO_MIME_WHITELIST.has(file.type)) {
+    return { ok: false, message: "invalid-type" };
+  }
+  if (!hasSupabaseConfig()) {
+    return { ok: false, message: "supabase-not-configured" };
+  }
+
+  const slot = slotRaw as HeroSlot;
+  // Cache-buster in the path so a re-upload to the same slot immediately
+  // wins; the old object lingers in the bucket but next/image won't fetch
+  // it (the DB row points at the new URL). Periodic cleanup is fine.
+  const extFromName = file.name.split(".").pop()?.toLowerCase() ?? "";
+  const ext =
+    file.type === "image/png"
+      ? "png"
+      : file.type === "image/webp"
+        ? "webp"
+        : extFromName === "png" || extFromName === "webp"
+          ? extFromName
+          : "jpg";
+  const objectPath = `heroes/${slot}-${Date.now()}.${ext}`;
+
+  try {
+    const sb = getSupabaseServiceClient();
+    const arrayBuffer = await file.arrayBuffer();
+    const { error: uploadErr } = await sb.storage
+      .from(HERO_BUCKET)
+      .upload(objectPath, arrayBuffer, {
+        contentType: file.type,
+        cacheControl: "31536000",
+        upsert: false,
+      });
+    if (uploadErr) {
+      console.error("[hero-upload] storage upload failed", uploadErr);
+      return { ok: false, message: uploadErr.message };
+    }
+    const { data: publicUrlData } = sb.storage
+      .from(HERO_BUCKET)
+      .getPublicUrl(objectPath);
+    const url = publicUrlData.publicUrl;
+
+    const saved = await setHeroImageUrl(slot, url);
+    if (!saved) {
+      return { ok: false, message: "settings-write-failed" };
+    }
+
+    revalidatePath("/admin/images");
+    revalidatePath("/nl");
+    revalidatePath("/en");
+    revalidatePath("/nl/about");
+    revalidatePath("/en/about");
+
+    return { ok: true, message: "uploaded" };
+  } catch (err) {
+    console.error("[hero-upload] threw", err);
+    return { ok: false, message: "internal-error" };
+  }
+}
+
+// ────────────────────────────────────────────────────────────────
+// Announcement bar — scrolling top bar with admin-editable middle slot.
+// Phone + email are pulled from SITE constants (rarely change); the slot
+// in the middle is whatever the parents type in /admin/banner.
+
+export type AnnouncementResult = {
+  ok: boolean;
+  message: string;
+} | null;
+
+export async function updateAnnouncement(
+  _prev: AnnouncementResult,
+  formData: FormData,
+): Promise<AnnouncementResult> {
+  const user = await getAdminUser();
+  if (!user) return { ok: false, message: "unauthorized" };
+
+  const enabled = formData.get("enabled") === "on";
+  const textNl = String(formData.get("text_nl") ?? "").trim() || null;
+  const textEn = String(formData.get("text_en") ?? "").trim() || null;
+
+  // Both languages must be present if the bar is enabled — otherwise visitors
+  // in the missing locale get a blank center slot. We allow turning it on
+  // with only NL filled if you really want, but reject completely empty.
+  if (enabled && !textNl && !textEn) {
+    return { ok: false, message: "missing-text" };
+  }
+  if ((textNl && textNl.length > 200) || (textEn && textEn.length > 200)) {
+    return { ok: false, message: "too-long" };
+  }
+
+  const saved = await setAnnouncement({ enabled, textNl, textEn });
+  if (!saved) return { ok: false, message: "settings-write-failed" };
+
+  // Bust both locales' layouts — the bar's mount lives in app/[lang]/layout.tsx
+  // so a tag-level revalidate is overkill; per-path is enough.
+  revalidatePath("/admin/banner");
+  revalidatePath("/nl", "layout");
+  revalidatePath("/en", "layout");
+
+  return { ok: true, message: "saved" };
+}
+
+export async function clearHeroImage(
+  _prev: HeroUploadResult,
+  formData: FormData,
+): Promise<HeroUploadResult> {
+  const user = await getAdminUser();
+  if (!user) return { ok: false, message: "unauthorized" };
+  const slotRaw = String(formData.get("slot") ?? "");
+  if (!HERO_SLOTS.has(slotRaw as HeroSlot)) {
+    return { ok: false, message: "invalid-slot" };
+  }
+  const saved = await setHeroImageUrl(slotRaw as HeroSlot, null);
+  if (!saved) return { ok: false, message: "settings-write-failed" };
+  revalidatePath("/admin/images");
+  revalidatePath("/nl");
+  revalidatePath("/en");
+  revalidatePath("/nl/about");
+  revalidatePath("/en/about");
+  return { ok: true, message: "cleared" };
 }

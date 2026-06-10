@@ -65,19 +65,22 @@ export function NewsletterForm({
           type="email"
           name="email"
           required
+          aria-required="true"
           placeholder={dict.placeholder}
           aria-label={dict.placeholder}
           className={clsx(
             "min-w-0 flex-1 px-4 py-3 text-sm border outline-none focus:ring-1",
             variant === "dark"
               ? "w-full bg-deep-brown border-cream/20 text-cream placeholder:text-cream/40 focus:border-terracotta focus:ring-terracotta"
-              : "bg-cream border-border text-deep-brown placeholder:text-muted/60 focus:border-deep-brown focus:ring-deep-brown",
+              : "bg-cream border-border text-deep-brown placeholder:text-muted focus:border-deep-brown focus:ring-deep-brown",
           )}
         />
         <SubmitButton label={dict.subscribe} variant={variant} />
       </div>
       {state && (
         <p
+          role={state.ok ? "status" : "alert"}
+          aria-live={state.ok ? "polite" : "assertive"}
           className={clsx(
             "mt-3 text-xs",
             state.ok

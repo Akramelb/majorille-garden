@@ -56,7 +56,14 @@ export async function getAdminUser(): Promise<User | null> {
   } = await supabase.auth.getUser();
   if (!user?.email) return null;
   const allow = adminAllowlist();
-  // If no allowlist is set, any authenticated user is allowed (dev convenience).
-  if (allow.length && !allow.includes(user.email.toLowerCase())) return null;
+  if (allow.length === 0) {
+    // Fail-closed in production — a missing ADMIN_EMAILS env var must NOT
+    // implicitly grant admin to any authenticated user. Only in non-production
+    // (Vercel preview, local dev) do we fall back to "any signed-in user is
+    // admin" for development convenience.
+    if (process.env.VERCEL_ENV === "production") return null;
+    return user;
+  }
+  if (!allow.includes(user.email.toLowerCase())) return null;
   return user;
 }

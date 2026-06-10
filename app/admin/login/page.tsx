@@ -7,7 +7,7 @@ import { LoginForm } from "./LoginForm";
 // a Suspense boundary to coexist with prerendering.
 export default function AdminLogin() {
   return (
-    <section className="min-h-screen flex items-center justify-center py-20">
+    <main className="min-h-screen flex items-center justify-center py-20">
       <Container size="sm">
         <div className="text-center mb-10">
           <p className="text-xs uppercase tracking-[0.32em] text-terracotta">
@@ -28,6 +28,6 @@ export default function AdminLogin() {
           </Link>
         </p>
       </Container>
-    </section>
+    </main>
   );
 }

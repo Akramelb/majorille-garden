@@ -44,3 +44,13 @@ next-env.d.ts
 
 # Claude Code local-only settings (keep shared settings.json + skills tracked)
 .claude/settings.local.json
+
+# Local source assets & sensitive business files — never publish to the repo
+# (invoices, signed backups, installers, marketing docs, raw source photos)
+/majorille pictures/
+# Local backup of the un-blurred about-hero original (privacy — keep off GitHub)
+/image-backups/
+# Scratch / contact-sheet images generated while editing photos
+/sheet_*.png
+/cand_*.png
+/grid_*.png

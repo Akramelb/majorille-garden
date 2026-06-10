@@ -1,5 +1,28 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+
+// Inline Instagram glyph — lucide-react stripped brand icons in v0.300+, so we
+// ship the SVG ourselves. Sized at 14×14 to match the lucide icons next to it.
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
 import { SITE, localized } from "@/lib/content";
 import type { Locale, Dictionary } from "@/app/[lang]/dictionaries";
 import { NewsletterForm } from "../sections/NewsletterForm";
@@ -133,6 +156,22 @@ export function Footer({
                 {SITE.email}
               </a>
             </div>
+            {SITE.socials.instagram && (
+              <div className="flex items-center gap-2">
+                <InstagramIcon className="text-terracotta shrink-0" />
+                <a
+                  href={SITE.socials.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-terracotta transition"
+                >
+                  @majorillegarden
+                </a>
+              </div>
+            )}
+            <div className="text-xs text-cream/70 pt-2">
+              KVK: {SITE.kvk} · BTW: {SITE.btw ?? "—"}
+            </div>
           </address>
         </div>
 
@@ -168,7 +207,7 @@ export function Footer({
       </div>
 
       <div className="border-t border-cream/10">
-        <div className="mx-auto w-full max-w-7xl container-px py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-cream/50">
+        <div className="mx-auto w-full max-w-7xl container-px py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-cream/70">
           <p>{t.copyright.replace("{year}", String(new Date().getFullYear()))}</p>
           <div className="flex items-center gap-5">
             <Link

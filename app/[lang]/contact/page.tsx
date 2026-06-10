@@ -112,7 +112,11 @@ export default async function ContactPage(
             <div className="relative mt-12 aspect-[5/4] hidden lg:block">
               <Image
                 src="/images/contact/location.jpg"
-                alt="Majorille Garden — locatie"
+                alt={
+                  lang === "nl"
+                    ? "Locatie van Majorille Garden in Amsterdam"
+                    : "Location of Majorille Garden in Amsterdam"
+                }
                 fill
                 sizes="(min-width:1024px) 45vw, 100vw"
                 className="object-cover"

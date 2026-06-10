@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      lang="nl"
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-cream text-deep-brown">{children}</body>

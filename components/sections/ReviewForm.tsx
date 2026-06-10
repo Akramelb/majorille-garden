@@ -13,6 +13,9 @@ const COPY: Record<Locale, Record<string, string>> = {
     title: "Deel uw ervaring",
     subtitle: "Laat een review achter — na goedkeuring verschijnt deze op de site.",
     name: "Naam",
+    email: "E-mail (optioneel)",
+    emailHint: "Voor een bevestiging — niet zichtbaar op de site.",
+    invalidEmail: "Vul een geldig e-mailadres in.",
     rating: "Beoordeling",
     treatment: "Behandeling (optioneel)",
     none: "Algemeen",
@@ -26,6 +29,9 @@ const COPY: Record<Locale, Record<string, string>> = {
     title: "Share your experience",
     subtitle: "Leave a review — it appears on the site once approved.",
     name: "Name",
+    email: "Email (optional)",
+    emailHint: "For a confirmation — never shown publicly.",
+    invalidEmail: "Please enter a valid email address.",
     rating: "Rating",
     treatment: "Treatment (optional)",
     none: "General",
@@ -85,6 +91,7 @@ export function ReviewForm({ locale }: { locale: Locale }) {
           <input
             name="author_name"
             required
+            aria-required="true"
             className="w-full px-4 py-3 bg-cream border border-border text-deep-brown text-sm outline-none focus:border-deep-brown focus:ring-1 focus:ring-deep-brown"
           />
         </label>
@@ -106,6 +113,20 @@ export function ReviewForm({ locale }: { locale: Locale }) {
           </select>
         </label>
       </div>
+
+      <label className="block">
+        <span className="block text-xs uppercase tracking-[0.18em] text-muted mb-2">
+          {t.email}
+        </span>
+        <input
+          type="email"
+          name="author_email"
+          autoComplete="email"
+          inputMode="email"
+          className="w-full px-4 py-3 bg-cream border border-border text-deep-brown text-sm outline-none focus:border-deep-brown focus:ring-1 focus:ring-deep-brown"
+        />
+        <span className="mt-1 block text-xs text-muted">{t.emailHint}</span>
+      </label>
 
       <div>
         <span className="block text-xs uppercase tracking-[0.18em] text-muted mb-2">
@@ -147,6 +168,7 @@ export function ReviewForm({ locale }: { locale: Locale }) {
         <textarea
           name="body"
           required
+          aria-required="true"
           rows={4}
           className="w-full px-4 py-3 bg-cream border border-border text-deep-brown text-sm outline-none focus:border-deep-brown focus:ring-1 focus:ring-deep-brown resize-none"
         />
@@ -155,7 +177,9 @@ export function ReviewForm({ locale }: { locale: Locale }) {
       <div className="flex items-center gap-4">
         <SubmitButton idle={t.submit} busy={t.sending} />
         {state && !state.ok && (
-          <p className="text-terracotta text-sm">{t.error}</p>
+          <p role="alert" aria-live="assertive" className="text-terracotta text-sm">
+            {state.message === "invalid-email" ? t.invalidEmail : t.error}
+          </p>
         )}
       </div>
     </form>

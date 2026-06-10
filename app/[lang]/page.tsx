@@ -12,6 +12,7 @@ import {
   formatPriceEUR,
 } from "@/lib/content";
 import { getActiveFAQs } from "@/lib/faqs";
+import { getHeroImageUrl } from "@/lib/site-settings";
 import { Container, Eyebrow } from "@/components/ui/Container";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { ContactForm } from "@/components/sections/ContactForm";
@@ -20,6 +21,7 @@ import { buildMetadata } from "@/lib/seo";
 import { getApprovedReviews, getReviewStats } from "@/lib/reviews";
 import { ReviewsList } from "@/components/sections/ReviewsList";
 import { StarRating } from "@/components/sections/StarRating";
+import { FAQJsonLd } from "@/components/JsonLd";
 
 export async function generateMetadata(
   props: PageProps<"/[lang]">,
@@ -44,23 +46,31 @@ export default async function Home(props: PageProps<"/[lang]">) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const [reviews, stats, faqs] = await Promise.all([
+  const [reviews, stats, faqs, heroHome, heroAbout] = await Promise.all([
     getApprovedReviews(3),
     getReviewStats(),
     getActiveFAQs(),
+    getHeroImageUrl("home"),
+    getHeroImageUrl("about"),
   ]);
 
   return (
     <>
+      <FAQJsonLd faqs={faqs} locale={lang} />
       {/* HERO — full-bleed image, copy overlaid */}
-      <section className="relative -mt-[76px] lg:-mt-[88px] h-[100svh] min-h-[560px] sm:min-h-[640px] w-full overflow-hidden">
+      <section className="relative -mt-[calc(76px+var(--bar-h))] lg:-mt-[calc(88px+var(--bar-h))] h-[100svh] min-h-[560px] sm:min-h-[640px] w-full overflow-hidden">
         <Image
-          src="/images/home/hero.jpg"
-          alt="A woman in white tosses arcs of warm Saharan sand at sunset"
+          src={heroHome}
+          alt={
+            lang === "nl"
+              ? "Een vrouw in het wit werpt bogen van warm Saharazand op tijdens zonsondergang"
+              : "A woman in white tosses arcs of warm Saharan sand at sunset"
+          }
           fill
           priority
           sizes="100vw"
           className="object-cover"
+          unoptimized={heroHome.startsWith("http")}
         />
         {/* Gradients: top for header legibility, bottom for copy legibility */}
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-deep-brown/55 to-transparent" />
@@ -177,8 +187,13 @@ export default async function Home(props: PageProps<"/[lang]">) {
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             <div className="lg:col-span-6 relative aspect-[4/5] order-2 lg:order-1">
               <Image
-                src="/images/about/hero.png"
-                alt="Majorille Garden interior"
+                src={heroAbout}
+                alt={
+                  lang === "nl"
+                    ? "Interieur van Majorille Garden — sereen Marokkaans-geïnspireerd"
+                    : "Interior of Majorille Garden — serene Moroccan-inspired space"
+                }
+                unoptimized={heroAbout.startsWith("http")}
                 fill
                 sizes="(min-width:1024px) 45vw, 100vw"
                 className="object-cover"

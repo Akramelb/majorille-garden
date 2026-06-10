@@ -7,6 +7,10 @@ export type ServiceVariant = {
   label: LocalizedString;
   durationMin: number;
   priceCents: number;
+  /** Optional one-line description rendered under the duration on the service
+   *  detail page. Kept short — a single sentence — so the pricing table stays
+   *  scannable. Leave undefined to fall back to just label + duration. */
+  description?: LocalizedString;
 };
 
 export type Service = {
@@ -86,6 +90,18 @@ export const SITE = {
   // Cal.com username. Set NEXT_PUBLIC_CAL_USERNAME in your environment.
   calUsername: process.env.NEXT_PUBLIC_CAL_USERNAME ?? "",
   bookingConfigured: Boolean(process.env.NEXT_PUBLIC_CAL_USERNAME),
+  // Bedrijfsgegevens — referenced from the footer and legal pages.
+  // KVK is the Kamer van Koophandel (Dutch chamber of commerce) registration.
+  // BTW is the Dutch VAT id; null until Akram registers — render the placeholder.
+  kvk: "88316602",
+  btw: "NL004580120B16" as string | null,
+  // Social profiles — surfaced in the footer and in LocalBusiness JSON-LD's
+  // `sameAs` (helps Google link the website to the same real-world business).
+  // Add more entries here when they exist; the schema reads whichever keys
+  // are non-empty strings.
+  socials: {
+    instagram: "https://www.instagram.com/majorillegarden/",
+  } as const,
 } as const;
 
 /**
@@ -231,12 +247,20 @@ export const SERVICES: Service[] = [
       {
         label: { nl: "Korte sessie", en: "Short session" },
         durationMin: 30,
-        priceCents: 5500,
+        priceCents: 4000,
+        description: {
+          nl: "Een gerichte massage met traditionele Marokkaanse oliën — ideaal voor het verlichten van spanning in schouders, nek en rug.",
+          en: "A focused massage with traditional Moroccan oils — ideal for releasing tension in the shoulders, neck and back.",
+        },
       },
       {
         label: { nl: "Volledige sessie", en: "Full session" },
         durationMin: 60,
-        priceCents: 9100,
+        priceCents: 7000,
+        description: {
+          nl: "Een complete lichaamsmassage met warme arganolie, langzame Marokkaanse strijkbewegingen en verfijnde drukpunttechnieken voor diepe ontspanning.",
+          en: "A complete full-body massage with warm argan oil, slow Moroccan strokes and refined pressure-point techniques for deep relaxation.",
+        },
       },
     ],
     bookingSlug: "traditional-massage",
@@ -308,12 +332,20 @@ export const SERVICES: Service[] = [
           en: "Majorille Signature Headspa",
         },
         durationMin: 60,
-        priceCents: 5500,
+        priceCents: 4500,
+        description: {
+          nl: "Een gepersonaliseerd ritueel met hoofdhuidanalyse, milde detox, warme oliebehandeling, stoomtherapie en onze signature hoofdmassage.",
+          en: "A personalised ritual with scalp analysis, gentle detox, a warm oil treatment, steam therapy, and our signature head massage.",
+        },
       },
       {
         label: { nl: "Majorille Deluxe Ritual", en: "Majorille Deluxe Ritual" },
         durationMin: 90,
-        priceCents: 9100,
+        priceCents: 7500,
+        description: {
+          nl: "Verdiepte verzorging met verlengde signature massage, een diep voedend masker en intensieve hoofd- en nekontspanningsmassage.",
+          en: "A deeper ritual with our extended signature massage, a deeply nourishing mask, and an intensive head and neck relaxation massage.",
+        },
       },
       {
         label: {
@@ -321,7 +353,11 @@ export const SERVICES: Service[] = [
           en: "Royal Garden Experience",
         },
         durationMin: 120,
-        priceCents: 10900,
+        priceCents: 9000,
+        description: {
+          nl: "Onze meest exclusieve behandeling: volledige detox, premium haartherapie, uitgebreide ontspanningsmassage en een complete hoofd-, nek- en schouderbehandeling — de ultieme wellnessbeleving.",
+          en: "Our most exclusive treatment: full detox, premium hair therapy, an extended relaxation massage, and a complete head, neck and shoulder ritual — the ultimate wellness experience.",
+        },
       },
     ],
     bookingSlug: "bio-head-spa",
@@ -474,12 +510,20 @@ export const SERVICES: Service[] = [
       {
         label: { nl: "Korte sessie", en: "Short session" },
         durationMin: 30,
-        priceCents: 3700,
+        priceCents: 5000,
+        description: {
+          nl: "Verwarmde kruidenstempels met arganolie en Marokkaanse kruiden glijden over rug en schouders — kort maar verkwikkend.",
+          en: "Warm herbal stamps with argan oil and Moroccan herbs glide over the back and shoulders — short but invigorating.",
+        },
       },
       {
         label: { nl: "Volledige sessie", en: "Full session" },
         durationMin: 60,
-        priceCents: 7300,
+        priceCents: 8500,
+        description: {
+          nl: "Een volledige behandeling waarbij verwarmde kruidenstempels het gehele lichaam masseren — een diep ontspannende combinatie van warmte, geur en gerichte drukpunten.",
+          en: "A full ritual where warm herbal stamps work across the entire body — a deeply relaxing blend of heat, aroma and targeted pressure.",
+        },
       },
     ],
     bookingSlug: "herbal-stamp-massage",
@@ -854,7 +898,7 @@ export const ABOUT = {
           "Our products are organic and free from chemicals — made traditionally and by hand, straight from the source. We want everyone to have access to truly organic essentials, like argan oil that nurtures lasting skin and hair. In our shop we offer natural treatments alongside the products, recipes, and the guidance to use them well.",
         ],
       } as LocalizedRichText,
-      image: "/images/about/diensten.jpg",
+      image: "/images/about/producten.jpg",
     },
     {
       title: { nl: "Onze diensten", en: "Our treatments" } as LocalizedString,
@@ -866,7 +910,7 @@ export const ABOUT = {
           "These natural, traditional treatments are rooted in the deserts of Morocco. At Majorille Garden we bring the same rhythms and rituals to Amsterdam — performed with our own organic products in a luxurious, comfortable setting. A tribute to traditional Moroccan rituals, designed to bring body and mind into harmony.",
         ],
       } as LocalizedRichText,
-      image: "/images/about/filosofie.jpg",
+      image: "/images/about/behandeling.jpg",
     },
     {
       title: { nl: "Onze filosofie", en: "Our philosophy" } as LocalizedString,

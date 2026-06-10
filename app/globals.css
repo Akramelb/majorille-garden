@@ -32,6 +32,42 @@
 }
 
 @layer base {
+  /* Announcement bar height — drives the top offset of Header and the
+     negative margin on hero sections so toggling the bar in admin doesn't
+     misalign anything. `0px` (not `0`) is intentional — calc() in Tailwind
+     arbitrary values needs the unit to type-coerce correctly. */
+  :root {
+    --bar-h: 0px;
+  }
+  body.has-announcement {
+    --bar-h: 36px;
+  }
+
+  /* Marquee animation for the announcement bar — content duplicates twice
+     inside the wrapper; we translate by -50% so the duplicate slides into
+     place exactly where the original started, producing a seamless loop.
+     Hover pauses for accessibility (reading without head-tracking). */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 38s linear infinite;
+  }
+  .animate-marquee:hover,
+  .animate-marquee:focus-within {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+
   html {
     scroll-behavior: smooth;
     /* Kills horizontal scrolling on mobile caused by any precision overflow

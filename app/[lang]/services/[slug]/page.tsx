@@ -33,6 +33,7 @@ export async function generateMetadata(
     path: `/services/${slug}`,
     title: `${name} · Majorille Garden`,
     description: tagline,
+    image: service.heroImage,
   });
 }
 
@@ -103,18 +104,23 @@ export default async function ServicePage(
                   {service.variants.map((v, i) => (
                     <li
                       key={i}
-                      className="flex items-center justify-between py-3"
+                      className="flex items-start justify-between gap-4 py-4"
                     >
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <p className="serif text-lg text-deep-brown">
                           {localized(v.label, lang)}
                         </p>
-                        <p className="text-xs text-muted">
+                        <p className="text-xs text-muted mt-0.5">
                           {v.durationMin} {dict.servicesSection.minutes} ·{" "}
                           {dict.servicesSection.incl}
                         </p>
+                        {v.description && (
+                          <p className="mt-2 text-sm text-muted leading-relaxed">
+                            {localized(v.description, lang)}
+                          </p>
+                        )}
                       </div>
-                      <p className="serif text-2xl text-deep-brown">
+                      <p className="serif text-2xl text-deep-brown shrink-0">
                         {formatPriceEUR(v.priceCents, lang)}
                       </p>
                     </li>
@@ -132,7 +138,11 @@ export default async function ServicePage(
             <div className="relative aspect-[4/5] lg:aspect-[3/4]">
               <Image
                 src={service.heroImage}
-                alt={localized(service.name, lang)}
+                alt={
+                  lang === "nl"
+                    ? `${localized(service.name, lang)} — sfeerbeeld van de behandeling bij Majorille Garden`
+                    : `${localized(service.name, lang)} — atmosphere of the treatment at Majorille Garden`
+                }
                 fill
                 priority
                 sizes="(min-width:1024px) 50vw, 100vw"
@@ -206,7 +216,11 @@ export default async function ServicePage(
                 >
                   <Image
                     src={src}
-                    alt={`${localized(service.name, lang)} — ${i + 1}`}
+                    alt={
+                      lang === "nl"
+                        ? `Indruk van ${localized(service.name, lang)} bij Majorille Garden — beeld ${i + 1}`
+                        : `Impression of ${localized(service.name, lang)} at Majorille Garden — image ${i + 1}`
+                    }
                     fill
                     sizes="(min-width:1024px) 25vw, 50vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -1,7 +1,15 @@
 "use server";
 
 import { getSupabaseServiceClient, hasSupabaseConfig } from "./supabase";
-import { contactNotificationHtml, sendOwnerEmail } from "./email";
+import {
+  contactAckHtml,
+  contactNotificationHtml,
+  reviewAckHtml,
+  sendCustomerEmail,
+  sendOwnerEmail,
+} from "./email";
+import { SITE } from "./content";
+import { checkRateLimit } from "./ratelimit";
 
 export type FormState = {
   ok: boolean;
@@ -10,6 +18,31 @@ export type FormState = {
 
 function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+/**
+ * Per-field length cap. Stops oversize values from sneaking through even when
+ * the overall request stays under the 100kb body-size limit configured in
+ * next.config.ts. Returns true when the value exceeds `max` characters.
+ */
+function tooLong(value: string, max: number): boolean {
+  return value.length > max;
+}
+
+/**
+ * Mask an email for log output — keeps domain + first/last local-part char,
+ * stars out the middle. Use in `console.warn` payloads so we never persist
+ * full PII to platform logs. Local to this file because "use server" exports
+ * must all be async; `lib/orders.ts` carries its own copy.
+ */
+function maskEmail(e: string): string {
+  if (!e || !e.includes("@")) return "<no-email>";
+  const [user, domain] = e.split("@");
+  const u =
+    user.length <= 2
+      ? user[0] + "*"
+      : user[0] + "*".repeat(user.length - 2) + user[user.length - 1];
+  return `${u}@${domain}`;
 }
 
 export async function submitReview(
@@ -21,16 +54,26 @@ export async function submitReview(
   const body = String(formData.get("body") ?? "").trim();
   const serviceSlug = String(formData.get("service_slug") ?? "").trim() || null;
   const locale = String(formData.get("locale") ?? "nl");
+  // Optional — only used to send the "thanks, we'll review and publish" ack.
+  // Not persisted to the reviews table (no column for it today, no schema
+  // change requested). If the customer provides it, they get a confirmation.
+  const authorEmail = String(formData.get("author_email") ?? "").trim();
   const honeypot = String(formData.get("hp") ?? "");
   if (honeypot) return { ok: true, message: "ok" };
   if (!author || !body || rating < 1 || rating > 5) {
     return { ok: false, message: "missing-fields" };
   }
+  if (tooLong(author, 120) || tooLong(body, 2000)) {
+    return { ok: false, message: "too-long" };
+  }
+  if (authorEmail && (!isEmail(authorEmail) || tooLong(authorEmail, 200))) {
+    return { ok: false, message: "invalid-email" };
+  }
+  const rl = await checkRateLimit("review");
+  if (!rl.ok) return { ok: false, message: "rate-limited" };
   if (!hasSupabaseConfig()) {
-    console.warn("[review] Supabase not configured — discarded:", {
-      author,
+    console.warn("[review] Supabase not configured — submission discarded", {
       rating,
-      body,
     });
     return { ok: true, message: "logged" };
   }
@@ -46,6 +89,21 @@ export async function submitReview(
   if (error) {
     console.error("[review] insert failed", error);
     return { ok: false, message: "supabase-failed" };
+  }
+  // Fire-and-forget customer ack when an email was supplied. Reply lands in
+  // the parents' inbox via reply_to: SITE.email.
+  if (authorEmail) {
+    const lang: "nl" | "en" = locale === "en" ? "en" : "nl";
+    void sendCustomerEmail({
+      to: authorEmail,
+      subject:
+        lang === "nl"
+          ? "Bedankt voor je review — Majorille Garden"
+          : "Thanks for your review — Majorille Garden",
+      html: reviewAckHtml({ name: author, lang }),
+      replyTo: SITE.email,
+      logKind: "other",
+    });
   }
   return { ok: true, message: "submitted" };
 }
@@ -66,17 +124,45 @@ export async function submitContact(
   if (!isEmail(email)) {
     return { ok: false, message: "invalid-email" };
   }
-  // Fire-and-forget email notification (no-op without RESEND_API_KEY + NOTIFY_TO)
+  if (
+    tooLong(name, 120) ||
+    tooLong(email, 200) ||
+    tooLong(phone, 40) ||
+    tooLong(message, 4000)
+  ) {
+    return { ok: false, message: "too-long" };
+  }
+  const rl = await checkRateLimit("contact");
+  if (!rl.ok) return { ok: false, message: "rate-limited" };
+  // Owner notification — fire-and-forget (no-op without RESEND_API_KEY + NOTIFY_TO).
+  // replyTo set so Reply in the parents' inbox goes straight to the customer.
   void sendOwnerEmail({
     subject: `Contact: ${name}`,
     html: contactNotificationHtml({ name, email, phone, message }),
     replyTo: email,
   });
+  // Customer-side ack — short, warm, NL/EN. Reply lands in parents' inbox
+  // via reply_to: SITE.email. logKind: "other" — matches the email_log
+  // check constraint without needing a schema change.
+  {
+    const langHeader = String(formData.get("locale") ?? "nl");
+    const ackLang: "nl" | "en" = langHeader === "en" ? "en" : "nl";
+    void sendCustomerEmail({
+      to: email,
+      subject:
+        ackLang === "nl"
+          ? "We hebben je bericht ontvangen — Majorille Garden"
+          : "We've received your message — Majorille Garden",
+      html: contactAckHtml({ name, lang: ackLang, message }),
+      replyTo: SITE.email,
+      logKind: "other",
+    });
+  }
 
   if (!hasSupabaseConfig()) {
     console.warn(
-      "[contact] Supabase not configured — submission discarded:",
-      { name, email, phone, message },
+      "[contact] Supabase not configured — submission discarded",
+      { email: maskEmail(email) },
     );
     return { ok: true, message: "logged" };
   }
@@ -100,10 +186,13 @@ export async function subscribeNewsletter(
 ): Promise<FormState> {
   const email = String(formData.get("email") ?? "").trim();
   if (!isEmail(email)) return { ok: false, message: "invalid-email" };
+  if (tooLong(email, 200)) return { ok: false, message: "too-long" };
+  const rl = await checkRateLimit("newsletter");
+  if (!rl.ok) return { ok: false, message: "rate-limited" };
   if (!hasSupabaseConfig()) {
     console.warn(
-      "[newsletter] Supabase not configured — email discarded:",
-      email,
+      "[newsletter] Supabase not configured — email discarded",
+      { email: maskEmail(email) },
     );
     return { ok: true, message: "logged" };
   }

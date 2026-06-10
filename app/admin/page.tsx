@@ -1,28 +1,15 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
   Inbox,
   Mail,
   Star as StarIcon,
   BookOpen,
-  ExternalLink,
-  ArrowUpRight,
-  Activity,
-  GitCommit,
-  Sparkles,
 } from "lucide-react";
 import { getAdminUser } from "@/lib/supabase/auth-server";
 import { getSupabaseServiceClient, hasSupabaseConfig } from "@/lib/supabase";
 import { getReviewStats, getReviewsByStatus } from "@/lib/reviews";
 import { getAllPosts } from "@/lib/blog";
-import {
-  getRecentDeployments,
-  hasVercelApiToken,
-  vercelDashboardUrls,
-  type DeploymentSummary,
-} from "@/lib/vercel";
 import { AdminShell, AdminPage } from "@/components/admin/AdminShell";
-import { StarRating } from "@/components/sections/StarRating";
 
 export const dynamic = "force-dynamic";
 
@@ -61,11 +48,10 @@ export default async function AdminDashboard() {
     subs = (s.data as SubRow[]) ?? [];
   }
 
-  const [reviewStats, pendingReviews, posts, deployments] = await Promise.all([
+  const [reviewStats, pendingReviews, posts] = await Promise.all([
     getReviewStats(),
     getReviewsByStatus("pending", 1),
     getAllPosts(),
-    getRecentDeployments(5),
   ]);
 
   const unreadCount = contacts.filter((c) => !c.read).length;
@@ -124,47 +110,6 @@ export default async function AdminDashboard() {
           />
         </section>
 
-        {/* Vercel — site health */}
-        <section className="mb-12">
-          <SectionHeader
-            title="Site & performance"
-            kicker="Vercel"
-            cta={
-              <a
-                href={vercelDashboardUrls.overview}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs uppercase tracking-[0.2em] text-deep-brown hover:text-terracotta inline-flex items-center gap-1"
-              >
-                Projectoverzicht <ExternalLink size={11} />
-              </a>
-            }
-          />
-
-          <div className="grid lg:grid-cols-3 gap-4">
-            <VercelLinkCard
-              icon={<Activity size={16} />}
-              label="Web Analytics"
-              caption="Bezoekers, pageviews, herkomst"
-              href={vercelDashboardUrls.analytics}
-            />
-            <VercelLinkCard
-              icon={<Sparkles size={16} />}
-              label="Speed Insights"
-              caption="Core Web Vitals: LCP, CLS, INP"
-              href={vercelDashboardUrls.speedInsights}
-            />
-            <VercelLinkCard
-              icon={<GitCommit size={16} />}
-              label="Logs & deploys"
-              caption="Runtime errors + edge logs"
-              href={vercelDashboardUrls.logs}
-            />
-          </div>
-
-          <DeploymentsBlock deployments={deployments} hasToken={hasVercelApiToken()} />
-        </section>
-
         {/* Recent contact submissions */}
         <section className="mb-12">
           <SectionHeader
@@ -188,27 +133,28 @@ export default async function AdminDashboard() {
                   className="bg-cream border border-border/50 p-5 rounded-sm hover:border-deep-brown/30 transition-colors"
                 >
                   <header className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-                    <p>
-                      <span className="text-deep-brown font-medium">
+                    <p className="min-w-0 break-words">
+                      <span className="text-deep-brown font-medium break-words">
                         {c.name}
                       </span>
                       {" — "}
                       <a
                         href={`mailto:${c.email}`}
-                        className="text-terracotta text-sm hover:underline"
+                        title={c.email}
+                        className="text-terracotta text-sm hover:underline break-all"
                       >
                         {c.email}
                       </a>
                       {c.phone && (
-                        <span className="text-muted text-sm">
+                        <span className="text-muted text-sm break-all">
                           {" · "}
                           {c.phone}
                         </span>
                       )}
                     </p>
-                    <time className="text-xs text-muted">{fmtDate(c.created_at)}</time>
+                    <time className="text-xs text-muted shrink-0">{fmtDate(c.created_at)}</time>
                   </header>
-                  <p className="text-sm text-muted whitespace-pre-wrap leading-relaxed">
+                  <p className="text-sm text-muted whitespace-pre-wrap leading-relaxed break-words">
                     {c.message}
                   </p>
                 </article>
@@ -237,8 +183,8 @@ export default async function AdminDashboard() {
               {subs.map((s) => (
                 <span
                   key={s.id}
-                  className="text-xs bg-sand/40 border border-border/40 rounded-sm px-3 py-1.5 text-deep-brown"
-                  title={fmtDate(s.created_at)}
+                  className="text-xs bg-sand/40 border border-border/40 rounded-sm px-3 py-1.5 text-deep-brown break-all max-w-full"
+                  title={`${s.email} · ${fmtDate(s.created_at)}`}
                 >
                   {s.email}
                 </span>
@@ -346,105 +292,3 @@ function Empty({ children }: { children: React.ReactNode }) {
   );
 }
 
-function VercelLinkCard({
-  icon,
-  label,
-  caption,
-  href,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  caption: string;
-  href: string;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="group bg-cream border border-border/50 rounded-sm p-5 flex flex-col gap-2 hover:border-deep-brown/40 transition-colors"
-    >
-      <div className="flex items-center justify-between">
-        <span className="text-terracotta">{icon}</span>
-        <ArrowUpRight
-          size={14}
-          className="text-muted group-hover:text-deep-brown transition-colors"
-        />
-      </div>
-      <p className="serif text-xl text-deep-brown leading-tight">{label}</p>
-      <p className="text-xs text-muted">{caption}</p>
-    </a>
-  );
-}
-
-function DeploymentsBlock({
-  deployments,
-  hasToken,
-}: {
-  deployments: DeploymentSummary[];
-  hasToken: boolean;
-}) {
-  if (!hasToken) {
-    return (
-      <div className="mt-4 px-5 py-4 bg-sand/40 border-l-2 border-terracotta text-sm">
-        <p className="text-deep-brown font-medium mb-1">
-          Verbind live deploy-data
-        </p>
-        <p className="text-muted text-xs leading-relaxed">
-          Voeg <code className="bg-cream px-1.5 py-0.5">VERCEL_API_TOKEN</code>{" "}
-          (scope: <em>Deployments: Read</em>) en optioneel{" "}
-          <code className="bg-cream px-1.5 py-0.5">VERCEL_TEAM_ID</code> toe aan
-          de Vercel-env, dan verschijnt hier een live lijst met de laatste
-          deploys.
-        </p>
-      </div>
-    );
-  }
-  if (deployments.length === 0) {
-    return null;
-  }
-  return (
-    <div className="mt-6">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-muted mb-3">
-        Laatste deploys
-      </p>
-      <ul className="divide-y divide-border/40 border-y border-border/40">
-        {deployments.map((d) => (
-          <li
-            key={d.uid}
-            className="py-3 flex flex-wrap items-center justify-between gap-2 text-sm"
-          >
-            <div className="min-w-0">
-              <p className="text-deep-brown truncate">
-                <span
-                  className={
-                    d.state === "READY"
-                      ? "text-olive"
-                      : d.state === "ERROR"
-                        ? "text-terracotta"
-                        : "text-muted"
-                  }
-                >
-                  ●
-                </span>{" "}
-                {d.meta?.githubCommitMessage?.split("\n")[0] ?? d.url}
-              </p>
-              <p className="text-xs text-muted truncate">
-                {d.meta?.githubCommitSha?.slice(0, 7) ?? d.uid.slice(0, 7)} ·{" "}
-                {d.target ?? "preview"} · {d.state.toLowerCase()}
-              </p>
-            </div>
-            <a
-              href={`https://${d.url}`}
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs text-terracotta hover:underline inline-flex items-center gap-1"
-            >
-              Open <ExternalLink size={11} />
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}

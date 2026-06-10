@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { clsx } from "clsx";
@@ -22,6 +22,8 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -29,6 +31,64 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // When the menu opens: lock body scroll, focus the first link, listen for
+  // Escape. On close: restore focus to the hamburger toggle so screen-reader
+  // and keyboard users land back where they were.
+  useEffect(() => {
+    if (!open) return;
+
+    // Snapshot the DOM refs at open-time so the cleanup uses the same nodes
+    // that were live when we attached listeners (lint: react-hooks/exhaustive-deps).
+    const menuNode = menuRef.current;
+    const toggleNode = toggleRef.current;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const firstLink = menuNode?.querySelector<HTMLElement>(
+      "a, button, [tabindex]:not([tabindex='-1'])",
+    );
+    firstLink?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+        return;
+      }
+      // Focus trap: Tab from the last focusable element wraps to the first,
+      // Shift+Tab from the first wraps to the last. Keeps keyboard users
+      // inside the menu until they explicitly close it.
+      if (e.key !== "Tab" || !menuNode) return;
+      const focusables = menuNode.querySelectorAll<HTMLElement>(
+        "a, button, [tabindex]:not([tabindex='-1'])",
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKey);
+      // Restore focus to the toggle button only if focus is currently inside
+      // the (now-closing) menu. If the user navigated away by clicking a link
+      // we DON'T want to yank focus.
+      if (menuNode?.contains(document.activeElement)) {
+        toggleNode?.focus();
+      }
+    };
+  }, [open]);
 
   const closeMenu = () => setOpen(false);
 
@@ -47,8 +107,9 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
 
   return (
     <header
+      style={{ top: "var(--bar-h)" }}
       className={clsx(
-        "fixed top-0 inset-x-0 z-50 transition-colors duration-500",
+        "fixed inset-x-0 z-50 transition-colors duration-500",
         overHero
           ? "bg-transparent"
           : "bg-cream/95 backdrop-blur-sm border-b border-border/50",
@@ -98,7 +159,10 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-10">
+        <nav
+          aria-label={locale === "nl" ? "hoofdnavigatie" : "main navigation"}
+          className="hidden lg:flex items-center gap-10"
+        >
           {links.map((l) => {
             const active =
               pathname === l.href ||
@@ -138,21 +202,42 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
         </div>
 
         <button
+          ref={toggleRef}
           type="button"
           onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={
+            open
+              ? locale === "nl"
+                ? "Menu sluiten"
+                : "Close menu"
+              : locale === "nl"
+                ? "Menu openen"
+                : "Open menu"
+          }
+          aria-expanded={open}
+          aria-controls="mobile-menu"
           className={clsx(
             "lg:hidden p-2 transition-colors",
             overHero ? "text-cream" : "text-deep-brown",
           )}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
         </button>
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-border/60 bg-cream">
-          <div className="mx-auto w-full max-w-7xl container-px py-6 flex flex-col gap-1">
+        <div
+          ref={menuRef}
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label={locale === "nl" ? "Menu" : "Menu"}
+          className="lg:hidden border-t border-border/60 bg-cream"
+        >
+          <nav
+            aria-label={locale === "nl" ? "mobiele navigatie" : "mobile navigation"}
+            className="mx-auto w-full max-w-7xl container-px py-6 flex flex-col gap-1"
+          >
             {links.map((l) => (
               <Link
                 key={l.href}
@@ -173,7 +258,7 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
                 {nav.bookNow}
               </Link>
             </div>
-          </div>
+          </nav>
         </div>
       )}
     </header>

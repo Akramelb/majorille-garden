@@ -27,6 +27,12 @@ export async function generateMetadata(
     title: `${postTitle(post, lang)} · Majorille Garden`,
     description: postExcerpt(post, lang) || postTitle(post, lang),
     image: post.cover_image ?? undefined,
+    type: "article",
+    article: {
+      publishedTime: post.created_at,
+      modifiedTime: post.updated_at,
+      authors: ["Majorille Garden"],
+    },
   });
 }
 
