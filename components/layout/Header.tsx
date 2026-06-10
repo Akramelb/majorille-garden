@@ -115,6 +115,9 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
           : "bg-cream/95 backdrop-blur-sm border-b border-border/50",
       )}
     >
+      {/* Brand signature: terracotta → gold → majorelle hairline along the
+          very top edge of every page. */}
+      <div className="brand-hairline" aria-hidden="true" />
       <div className="mx-auto w-full max-w-7xl container-px flex items-center justify-between py-5 lg:py-6">
         <Link
           href={base}
@@ -171,15 +174,16 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
               <Link
                 key={l.href}
                 href={l.href}
+                aria-current={active ? "page" : undefined}
                 className={clsx(
-                  "text-[0.72rem] uppercase tracking-[0.22em] transition-colors",
+                  "nav-link text-[0.72rem] uppercase tracking-[0.22em] transition-colors",
                   overHero
                     ? active
                       ? "text-cream"
                       : "text-cream/75 hover:text-cream"
                     : active
                       ? "text-deep-brown"
-                      : "text-deep-brown/70 hover:text-terracotta",
+                      : "text-deep-brown/70 hover:text-majorelle",
                 )}
               >
                 {l.label}

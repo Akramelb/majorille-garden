@@ -12,7 +12,10 @@ export async function generateMetadata(props: PageProps<"/[lang]/terms">) {
     locale: lang,
     path: "/terms",
     title: `${doc.title} · Majorille Garden`,
-    description: doc.title,
+    description:
+      lang === "nl"
+        ? "Algemene voorwaarden van Majorille Garden: afspraken en annuleren, betalingen, producten, retourbeleid en aansprakelijkheid."
+        : "Terms and conditions of Majorille Garden: appointments and cancellation, payments, products, returns, and liability.",
   });
 }
 

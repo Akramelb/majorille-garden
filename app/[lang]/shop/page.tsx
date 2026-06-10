@@ -7,6 +7,7 @@ import { Container, Eyebrow } from "@/components/ui/Container";
 import { getDictionary, hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
 import { getPromo } from "@/lib/promos";
+import { ProductsJsonLd } from "@/components/JsonLd";
 
 export async function generateMetadata(props: PageProps<"/[lang]/shop">) {
   const { lang } = await props.params;
@@ -39,13 +40,14 @@ export default async function ShopPage(props: PageProps<"/[lang]/shop">) {
 
   return (
     <section className="py-24 lg:py-36">
+      <ProductsJsonLd products={PRODUCTS} locale={lang} />
       <Container>
         <div className="max-w-3xl mb-16 lg:mb-24">
-          <Eyebrow>{dict.products.eyebrow}</Eyebrow>
-          <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
+          <div className="reveal"><Eyebrow>{dict.products.eyebrow}</Eyebrow></div>
+          <h1 className="reveal reveal-2 display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
             {dict.shop.title}
           </h1>
-          <p className="mt-8 text-lg lg:text-xl text-muted leading-relaxed">
+          <p className="reveal reveal-3 mt-8 text-lg lg:text-xl text-muted leading-relaxed">
             {dict.shop.subtitle}
           </p>
           {promoBanner && (

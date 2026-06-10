@@ -69,8 +69,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
-          unoptimized={heroHome.startsWith("http")}
+          className="object-cover hero-drift"
         />
         {/* Gradients: top for header legibility, bottom for copy legibility */}
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-deep-brown/55 to-transparent" />
@@ -78,17 +77,17 @@ export default async function Home(props: PageProps<"/[lang]">) {
 
         <Container className="absolute inset-x-0 bottom-0 pb-14 sm:pb-20 lg:pb-28">
           <div className="max-w-3xl">
-            <p className="text-[0.72rem] uppercase tracking-[0.32em] text-cream/85">
+            <p className="reveal text-[0.72rem] uppercase tracking-[0.32em] text-cream/85">
               {dict.hero.eyebrow}
             </p>
-            <h1 className="display mt-4 sm:mt-6 text-cream text-[2.5rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.75rem]">
+            <h1 className="reveal reveal-2 display mt-4 sm:mt-6 text-cream text-[2.5rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.75rem]">
               {dict.hero.title}
             </h1>
-            <p className="mt-5 sm:mt-8 text-base lg:text-lg text-cream/80 leading-relaxed max-w-xl">
+            <p className="reveal reveal-3 mt-5 sm:mt-8 text-base lg:text-lg text-cream/80 leading-relaxed max-w-xl">
               {dict.hero.subtitle}
             </p>
-            <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-5 sm:gap-8">
-              <Link href={`/${lang}/booking`} className="btn-primary bg-cream text-deep-brown hover:bg-terracotta hover:text-cream">
+            <div className="reveal reveal-4 mt-8 sm:mt-10 flex flex-wrap items-center gap-5 sm:gap-8">
+              <Link href={`/${lang}/booking`} className="btn-primary btn-primary--cream">
                 {dict.hero.ctaPrimary}
               </Link>
               <Link href={`/${lang}/services`} className="link-edit link-edit--light">
@@ -103,7 +102,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
       {/* INTRO — quiet editorial paragraph, lots of whitespace */}
       <section className="py-32 lg:py-48 riad-trellis-light">
         <Container size="md">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center reveal-scroll">
             <Eyebrow>{dict.intro.eyebrow}</Eyebrow>
             <h2 className="display mt-8 text-4xl lg:text-6xl text-deep-brown">
               {dict.intro.title}
@@ -111,6 +110,9 @@ export default async function Home(props: PageProps<"/[lang]">) {
             <p className="mt-10 text-lg lg:text-xl text-muted leading-[1.75]">
               {dict.intro.body}
             </p>
+            <div className="tile-rule mt-14 max-w-xs mx-auto" aria-hidden="true">
+              <i /><i /><i />
+            </div>
           </div>
         </Container>
       </section>
@@ -140,7 +142,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
 
         {/* Rail breaks out of container for full-bleed scroll */}
         <div className="rail container-px mx-auto w-full max-w-[1400px]">
-          {SERVICES.map((s) => {
+          {SERVICES.map((s, idx) => {
             const cheapest = s.variants.reduce(
               (min, v) => (v.priceCents < min.priceCents ? v : min),
               s.variants[0],
@@ -151,7 +153,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
                 href={`/${lang}/services/${s.slug}`}
                 className="group block w-[78vw] sm:w-[52vw] md:w-[42vw] lg:w-[28rem]"
               >
-                <div className="relative aspect-[3/4] overflow-hidden bg-sand/30">
+                <div className="arch-frame relative aspect-[3/4] overflow-hidden bg-sand/30">
                   <Image
                     src={s.cardImage}
                     alt={localized(s.name, lang)}
@@ -160,20 +162,28 @@ export default async function Home(props: PageProps<"/[lang]">) {
                     className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
                   />
                 </div>
-                <div className="mt-6">
-                  <h3 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight">
-                    {localized(s.name, lang)}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted leading-relaxed line-clamp-2">
-                    {localized(s.tagline, lang)}
-                  </p>
-                  <p className="mt-4 text-xs uppercase tracking-[0.22em] text-terracotta">
-                    {dict.servicesSection.from}{" "}
-                    {formatPriceEUR(cheapest.priceCents, lang)}
-                    <span className="text-muted ml-2 normal-case tracking-normal">
-                      · {cheapest.durationMin} {dict.servicesSection.minutes}
-                    </span>
-                  </p>
+                <div className="mt-6 flex items-baseline gap-4">
+                  <span
+                    className="serif italic text-sm text-gold tabular-nums shrink-0"
+                    aria-hidden="true"
+                  >
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight group-hover:text-majorelle transition-colors duration-300">
+                      {localized(s.name, lang)}
+                    </h3>
+                    <p className="mt-2 text-sm text-muted leading-relaxed line-clamp-2">
+                      {localized(s.tagline, lang)}
+                    </p>
+                    <p className="mt-4 text-xs uppercase tracking-[0.22em] text-terracotta">
+                      {dict.servicesSection.from}{" "}
+                      {formatPriceEUR(cheapest.priceCents, lang)}
+                      <span className="text-muted ml-2 normal-case tracking-normal">
+                        · {cheapest.durationMin} {dict.servicesSection.minutes}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </Link>
             );
@@ -185,19 +195,20 @@ export default async function Home(props: PageProps<"/[lang]">) {
       <section className="py-32 lg:py-48 bg-sand/25">
         <Container>
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-            <div className="lg:col-span-6 relative aspect-[4/5] order-2 lg:order-1">
-              <Image
-                src={heroAbout}
-                alt={
-                  lang === "nl"
-                    ? "Interieur van Majorille Garden — sereen Marokkaans-geïnspireerd"
-                    : "Interior of Majorille Garden — serene Moroccan-inspired space"
-                }
-                unoptimized={heroAbout.startsWith("http")}
-                fill
-                sizes="(min-width:1024px) 45vw, 100vw"
-                className="object-cover"
-              />
+            <div className="lg:col-span-6 order-2 lg:order-1 arch-echo">
+              <div className="arch-frame relative aspect-[4/5]">
+                <Image
+                  src={heroAbout}
+                  alt={
+                    lang === "nl"
+                      ? "Interieur van Majorille Garden — sereen Marokkaans-geïnspireerd"
+                      : "Interior of Majorille Garden — serene Moroccan-inspired space"
+                  }
+                  fill
+                  sizes="(min-width:1024px) 45vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
             <div className="lg:col-span-6 lg:pl-8 order-1 lg:order-2">
               <Eyebrow>{dict.about.eyebrow}</Eyebrow>
@@ -222,7 +233,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
       </section>
 
       {/* PRODUCTS — dark section, stripped of card chrome */}
-      <section className="py-32 lg:py-48 bg-deep-brown text-cream riad-trellis-dark">
+      <section className="py-32 lg:py-48 bg-deep-brown text-cream riad-trellis-dark dusk-glow">
         <Container>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 lg:mb-20">
             <div className="max-w-xl">
@@ -307,8 +318,14 @@ export default async function Home(props: PageProps<"/[lang]">) {
           ) : (
             <div className="text-center">
               <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
-              <blockquote className="mt-10 display text-3xl lg:text-5xl text-deep-brown leading-[1.2] max-w-4xl mx-auto">
-                &ldquo;{localized(TESTIMONIAL.quote, lang)}&rdquo;
+              <span
+                className="block mt-8 serif text-[5rem] leading-[0.5] text-gold select-none"
+                aria-hidden="true"
+              >
+                &ldquo;
+              </span>
+              <blockquote className="mt-6 display text-3xl lg:text-5xl text-deep-brown leading-[1.2] max-w-4xl mx-auto">
+                {localized(TESTIMONIAL.quote, lang)}
               </blockquote>
               <p className="mt-12 text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
                 — {TESTIMONIAL.author}

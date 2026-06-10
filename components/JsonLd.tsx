@@ -1,4 +1,10 @@
-import { SITE, localized, type Service, type FAQ } from "@/lib/content";
+import {
+  SITE,
+  localized,
+  type Service,
+  type FAQ,
+  type Product,
+} from "@/lib/content";
 import { siteUrl } from "@/lib/seo";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
@@ -133,6 +139,110 @@ export function FAQJsonLd({
       acceptedAnswer: {
         "@type": "Answer",
         text: localized(f.answer, locale),
+      },
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+/**
+ * BreadcrumbList schema — mirrors the visual breadcrumb on service detail
+ * pages so the trail is eligible for breadcrumb rich results.
+ */
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+/**
+ * AggregateRating attached to the business — emitted ONLY on the reviews
+ * page (the page that visibly shows the first-party reviews it summarises,
+ * per Google's review-snippet guidelines).
+ */
+export function AggregateRatingJsonLd({
+  avg,
+  count,
+}: {
+  avg: number;
+  count: number;
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "HealthAndBeautyBusiness",
+    "@id": `${siteUrl()}/#business`,
+    name: SITE.name,
+    url: siteUrl(),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: avg,
+      reviewCount: count,
+      bestRating: 5,
+      worstRating: 1,
+    },
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+/**
+ * Product ItemList for the shop catalogue — name, image, price and
+ * availability per product so listings are eligible for product snippets.
+ */
+export function ProductsJsonLd({
+  products,
+  locale,
+}: {
+  products: ReadonlyArray<Product>;
+  locale: Locale;
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Product",
+        name: localized(p.name, locale),
+        description: localized(p.shortDescription, locale),
+        image: `${siteUrl()}${p.image}`,
+        url: `${siteUrl()}/${locale}/shop`,
+        offers: {
+          "@type": "Offer",
+          price: (p.priceCents / 100).toFixed(2),
+          priceCurrency: "EUR",
+          availability:
+            p.inStock === false
+              ? "https://schema.org/OutOfStock"
+              : "https://schema.org/InStock",
+        },
       },
     })),
   };

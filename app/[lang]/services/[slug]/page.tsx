@@ -10,8 +10,8 @@ import {
 } from "@/lib/content";
 import { Container, Eyebrow } from "@/components/ui/Container";
 import { getDictionary, hasLocale, LOCALES } from "../../dictionaries";
-import { buildMetadata } from "@/lib/seo";
-import { ServiceJsonLd } from "@/components/JsonLd";
+import { buildMetadata, siteUrl } from "@/lib/seo";
+import { BreadcrumbJsonLd, ServiceJsonLd } from "@/components/JsonLd";
 
 export async function generateStaticParams() {
   return LOCALES.flatMap((lang) =>
@@ -49,6 +49,16 @@ export default async function ServicePage(
   return (
     <>
       <ServiceJsonLd service={service} locale={lang} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: dict.nav.home, url: `${siteUrl()}/${lang}` },
+          { name: dict.nav.services, url: `${siteUrl()}/${lang}/services` },
+          {
+            name: localized(service.name, lang),
+            url: `${siteUrl()}/${lang}/services/${service.slug}`,
+          },
+        ]}
+      />
       {/* HERO */}
       <section className="pt-12 lg:pt-20 pb-16 lg:pb-28">
         <Container>
@@ -79,11 +89,11 @@ export default async function ServicePage(
           </nav>
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-center">
             <div>
-              <Eyebrow>{dict.servicesSection.eyebrow}</Eyebrow>
-              <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-deep-brown">
+              <div className="reveal"><Eyebrow>{dict.servicesSection.eyebrow}</Eyebrow></div>
+              <h1 className="reveal reveal-2 display mt-6 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-deep-brown">
                 {localized(service.name, lang)}
               </h1>
-              <p className="mt-6 text-xl text-muted leading-relaxed">
+              <p className="reveal reveal-3 mt-6 text-xl text-muted leading-relaxed">
                 {localized(service.tagline, lang)}
               </p>
               {localized(service.intro, lang).map((p, i) => (
@@ -96,7 +106,7 @@ export default async function ServicePage(
               ))}
 
               {/* Pricing */}
-              <div className="mt-10 p-6 lg:p-8 bg-cream border border-border/60">
+              <div className="mt-10 p-6 lg:p-8 bg-cream border border-border/60 border-t-2 border-t-gold">
                 <p className="text-xs uppercase tracking-[0.22em] text-terracotta mb-4">
                   {lang === "nl" ? "Tarieven" : "Pricing"}
                 </p>
@@ -135,19 +145,21 @@ export default async function ServicePage(
                 </Link>
               </div>
             </div>
-            <div className="relative aspect-[4/5] lg:aspect-[3/4]">
-              <Image
-                src={service.heroImage}
-                alt={
-                  lang === "nl"
-                    ? `${localized(service.name, lang)} — sfeerbeeld van de behandeling bij Majorille Garden`
-                    : `${localized(service.name, lang)} — atmosphere of the treatment at Majorille Garden`
-                }
-                fill
-                priority
-                sizes="(min-width:1024px) 50vw, 100vw"
-                className="object-cover"
-              />
+            <div className="arch-echo reveal reveal-3">
+              <div className="arch-frame relative aspect-[4/5] lg:aspect-[3/4]">
+                <Image
+                  src={service.heroImage}
+                  alt={
+                    lang === "nl"
+                      ? `${localized(service.name, lang)} — sfeerbeeld van de behandeling bij Majorille Garden`
+                      : `${localized(service.name, lang)} — atmosphere of the treatment at Majorille Garden`
+                  }
+                  fill
+                  priority
+                  sizes="(min-width:1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </Container>
@@ -233,7 +245,7 @@ export default async function ServicePage(
       )}
 
       {/* CLOSING QUOTE + CTA */}
-      <section className="py-28 lg:py-44 bg-deep-brown text-cream riad-trellis-dark">
+      <section className="py-28 lg:py-44 bg-deep-brown text-cream riad-trellis-dark dusk-glow">
         <Container size="md">
           {service.closingQuote && (
             <blockquote className="display text-3xl lg:text-5xl text-cream leading-[1.2] text-center max-w-3xl mx-auto">

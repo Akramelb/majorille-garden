@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -19,9 +19,9 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const inter = Inter({
+const hanken = Hanken_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   alternates: {
-    languages: { nl: "/nl", en: "/en" },
+    languages: { nl: "/nl", en: "/en", "x-default": "/nl" },
   },
 };
 
@@ -57,7 +57,7 @@ export default async function RootLayout(
   return (
     <html
       lang={lang}
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${hanken.variable} h-full antialiased`}
     >
       <body
         className={`min-h-full flex flex-col bg-cream text-deep-brown${

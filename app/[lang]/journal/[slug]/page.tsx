@@ -12,7 +12,9 @@ import {
 import { hasLocale } from "../../dictionaries";
 import { buildMetadata, siteUrl } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+// ISR: re-render at most every 5 min instead of on every request — admin
+// publishes/moderation appear within that window without a redeploy.
+export const revalidate = 300;
 
 export async function generateMetadata(
   props: PageProps<"/[lang]/journal/[slug]">,
@@ -50,12 +52,19 @@ export default async function JournalPost(
     "@type": "Article",
     headline: title,
     description: postExcerpt(post, lang),
-    image: post.cover_image ? [post.cover_image] : undefined,
+    image: post.cover_image
+      ? [
+          post.cover_image.startsWith("http")
+            ? post.cover_image
+            : `${siteUrl()}${post.cover_image}`,
+        ]
+      : undefined,
     datePublished: post.created_at,
     dateModified: post.updated_at,
     author: { "@type": "Organization", name: "Majorille Garden" },
     publisher: { "@type": "Organization", name: "Majorille Garden" },
     mainEntityOfPage: `${siteUrl()}/${lang}/journal/${slug}`,
+    url: `${siteUrl()}/${lang}/journal/${slug}`,
   };
 
   return (

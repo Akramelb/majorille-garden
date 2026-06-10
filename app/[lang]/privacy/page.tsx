@@ -12,7 +12,10 @@ export async function generateMetadata(props: PageProps<"/[lang]/privacy">) {
     locale: lang,
     path: "/privacy",
     title: `${doc.title} · Majorille Garden`,
-    description: doc.title,
+    description:
+      lang === "nl"
+        ? "Hoe Majorille Garden met uw persoonsgegevens omgaat: welke gegevens we verwerken, waarom, hoe lang we ze bewaren en uw AVG-rechten."
+        : "How Majorille Garden handles your personal data: what we process, why, retention periods, and your GDPR rights.",
   });
 }
 

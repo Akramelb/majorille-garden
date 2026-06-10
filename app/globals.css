@@ -1,7 +1,12 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Moroccan luxury palette */
+  /*
+    "Jardin Majorelle at dusk" — warm Moroccan earth tones anchored by the
+    cobalt blue of the garden the brand is named after. Terracotta carries
+    warmth; majorelle is the sharp signature accent, used sparingly (rules,
+    eyebrows, hovers, selection) so it stays memorable.
+  */
   --color-cream: #FAF5EC;
   --color-sand: #E8DCC4;
   --color-sand-dark: #D4C19E;
@@ -11,6 +16,8 @@
   --color-olive-dark: #2F3D24;
   --color-deep-brown: #2A1810;
   --color-gold: #C9A961;
+  --color-majorelle: #2D4FC8;
+  --color-majorelle-deep: #1F3A9E;
 
   /* Semantic tokens */
   --color-background: var(--color-cream);
@@ -22,7 +29,7 @@
 
   /* Fonts (variables set in layout.tsx via next/font) */
   --font-serif: var(--font-fraunces);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-body);
 
   /* Radii */
   --radius-arch: 9999px 9999px 0 0;
@@ -86,6 +93,20 @@
     overflow-x: clip;
   }
 
+  /* Grain atmosphere — a fixed, almost-subliminal noise layer that keeps the
+     large cream fields from reading as flat screen-white. Pure SVG turbulence,
+     no asset request. pointer-events: none so it never intercepts input. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='1'/></svg>");
+    background-size: 160px 160px;
+  }
+
   h1, h2, h3, h4, h5 {
     font-family: var(--font-serif), Georgia, serif;
     font-weight: 500;
@@ -109,8 +130,14 @@
   }
 
   ::selection {
-    background: var(--color-terracotta);
+    background: var(--color-majorelle);
     color: var(--color-cream);
+  }
+
+  /* Visible keyboard focus everywhere, in the signature blue. */
+  :focus-visible {
+    outline: 2px solid var(--color-majorelle);
+    outline-offset: 3px;
   }
 }
 
@@ -133,6 +160,32 @@
     overflow: hidden;
   }
 
+  /* Horseshoe-arch image frame — the redesign's signature shape. Rounds the
+     top into a full arch and keeps a slim foot, like a riad doorway. Apply to
+     the wrapper around next/image fills. */
+  .arch-frame {
+    border-radius: 50% 50% 0 0 / 32% 32% 0 0;
+    overflow: hidden;
+  }
+
+  /* Offset keyline behind arch images — a thin gold echo of the arch, shifted
+     so the photo appears to float in front of a drawn doorway. */
+  .arch-echo {
+    position: relative;
+  }
+  .arch-echo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translate(14px, 14px);
+    border: 1px solid var(--color-gold);
+    border-radius: 50% 50% 0 0 / 32% 32% 0 0;
+    pointer-events: none;
+  }
+  .arch-echo > * {
+    position: relative;
+  }
+
   /* Subtle zellige divider (geometric SVG-like) */
   .zellige-divider {
     display: block;
@@ -146,6 +199,42 @@
     background-size: 12px 12px;
     background-position: 0 0, 0 6px, 6px -6px, -6px 0;
     opacity: 0.18;
+  }
+
+  /* Zellige rule — three tilted tiles (terracotta · majorelle · gold) on a
+     hairline, used as a section ornament instead of plain horizontal rules. */
+  .tile-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .tile-rule::before,
+  .tile-rule::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: var(--color-border);
+  }
+  .tile-rule > i {
+    width: 7px;
+    height: 7px;
+    transform: rotate(45deg);
+    flex: none;
+  }
+  .tile-rule > i:nth-child(1) { background: var(--color-terracotta); }
+  .tile-rule > i:nth-child(2) { background: var(--color-majorelle); }
+  .tile-rule > i:nth-child(3) { background: var(--color-gold); }
+
+  /* Brand hairline — terracotta → gold → majorelle gradient, used as the very
+     top edge of the page and the footer's opening rule. */
+  .brand-hairline {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--color-terracotta) 0%,
+      var(--color-gold) 50%,
+      var(--color-majorelle) 100%
+    );
   }
 
   /*
@@ -180,22 +269,44 @@
     opacity: 0.16;
   }
 
+  /* Soft radial dusk glow for the dark sections — terracotta warmth pooling
+     at one corner, majorelle cooling the opposite. Layers under the trellis. */
+  .dusk-glow {
+    background-image:
+      radial-gradient(60% 80% at 12% 0%, rgba(196, 99, 58, 0.22), transparent 60%),
+      radial-gradient(50% 70% at 95% 100%, rgba(45, 79, 200, 0.18), transparent 60%);
+  }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: var(--color-deep-brown);
+    background: linear-gradient(to right, var(--color-terracotta) 50%, var(--color-deep-brown) 50%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
     color: var(--color-cream);
     padding: 0.95rem 1.85rem;
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    transition: all 250ms var(--ease-soft);
+    transition: background-position 450ms var(--ease-soft), color 250ms var(--ease-soft);
   }
   .btn-primary:hover {
-    background: var(--color-terracotta);
+    background-position: 0 0;
+  }
+
+  /* Cream-on-photo variant: slides from cream to terracotta on hover. */
+  .btn-primary--cream {
+    background: linear-gradient(to right, var(--color-terracotta) 50%, var(--color-cream) 50%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    color: var(--color-deep-brown);
+  }
+  .btn-primary--cream:hover {
+    background-position: 0 0;
+    color: var(--color-cream);
   }
 
   .btn-secondary {
@@ -218,7 +329,8 @@
     color: var(--color-cream);
   }
 
-  /* Bamford-style editorial link — uppercase, thin underline, no box */
+  /* Bamford-style editorial link — uppercase, thin underline, no box.
+     Hover shifts to majorelle: the signature accent on interaction. */
   .link-edit {
     display: inline-flex;
     align-items: center;
@@ -233,8 +345,8 @@
     transition: all 250ms var(--ease-soft);
   }
   .link-edit:hover {
-    color: var(--color-terracotta);
-    border-bottom-color: var(--color-terracotta);
+    color: var(--color-majorelle);
+    border-bottom-color: var(--color-majorelle);
   }
   .link-edit--light {
     color: var(--color-cream);
@@ -243,6 +355,27 @@
   .link-edit--light:hover {
     color: var(--color-gold);
     border-bottom-color: var(--color-gold);
+  }
+
+  /* Nav link with animated center-out underline. */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 300ms var(--ease-soft);
+  }
+  .nav-link:hover::after,
+  .nav-link[aria-current="page"]::after {
+    transform: scaleX(1);
   }
 
   /* Horizontal-scroll rail (Rituals collection rail). Hide scrollbar but keep behavior. */
@@ -270,4 +403,60 @@
   }
   @media (min-width: 768px) { .container-px { padding-left: 2.5rem; padding-right: 2.5rem; } }
   @media (min-width: 1280px) { .container-px { padding-left: 4rem; padding-right: 4rem; } }
+
+  /*
+    Page-load choreography — one well-orchestrated entrance instead of
+    scattered micro-interactions. `.reveal` fades up once on load; chain
+    `.reveal-2`..`.reveal-6` for the stagger. Hero copy uses these.
+  */
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .reveal {
+    animation: rise-in 900ms var(--ease-soft) both;
+  }
+  .reveal-2 { animation-delay: 120ms; }
+  .reveal-3 { animation-delay: 240ms; }
+  .reveal-4 { animation-delay: 380ms; }
+  .reveal-5 { animation-delay: 520ms; }
+  .reveal-6 { animation-delay: 660ms; }
+
+  /* Scroll-triggered reveal — pure CSS via animation-timeline: view().
+     Progressive enhancement: browsers without support simply render the
+     content static (the `@supports` gate means no hidden content anywhere). */
+  @supports (animation-timeline: view()) {
+    .reveal-scroll {
+      animation: rise-in 1ms var(--ease-soft) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 36%;
+    }
+  }
+
+  /* Slow Ken-Burns drift for the home hero image. GPU-composited transform
+     only — no layout or paint cost. */
+  @keyframes hero-drift {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+  }
+  .hero-drift {
+    animation: hero-drift 7s var(--ease-soft) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-scroll,
+    .hero-drift {
+      animation: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }

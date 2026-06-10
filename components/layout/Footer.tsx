@@ -38,7 +38,8 @@ export function Footer({
   const navT = dict.nav;
   const base = `/${locale}`;
   return (
-    <footer className="mt-32 bg-deep-brown text-cream/80 riad-trellis-dark">
+    <footer className="mt-32 bg-deep-brown text-cream/80 riad-trellis-dark dusk-glow">
+      <div className="brand-hairline" aria-hidden="true" />
       <div className="mx-auto w-full max-w-7xl container-px py-20 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-1">
           <div className="serif text-3xl text-cream tracking-tight leading-none">

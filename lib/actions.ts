@@ -137,7 +137,9 @@ export async function submitContact(
   // Owner notification — fire-and-forget (no-op without RESEND_API_KEY + NOTIFY_TO).
   // replyTo set so Reply in the parents' inbox goes straight to the customer.
   void sendOwnerEmail({
-    subject: `Contact: ${name}`,
+    // CR/LF stripped: user input never gets to smuggle extra headers or
+    // mangle the subject, whatever the mail transport does downstream.
+    subject: `Contact: ${name.replace(/[\r\n]+/g, " ")}`,
     html: contactNotificationHtml({ name, email, phone, message }),
     replyTo: email,
   });

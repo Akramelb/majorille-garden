@@ -6,8 +6,11 @@ import { StarRating } from "@/components/sections/StarRating";
 import { getApprovedReviews, getReviewStats } from "@/lib/reviews";
 import { hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
+import { AggregateRatingJsonLd } from "@/components/JsonLd";
 
-export const dynamic = "force-dynamic";
+// ISR: re-render at most every 5 min instead of on every request — admin
+// publishes/moderation appear within that window without a redeploy.
+export const revalidate = 300;
 
 const COPY = {
   nl: {
@@ -52,6 +55,7 @@ export default async function ReviewsPage(props: PageProps<"/[lang]/reviews">) {
 
   return (
     <section className="py-20 lg:py-28">
+      {stats && <AggregateRatingJsonLd avg={stats.avg} count={stats.count} />}
       <Container>
         <div className="max-w-2xl mb-12">
           <Eyebrow>{t.eyebrow}</Eyebrow>

@@ -24,7 +24,7 @@ export function ServiceCard({
       href={`/${locale}/services/${service.slug}`}
       className="group block"
     >
-      <div className="relative aspect-[3/4] overflow-hidden bg-sand/30">
+      <div className="arch-frame relative aspect-[3/4] overflow-hidden bg-sand/30">
         <Image
           src={service.cardImage}
           alt={localized(service.name, locale)}
@@ -34,7 +34,7 @@ export function ServiceCard({
         />
       </div>
       <div className="mt-6">
-        <h3 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight">
+        <h3 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight group-hover:text-majorelle transition-colors duration-300">
           {localized(service.name, locale)}
         </h3>
         <p className="mt-2 text-sm text-muted leading-relaxed line-clamp-2">

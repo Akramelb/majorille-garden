@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
         hostname: "primary.jwwb.nl",
         pathname: "/**",
       },
+      // Supabase storage (admin-uploaded hero overrides + blog covers) — lets
+      // next/image optimize them instead of the `unoptimized` escape hatch.
+      {
+        protocol: "https",
+        hostname: "*.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
   },
   experimental: {
@@ -45,8 +52,8 @@ const nextConfig: NextConfig = {
           },
           // Enforced CSP — covers the actual third-party surface (Cal.com
           // embed + popup, Mollie checkout, Supabase auth/realtime/storage,
-          // Vercel analytics, Resend logo image in mail previews via https:,
-          // Google Fonts fallback). `unsafe-inline` on script-src is required
+          // Vercel analytics, Google Fonts fallback).
+          // `unsafe-inline` on script-src is required
           // for Next.js hydration bootstrap scripts; tighten via nonces only
           // if a real XSS lands and you've got the budget to test every page.
           {
@@ -56,7 +63,9 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' https://app.cal.com https://cal.com https://*.vercel-scripts.com https://va.vercel-scripts.com",
               "frame-src https://app.cal.com https://cal.com https://*.mollie.com",
               "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://app.cal.com https://api.cal.com https://va.vercel-scripts.com",
-              "img-src 'self' data: blob: https://primary.jwwb.nl https://*.supabase.co https:",
+              // Explicit allowlist — the previous bare `https:` allowed any
+              // origin, which defeats img-src as an exfiltration barrier.
+              "img-src 'self' data: blob: https://primary.jwwb.nl https://*.supabase.co https://app.cal.com https://cal.com",
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' data: https://fonts.gstatic.com",
               "form-action 'self' https://www.mollie.com https://*.mollie.com",

@@ -35,33 +35,34 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
         <Container>
           <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center">
             <div>
-              <Eyebrow>{dict.about.eyebrow}</Eyebrow>
-              <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
+              <div className="reveal"><Eyebrow>{dict.about.eyebrow}</Eyebrow></div>
+              <h1 className="reveal reveal-2 display mt-6 text-4xl sm:text-5xl lg:text-7xl text-deep-brown">
                 {dict.about.title}
               </h1>
               {localized(ABOUT.hero, lang).map((p, i) => (
                 <p
                   key={i}
-                  className="mt-6 text-lg text-muted leading-[1.75] max-w-xl"
+                  className="reveal reveal-3 mt-6 text-lg text-muted leading-[1.75] max-w-xl"
                 >
                   {p}
                 </p>
               ))}
             </div>
-            <div className="relative aspect-[4/5]">
-              <Image
-                src={heroAbout}
-                unoptimized={heroAbout.startsWith("http")}
-                alt={
-                  lang === "nl"
-                    ? "Het interieur van Majorille Garden — warme Marokkaans-geïnspireerde sfeer"
-                    : "The interior of Majorille Garden — warm Moroccan-inspired atmosphere"
-                }
-                fill
-                priority
-                sizes="(min-width:1024px) 45vw, 100vw"
-                className="object-cover"
-              />
+            <div className="arch-echo reveal reveal-3">
+              <div className="arch-frame relative aspect-[4/5]">
+                <Image
+                  src={heroAbout}
+                  alt={
+                    lang === "nl"
+                      ? "Het interieur van Majorille Garden — warme Marokkaans-geïnspireerde sfeer"
+                      : "The interior of Majorille Garden — warm Moroccan-inspired atmosphere"
+                  }
+                  fill
+                  priority
+                  sizes="(min-width:1024px) 45vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </Container>

@@ -29,9 +29,13 @@ export const dynamic = "force-dynamic";
  * 20+ messages and providers batch.
  */
 export async function POST(req: Request): Promise<Response> {
-  // Auth — shared secret. Skip the check when no secret is configured so
-  // local dev can curl this without ceremony; production MUST set it.
+  // Auth — shared secret. The check is skipped ONLY outside production so
+  // local dev can curl this without ceremony; in production a missing secret
+  // fails closed instead of leaving the endpoint open to inbox spam.
   const secret = process.env.INBOUND_WEBHOOK_SECRET;
+  if (!secret && process.env.VERCEL_ENV === "production") {
+    return new Response("not configured", { status: 503 });
+  }
   if (secret) {
     const auth = req.headers.get("authorization") ?? "";
     const expected = `Bearer ${secret}`;

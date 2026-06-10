@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { getSupabaseServiceClient, hasSupabaseConfig } from "@/lib/supabase";
 
 /**
@@ -42,7 +43,12 @@ const EMPTY: SiteSettings = {
 const COLUMNS =
   "hero_home_url, hero_promo_url, hero_about_url, announcement_enabled, announcement_text_nl, announcement_text_en, updated_at";
 
-export async function getSiteSettings(): Promise<SiteSettings> {
+/**
+ * Wrapped in React cache() so the layout (announcement) and any number of
+ * page-level consumers (hero slots) share ONE Supabase read per request —
+ * previously the home page paid three round-trips for the same row.
+ */
+export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   if (!hasSupabaseConfig()) return EMPTY;
   try {
     const sb = getSupabaseServiceClient();
@@ -60,7 +66,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     console.error("[site-settings] read threw", err);
     return EMPTY;
   }
-}
+});
 
 const FALLBACKS: Record<HeroSlot, string> = {
   home: "/images/home/hero.jpg",

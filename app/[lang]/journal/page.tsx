@@ -7,7 +7,9 @@ import { getPublishedPosts, postTitle, postExcerpt } from "@/lib/blog";
 import { hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+// ISR: re-render at most every 5 min instead of on every request — admin
+// publishes/moderation appear within that window without a redeploy.
+export const revalidate = 300;
 
 const COPY = {
   nl: {
@@ -49,11 +51,11 @@ export default async function JournalPage(props: PageProps<"/[lang]/journal">) {
     <section className="py-20 lg:py-28">
       <Container>
         <div className="max-w-2xl mb-14">
-          <Eyebrow>{t.eyebrow}</Eyebrow>
-          <h1 className="mt-4 serif text-4xl sm:text-5xl lg:text-7xl text-deep-brown leading-[1.05]">
+          <div className="reveal"><Eyebrow>{t.eyebrow}</Eyebrow></div>
+          <h1 className="reveal reveal-2 mt-4 serif text-4xl sm:text-5xl lg:text-7xl text-deep-brown leading-[1.05]">
             {t.title}
           </h1>
-          <p className="mt-6 text-lg text-muted leading-relaxed">{t.intro}</p>
+          <p className="reveal reveal-3 mt-6 text-lg text-muted leading-relaxed">{t.intro}</p>
         </div>
 
         {posts.length === 0 ? (
