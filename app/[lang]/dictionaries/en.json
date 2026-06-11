@@ -20,6 +20,16 @@
     "title": "Discover the healing power of natural therapy",
     "body": "Welcome to Majorille Garden. We believe in the healing power of nature — our treatments and organic products are designed to restore balance and lasting wellbeing. A unique blend of massage, nature, and soul to bring you back into balance."
   },
+  "promo": {
+    "eyebrow": "Exclusive offer",
+    "title": "Meridian treatment",
+    "tagline": "Rest that returns. Balance that lasts.",
+    "body": "Book 6 sessions and receive the 7th as our gift. Your chance to bring body and soul back into lasting balance.",
+    "dealLabel": "free",
+    "badge": "Limited availability",
+    "price": "€630",
+    "cta": "Claim via WhatsApp"
+  },
   "servicesSection": {
     "eyebrow": "Our rituals",
     "title": "Authentic rituals, organic ingredients",

@@ -8,6 +8,7 @@ import {
   TESTIMONIAL,
   PRODUCTS,
   ABOUT,
+  SITE,
   localized,
   formatPriceEUR,
 } from "@/lib/content";
@@ -112,6 +113,57 @@ export default async function Home(props: PageProps<"/[lang]">) {
             </p>
             <div className="tile-rule mt-14 max-w-xs mx-auto" aria-hidden="true">
               <i /><i /><i />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* PROMO — Meridianen 6+1 combo offer */}
+      <section className="relative overflow-hidden bg-deep-brown py-24 lg:py-32 dusk-glow">
+        <div className="brand-hairline" />
+        <Container>
+          <div className="grid lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 items-center">
+            {/* copy */}
+            <div className="reveal-scroll order-2 lg:order-1">
+              <p className="text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
+                {dict.promo.eyebrow}
+              </p>
+              <h2 className="display mt-5 text-4xl sm:text-5xl lg:text-[3.25rem] text-cream leading-[1.0]">
+                {dict.promo.title}
+              </h2>
+              <p className="mt-5 text-xl lg:text-2xl serif italic text-gold leading-snug">
+                {dict.promo.tagline}
+              </p>
+              <p className="mt-6 text-cream/70 text-base lg:text-lg leading-relaxed max-w-lg">
+                {dict.promo.body}
+              </p>
+              <div className="mt-10 flex flex-wrap items-center gap-6">
+                <a
+                  href={SITE.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary btn-primary--cream"
+                >
+                  {dict.promo.cta}
+                </a>
+                <span className="text-2xl serif text-cream/80">
+                  {dict.promo.price}
+                </span>
+              </div>
+            </div>
+            {/* decorative counter */}
+            <div className="reveal-scroll order-1 lg:order-2 flex flex-col items-center lg:items-end text-center lg:text-right select-none">
+              <span className="display text-[5.5rem] sm:text-[7rem] lg:text-[8.5rem] xl:text-[10rem] text-gold leading-[0.85] tabular-nums">
+                6+1
+              </span>
+              <div className="mt-3 border-t border-gold/30 pt-3 w-32 lg:w-auto">
+                <span className="display text-2xl lg:text-3xl text-cream/60 italic">
+                  {dict.promo.dealLabel}
+                </span>
+              </div>
+              <p className="mt-4 text-[0.68rem] uppercase tracking-[0.28em] text-cream/35">
+                {dict.promo.badge}
+              </p>
             </div>
           </div>
         </Container>
