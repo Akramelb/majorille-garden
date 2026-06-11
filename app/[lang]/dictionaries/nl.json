@@ -20,14 +20,27 @@
     "title": "Ontdek de helende kracht van natuurlijke therapie",
     "body": "Welkom bij Majorille Garden, waar we geloven in de helende kracht van de natuur. Onze natuurlijke behandelingen en biologische producten zijn ontworpen om balans en welzijn te bevorderen. Een unieke combinatie van massage, natuur en ziel om je weer in balans te brengen."
   },
+  "loyaltySection": {
+    "eyebrow": "Loyaliteitspakketten",
+    "title": "Exclusieve pakketten voor trouwe gasten",
+    "subtitle": "Boek 6 sessies en ontvang de 7e altijd gratis van ons."
+  },
   "promo": {
-    "eyebrow": "Exclusieve aanbieding",
+    "badge": "Beperkt beschikbaar",
+    "dealLabel": "gratis",
     "title": "Meridianen behandeling",
     "tagline": "Rust die terugkeert. Balans die blijft.",
-    "body": "Boek 6 sessies en ontvang de 7e als cadeau van ons. Jouw kans om lichaam en ziel duurzaam in balans te brengen.",
-    "dealLabel": "gratis",
-    "badge": "Beperkt beschikbaar",
+    "body": "Jouw kans om lichaam en ziel duurzaam in balans te brengen. 6 sessies + 1 cadeau van ons.",
     "price": "€630",
+    "cta": "Claim via WhatsApp"
+  },
+  "promoB": {
+    "badge": "Beperkt beschikbaar",
+    "dealLabel": "gratis",
+    "title": "Bio head spa & Kruidenstempel massage",
+    "tagline": "Natuurlijke verzorging voor hoofd, huid en ziel.",
+    "body": "Ontspan, herstel en straal van binnenuit met de kracht van biologische ingrediënten en verwarmde kruiden. 6 behandelingen + 1 cadeau van ons.",
+    "price": "€699",
     "cta": "Claim via WhatsApp"
   },
   "servicesSection": {

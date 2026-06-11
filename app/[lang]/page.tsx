@@ -118,26 +118,48 @@ export default async function Home(props: PageProps<"/[lang]">) {
         </Container>
       </section>
 
-      {/* PROMO — Meridianen 6+1 combo offer */}
+      {/* LOYALTY PACKAGES — 2 combo offers */}
       <section className="relative overflow-hidden bg-deep-brown py-24 lg:py-32 dusk-glow">
         <div className="brand-hairline" />
         <Container>
-          <div className="grid lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 items-center">
-            {/* copy */}
-            <div className="reveal-scroll order-2 lg:order-1">
-              <p className="text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
-                {dict.promo.eyebrow}
+          {/* section header */}
+          <div className="text-center mb-16 lg:mb-20 reveal-scroll">
+            <p className="text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
+              {dict.loyaltySection.eyebrow}
+            </p>
+            <h2 className="display mt-5 text-3xl sm:text-4xl lg:text-5xl text-cream">
+              {dict.loyaltySection.title}
+            </h2>
+            <p className="mt-5 text-cream/55 text-lg max-w-md mx-auto">
+              {dict.loyaltySection.subtitle}
+            </p>
+          </div>
+
+          {/* cards */}
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
+            {/* card 1 — Meridianen */}
+            <div className="reveal-scroll border border-gold/20 p-8 lg:p-10 flex flex-col">
+              <p className="text-[0.68rem] uppercase tracking-[0.28em] text-terracotta">
+                {dict.promo.badge}
               </p>
-              <h2 className="display mt-5 text-4xl sm:text-5xl lg:text-[3.25rem] text-cream leading-[1.0]">
+              <div className="mt-4 flex items-baseline gap-3 select-none">
+                <span className="display text-[4rem] lg:text-[5rem] text-gold leading-[0.85] tabular-nums">
+                  6+1
+                </span>
+                <span className="display text-xl text-cream/45 italic">
+                  {dict.promo.dealLabel}
+                </span>
+              </div>
+              <h3 className="mt-5 display text-2xl lg:text-[1.8rem] text-cream leading-tight">
                 {dict.promo.title}
-              </h2>
-              <p className="mt-5 text-xl lg:text-2xl serif italic text-gold leading-snug">
+              </h3>
+              <p className="mt-3 serif italic text-gold text-lg leading-snug">
                 {dict.promo.tagline}
               </p>
-              <p className="mt-6 text-cream/70 text-base lg:text-lg leading-relaxed max-w-lg">
+              <p className="mt-4 text-cream/60 leading-relaxed text-sm lg:text-base flex-1">
                 {dict.promo.body}
               </p>
-              <div className="mt-10 flex flex-wrap items-center gap-6">
+              <div className="mt-8 flex flex-wrap items-center gap-5">
                 <a
                   href={SITE.whatsappLink}
                   target="_blank"
@@ -146,24 +168,43 @@ export default async function Home(props: PageProps<"/[lang]">) {
                 >
                   {dict.promo.cta}
                 </a>
-                <span className="text-2xl serif text-cream/80">
-                  {dict.promo.price}
-                </span>
+                <span className="text-xl serif text-cream/75">{dict.promo.price}</span>
               </div>
             </div>
-            {/* decorative counter */}
-            <div className="reveal-scroll order-1 lg:order-2 flex flex-col items-center lg:items-end text-center lg:text-right select-none">
-              <span className="display text-[5.5rem] sm:text-[7rem] lg:text-[8.5rem] xl:text-[10rem] text-gold leading-[0.85] tabular-nums">
-                6+1
-              </span>
-              <div className="mt-3 border-t border-gold/30 pt-3 w-32 lg:w-auto">
-                <span className="display text-2xl lg:text-3xl text-cream/60 italic">
-                  {dict.promo.dealLabel}
+
+            {/* card 2 — Ma Jolie (Bio head spa + Kruidenstempel) */}
+            <div className="reveal-scroll border border-gold/20 p-8 lg:p-10 flex flex-col">
+              <p className="text-[0.68rem] uppercase tracking-[0.28em] text-terracotta">
+                {dict.promoB.badge}
+              </p>
+              <div className="mt-4 flex items-baseline gap-3 select-none">
+                <span className="display text-[4rem] lg:text-[5rem] text-gold leading-[0.85] tabular-nums">
+                  6+1
+                </span>
+                <span className="display text-xl text-cream/45 italic">
+                  {dict.promoB.dealLabel}
                 </span>
               </div>
-              <p className="mt-4 text-[0.68rem] uppercase tracking-[0.28em] text-cream/35">
-                {dict.promo.badge}
+              <h3 className="mt-5 display text-2xl lg:text-[1.8rem] text-cream leading-tight">
+                {dict.promoB.title}
+              </h3>
+              <p className="mt-3 serif italic text-gold text-lg leading-snug">
+                {dict.promoB.tagline}
               </p>
+              <p className="mt-4 text-cream/60 leading-relaxed text-sm lg:text-base flex-1">
+                {dict.promoB.body}
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-5">
+                <a
+                  href={SITE.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary btn-primary--cream"
+                >
+                  {dict.promoB.cta}
+                </a>
+                <span className="text-xl serif text-cream/75">{dict.promoB.price}</span>
+              </div>
             </div>
           </div>
         </Container>

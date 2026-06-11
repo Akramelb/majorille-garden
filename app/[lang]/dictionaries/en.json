@@ -20,14 +20,27 @@
     "title": "Discover the healing power of natural therapy",
     "body": "Welcome to Majorille Garden. We believe in the healing power of nature — our treatments and organic products are designed to restore balance and lasting wellbeing. A unique blend of massage, nature, and soul to bring you back into balance."
   },
+  "loyaltySection": {
+    "eyebrow": "Loyalty packages",
+    "title": "Exclusive packages for returning guests",
+    "subtitle": "Book 6 sessions and always receive the 7th as our gift."
+  },
   "promo": {
-    "eyebrow": "Exclusive offer",
+    "badge": "Limited availability",
+    "dealLabel": "free",
     "title": "Meridian treatment",
     "tagline": "Rest that returns. Balance that lasts.",
-    "body": "Book 6 sessions and receive the 7th as our gift. Your chance to bring body and soul back into lasting balance.",
-    "dealLabel": "free",
-    "badge": "Limited availability",
+    "body": "Your chance to bring body and soul back into lasting balance. 6 sessions + 1 as our gift.",
     "price": "€630",
+    "cta": "Claim via WhatsApp"
+  },
+  "promoB": {
+    "badge": "Limited availability",
+    "dealLabel": "free",
+    "title": "Bio head spa & Herbal stamp massage",
+    "tagline": "Natural care for scalp, skin, and soul.",
+    "body": "Relax, restore and radiate from within with organic ingredients and warm herbal stamps. 6 treatments + 1 as our gift.",
+    "price": "€699",
     "cta": "Claim via WhatsApp"
   },
   "servicesSection": {
