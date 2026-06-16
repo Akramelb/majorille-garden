@@ -102,6 +102,12 @@ export const SITE = {
   socials: {
     instagram: "https://www.instagram.com/majorillegarden/",
   } as const,
+  /**
+   * Public URL of the current Social Deal listing. Set
+   * NEXT_PUBLIC_SOCIAL_DEAL_URL in your env to surface the "View on Social Deal"
+   * link in the homepage promo strip; if unset, only the WhatsApp CTA is shown.
+   */
+  socialDealUrl: (process.env.NEXT_PUBLIC_SOCIAL_DEAL_URL ?? "") || null,
 } as const;
 
 /**
@@ -924,7 +930,7 @@ export const ABOUT = {
           "At Majorille Garden, you don't just buy a product — you invest in purity, tradition, and a healthier future.",
         ],
       } as LocalizedRichText,
-      image: "/images/about/footer.jpg",
+      image: "/images/about/filosofie.jpg",
     },
   ],
 };

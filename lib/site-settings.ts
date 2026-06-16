@@ -71,7 +71,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
 const FALLBACKS: Record<HeroSlot, string> = {
   home: "/images/home/hero.jpg",
   promo: "/images/home/hero-promo.jpg",
-  about: "/images/about/hero-blurred.jpg",
+  about: "/images/about/hero.jpg",
 };
 
 /**

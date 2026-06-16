@@ -25,6 +25,19 @@
     "title": "Exclusive packages for returning guests",
     "subtitle": "Book 6 sessions and always receive the 7th as our gift."
   },
+  "loyaltyBonus": {
+    "eyebrow": "With every package",
+    "title": "Complimentary Lunasea Luxe foot bath & massage",
+    "body": "With every loyalty package purchase, you'll receive a soothing Lunasea Luxe foot bath treatment with massage — entirely as our gift."
+  },
+  "socialDeal": {
+    "eyebrow": "Social Deal",
+    "title": "Discover Majorille Garden via Social Deal",
+    "body": "Get to know our Moroccan-inspired rituals through an exclusive offer. Reserve easily via WhatsApp and bring your voucher when you visit.",
+    "ctaWhatsapp": "Claim via WhatsApp",
+    "ctaView": "View on Social Deal",
+    "whatsappMessage": "Hello, I have a Social Deal voucher and would like to book an appointment."
+  },
   "promo": {
     "badge": "Limited availability",
     "dealLabel": "free",

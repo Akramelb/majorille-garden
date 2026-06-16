@@ -100,6 +100,43 @@ export default async function Home(props: PageProps<"/[lang]">) {
         </Container>
       </section>
 
+      {/* SOCIAL DEAL PROMO — between hero and intro */}
+      <section className="py-16 lg:py-24 bg-sand/40 border-y border-terracotta/20">
+        <Container size="md">
+          <div className="max-w-2xl mx-auto text-center reveal-scroll">
+            <p className="text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
+              {dict.socialDeal.eyebrow}
+            </p>
+            <h2 className="display mt-5 text-3xl lg:text-4xl text-deep-brown">
+              {dict.socialDeal.title}
+            </h2>
+            <p className="mt-5 text-muted text-base lg:text-lg leading-relaxed">
+              {dict.socialDeal.body}
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-5 sm:gap-8">
+              <a
+                href={`${SITE.whatsappLink}?text=${encodeURIComponent(dict.socialDeal.whatsappMessage)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                {dict.socialDeal.ctaWhatsapp}
+              </a>
+              {SITE.socialDealUrl && (
+                <a
+                  href={SITE.socialDealUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-edit"
+                >
+                  {dict.socialDeal.ctaView}
+                </a>
+              )}
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* INTRO — quiet editorial paragraph, lots of whitespace */}
       <section className="py-32 lg:py-48 riad-trellis-light">
         <Container size="md">
@@ -205,6 +242,30 @@ export default async function Home(props: PageProps<"/[lang]">) {
                 </a>
                 <span className="text-xl serif text-cream/75">{dict.promoB.price}</span>
               </div>
+            </div>
+          </div>
+
+          {/* LOYALTY BONUS — Lunasea Luxe voetenbad + massage */}
+          <div className="reveal-scroll mt-10 lg:mt-14 border border-gold/20 grid md:grid-cols-[1fr_2fr] gap-6 lg:gap-10 items-center p-6 lg:p-8">
+            <div className="relative aspect-[4/3] overflow-hidden bg-cream/5 rounded-lg shadow-[0_18px_45px_-18px_rgba(0,0,0,0.6)]">
+              <Image
+                src="/images/promo/lunasea-voetenbad.webp"
+                alt={dict.loyaltyBonus.title}
+                fill
+                sizes="(min-width:768px) 30vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-[0.68rem] uppercase tracking-[0.28em] text-terracotta">
+                {dict.loyaltyBonus.eyebrow}
+              </p>
+              <h3 className="mt-3 display text-2xl lg:text-3xl text-cream leading-tight">
+                {dict.loyaltyBonus.title}
+              </h3>
+              <p className="mt-3 text-cream/65 leading-relaxed text-sm lg:text-base">
+                {dict.loyaltyBonus.body}
+              </p>
             </div>
           </div>
         </Container>

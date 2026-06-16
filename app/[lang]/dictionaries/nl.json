@@ -25,6 +25,19 @@
     "title": "Exclusieve pakketten voor trouwe gasten",
     "subtitle": "Boek 6 sessies en ontvang de 7e altijd gratis van ons."
   },
+  "loyaltyBonus": {
+    "eyebrow": "Bij elk pakket",
+    "title": "Gratis Lunasea Luxe voetenbad & massage",
+    "body": "Bij iedere aankoop van een loyaliteitspakket ontvangt u een verwennende Lunasea Luxe voetenbad-behandeling met massage — helemaal van ons."
+  },
+  "socialDeal": {
+    "eyebrow": "Social Deal",
+    "title": "Ontdek Majorille Garden via Social Deal",
+    "body": "Maak kennis met onze Marokkaans geïnspireerde rituelen via een exclusief aanbod. Reserveer eenvoudig via WhatsApp en breng uw voucher mee.",
+    "ctaWhatsapp": "Claim via WhatsApp",
+    "ctaView": "Bekijk op Social Deal",
+    "whatsappMessage": "Hallo, ik heb een Social Deal-voucher en wil graag een afspraak inplannen."
+  },
   "promo": {
     "badge": "Beperkt beschikbaar",
     "dealLabel": "gratis",

@@ -79,14 +79,16 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
                 i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
               }`}
             >
-              <div className="relative aspect-[5/4]">
-                <Image
-                  src={section.image}
-                  alt={localized(section.title, lang)}
-                  fill
-                  sizes="(min-width:1024px) 45vw, 100vw"
-                  className="object-cover"
-                />
+              <div className="arch-echo">
+                <div className="arch-frame relative aspect-[4/5] bg-sand/30">
+                  <Image
+                    src={section.image}
+                    alt={localized(section.title, lang)}
+                    fill
+                    sizes="(min-width:1024px) 45vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
               <div>
                 <h2 className="display text-4xl lg:text-5xl text-deep-brown">

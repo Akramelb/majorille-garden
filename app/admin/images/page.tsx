@@ -37,7 +37,7 @@ export default async function AdminImagesPage() {
       slot: "about" as const,
       label: "Over ons — sfeerfoto",
       hint: "Verticale foto van het interieur op de Over ons pagina.",
-      fallback: "/images/about/hero-blurred.jpg",
+      fallback: "/images/about/hero.jpg",
       currentUrl: settings.hero_about_url,
     },
   ];
