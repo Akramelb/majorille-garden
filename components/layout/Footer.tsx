@@ -224,7 +224,7 @@ export function Footer({
               {locale === "nl" ? "Voorwaarden" : "Terms"}
             </Link>
             <span className="uppercase tracking-[0.18em]">
-              Amsterdam · Marrakech
+              Amsterdam
             </span>
           </div>
         </div>

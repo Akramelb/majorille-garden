@@ -22,6 +22,7 @@ import { buildMetadata } from "@/lib/seo";
 import { getApprovedReviews, getReviewStats } from "@/lib/reviews";
 import { ReviewsList } from "@/components/sections/ReviewsList";
 import { StarRating } from "@/components/sections/StarRating";
+import { RailControls } from "@/components/sections/RailControls";
 import { FAQJsonLd } from "@/components/JsonLd";
 
 export async function generateMetadata(
@@ -55,6 +56,12 @@ export default async function Home(props: PageProps<"/[lang]">) {
     getHeroImageUrl("about"),
   ]);
 
+  // Editorial accent: lift the brand name out of the hero headline so it reads
+  // as a signature. Works in both locales — the string always contains it.
+  const heroBrand = "Majorille Garden";
+  const heroTitle = dict.hero.title;
+  const heroBrandIdx = heroTitle.indexOf(heroBrand);
+
   return (
     <>
       <FAQJsonLd faqs={faqs} locale={lang} />
@@ -77,14 +84,25 @@ export default async function Home(props: PageProps<"/[lang]">) {
         <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-deep-brown/80 via-deep-brown/30 to-transparent" />
 
         <Container className="absolute inset-x-0 bottom-0 pb-14 sm:pb-20 lg:pb-28">
-          <div className="max-w-3xl">
-            <p className="reveal text-[0.72rem] uppercase tracking-[0.32em] text-cream/85">
-              {dict.hero.eyebrow}
-            </p>
-            <h1 className="reveal reveal-2 display mt-4 sm:mt-6 text-cream text-[2.5rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.75rem]">
-              {dict.hero.title}
+          <div className="max-w-4xl">
+            <div className="reveal flex items-center gap-3">
+              <span className="h-px w-8 bg-gold/70" aria-hidden="true" />
+              <p className="text-[0.72rem] uppercase tracking-[0.32em] text-cream/85">
+                {dict.hero.eyebrow}
+              </p>
+            </div>
+            <h1 className="reveal reveal-2 display mt-5 sm:mt-7 text-balance text-cream text-[2.5rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] [text-shadow:0_2px_28px_rgba(42,24,16,0.3)]">
+              {heroBrandIdx === -1 ? (
+                heroTitle
+              ) : (
+                <>
+                  {heroTitle.slice(0, heroBrandIdx)}
+                  <span className="italic text-gold">{heroBrand}</span>
+                  {heroTitle.slice(heroBrandIdx + heroBrand.length)}
+                </>
+              )}
             </h1>
-            <p className="reveal reveal-3 mt-5 sm:mt-8 text-base lg:text-lg text-cream/80 leading-relaxed max-w-xl">
+            <p className="reveal reveal-3 mt-6 sm:mt-8 text-base lg:text-lg text-cream/80 leading-relaxed max-w-xl text-balance">
               {dict.hero.subtitle}
             </p>
             <div className="reveal reveal-4 mt-8 sm:mt-10 flex flex-wrap items-center gap-5 sm:gap-8">
@@ -284,18 +302,25 @@ export default async function Home(props: PageProps<"/[lang]">) {
                 {dict.servicesSection.subtitle}
               </p>
             </div>
-            <Link
-              href={`/${lang}/services`}
-              className="link-edit self-start lg:self-auto"
-            >
-              {dict.servicesSection.viewAll}
-              <ArrowRight size={14} />
-            </Link>
+            <div className="flex items-center gap-6 self-start lg:self-auto">
+              <RailControls
+                targetId="rituals-rail"
+                prevLabel={lang === "nl" ? "Vorige behandelingen" : "Previous treatments"}
+                nextLabel={lang === "nl" ? "Volgende behandelingen" : "Next treatments"}
+              />
+              <Link href={`/${lang}/services`} className="link-edit">
+                {dict.servicesSection.viewAll}
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
         </Container>
 
         {/* Rail breaks out of container for full-bleed scroll */}
-        <div className="rail container-px mx-auto w-full max-w-[1400px]">
+        <div
+          id="rituals-rail"
+          className="rail container-px mx-auto w-full max-w-[1400px]"
+        >
           {SERVICES.map((s, idx) => {
             const cheapest = s.variants.reduce(
               (min, v) => (v.priceCents < min.priceCents ? v : min),
