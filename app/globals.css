@@ -330,7 +330,7 @@
   }
 
   /* Bamford-style editorial link — uppercase, thin underline, no box.
-     Hover shifts to majorelle: the signature accent on interaction. */
+     Hover shifts to terracotta: the site's standard warm link hover. */
   .link-edit {
     display: inline-flex;
     align-items: center;
@@ -345,8 +345,8 @@
     transition: all 250ms var(--ease-soft);
   }
   .link-edit:hover {
-    color: var(--color-majorelle);
-    border-bottom-color: var(--color-majorelle);
+    color: var(--color-terracotta);
+    border-bottom-color: var(--color-terracotta);
   }
   .link-edit--light {
     color: var(--color-cream);
