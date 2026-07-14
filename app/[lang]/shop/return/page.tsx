@@ -7,6 +7,7 @@ import { getOrderById } from "@/lib/orders";
 import { verifyOrderToken } from "@/lib/order-token";
 import { formatPriceEUR } from "@/lib/content";
 import { getPromo } from "@/lib/promos";
+import { isVacationActive } from "@/lib/vacation";
 
 export const dynamic = "force-dynamic";
 
@@ -56,6 +57,12 @@ export default async function ShopReturn(
           <p className="mt-4 text-sm text-muted">
             {lang === "nl" ? "Bestelling" : "Order"} {reference}
           </p>
+
+          {isVacationActive() && (
+            <p className="mt-6 inline-block px-4 py-2 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark">
+              {dict.vacation.shopNotice}
+            </p>
+          )}
 
           <div className="mt-12 border-t border-border/60 pt-8">
             <p className="text-xs uppercase tracking-[0.18em] text-muted mb-4">

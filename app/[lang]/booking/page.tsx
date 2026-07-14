@@ -4,6 +4,7 @@ import { BookingForm } from "@/components/sections/BookingForm";
 import { getDictionary, hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
 import { getPromo } from "@/lib/promos";
+import { isVacationActive } from "@/lib/vacation";
 
 export async function generateMetadata(props: PageProps<"/[lang]/booking">) {
   const { lang } = await props.params;
@@ -53,6 +54,16 @@ export default async function BookingPage(
           <p className="reveal reveal-3 mt-8 text-lg lg:text-xl text-muted leading-relaxed">
             {dict.booking.subtitle}
           </p>
+          {isVacationActive() && (
+            <div className="reveal reveal-3 mt-8 border border-terracotta/40 bg-terracotta/10 p-5 sm:p-6">
+              <p className="text-sm font-medium text-deep-brown mb-1">
+                {dict.vacation.bookingTitle}
+              </p>
+              <p className="text-sm text-muted leading-relaxed">
+                {dict.vacation.bookingBody}
+              </p>
+            </div>
+          )}
         </div>
         <BookingForm
           dict={dict.booking}

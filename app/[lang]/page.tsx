@@ -24,6 +24,7 @@ import { ReviewsList } from "@/components/sections/ReviewsList";
 import { StarRating } from "@/components/sections/StarRating";
 import { RailControls } from "@/components/sections/RailControls";
 import { FAQJsonLd } from "@/components/JsonLd";
+import { isVacationActive } from "@/lib/vacation";
 
 export async function generateMetadata(
   props: PageProps<"/[lang]">,
@@ -55,6 +56,14 @@ export default async function Home(props: PageProps<"/[lang]">) {
     getHeroImageUrl("home"),
     getHeroImageUrl("about"),
   ]);
+
+  // The home page renders the same ContactForm as /contact, so it needs the
+  // same vacation-aware success copy (no "within 24 hours" while the owners
+  // are away). Mirrors app/[lang]/contact/page.tsx.
+  const vacation = isVacationActive();
+  const contactDict = vacation
+    ? { ...dict.contactSection, success: dict.vacation.contactSuccess }
+    : dict.contactSection;
 
   // Editorial accent: lift the brand name out of the hero headline so it reads
   // as a signature. Works in both locales — the string always contains it.
@@ -548,12 +557,17 @@ export default async function Home(props: PageProps<"/[lang]">) {
               <p className="mt-6 text-muted text-lg max-w-md leading-relaxed">
                 {dict.contactSection.subtitle}
               </p>
+              {vacation && (
+                <p className="mt-6 max-w-md px-4 py-3 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark leading-relaxed">
+                  {dict.vacation.contactNotice}
+                </p>
+              )}
               <div className="mt-16">
                 <NewsletterForm dict={dict.newsletter} />
               </div>
             </div>
             <div>
-              <ContactForm dict={dict.contactSection} />
+              <ContactForm dict={contactDict} />
             </div>
           </div>
         </Container>

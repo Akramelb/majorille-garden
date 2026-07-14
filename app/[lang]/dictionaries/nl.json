@@ -108,6 +108,15 @@
     "success": "Bedankt voor uw aanmelding.",
     "error": "Aanmelden mislukt — probeer opnieuw."
   },
+  "vacation": {
+    "banner": "Wij zijn op vakantie t/m 15 augustus — boek alvast vooruit voor data vanaf 16 augustus.",
+    "bookingTitle": "Zomervakantie t/m 15 augustus",
+    "bookingBody": "Majorille Garden is t/m 15 augustus op vakantie. Reserveren en betalen kan gewoon alvast — kies na de betaling in de kalender een datum vanaf 16 augustus.",
+    "bookingReturnNote": "Let op: wegens vakantie zijn afspraken beschikbaar vanaf 16 augustus.",
+    "shopNotice": "Let op: wegens vakantie worden bestellingen vanaf 16 augustus verzonden.",
+    "contactNotice": "Wij zijn t/m 15 augustus op vakantie — onze reactie kan iets langer duren dan u van ons gewend bent.",
+    "contactSuccess": "Bedankt! Wegens vakantie reageren we iets later dan u van ons gewend bent — u hoort van ons."
+  },
   "booking": {
     "title": "Reserveer uw moment",
     "subtitle": "Kies voor wie, selecteer een behandeling en plan direct een geschikt moment.",

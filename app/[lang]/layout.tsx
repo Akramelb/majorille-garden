@@ -9,8 +9,15 @@ import { Footer } from "@/components/layout/Footer";
 import { LocalBusinessJsonLd } from "@/components/JsonLd";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
-import { getAnnouncement } from "@/lib/site-settings";
+import { getAnnouncement, isAnnouncementEnabled } from "@/lib/site-settings";
+import { isVacationActive } from "@/lib/vacation";
 import { LOCALES, getDictionary, hasLocale } from "./dictionaries";
+
+// ISR for the whole public subtree: statically generated pages re-render at
+// most hourly, so the time-boxed vacation banner (lib/vacation.ts) and
+// admin-edited site_settings propagate without a redeploy. Routes with their
+// own lower `revalidate` (journal, reviews) or `force-dynamic` keep it.
+export const revalidate = 3600;
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -52,7 +59,20 @@ export default async function RootLayout(
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const announcement = await getAnnouncement(lang);
+  // Banner precedence: an admin-set announcement (via /admin/banner) owns the
+  // slot for BOTH locales the moment it's enabled — so an admin banner filled
+  // only in NL doesn't leave EN visitors seeing the vacation fallback (two
+  // different site-wide messages at once). Only when no admin banner is enabled
+  // does the time-boxed vacation banner fill the slot.
+  const [adminAnnouncement, announcementEnabled] = await Promise.all([
+    getAnnouncement(lang),
+    isAnnouncementEnabled(),
+  ]);
+  const announcement = announcementEnabled
+    ? adminAnnouncement
+    : isVacationActive()
+      ? dict.vacation.banner
+      : null;
 
   return (
     <html

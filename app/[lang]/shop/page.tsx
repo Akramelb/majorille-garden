@@ -7,6 +7,7 @@ import { Container, Eyebrow } from "@/components/ui/Container";
 import { getDictionary, hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
 import { getPromo } from "@/lib/promos";
+import { isVacationActive } from "@/lib/vacation";
 import { ProductsJsonLd } from "@/components/JsonLd";
 
 export async function generateMetadata(props: PageProps<"/[lang]/shop">) {
@@ -50,6 +51,13 @@ export default async function ShopPage(props: PageProps<"/[lang]/shop">) {
           <p className="reveal reveal-3 mt-8 text-lg lg:text-xl text-muted leading-relaxed">
             {dict.shop.subtitle}
           </p>
+          {isVacationActive() && (
+            <div className="reveal reveal-3 mt-6">
+              <p className="inline-block px-4 py-2 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark">
+                {dict.vacation.shopNotice}
+              </p>
+            </div>
+          )}
           {promoBanner && (
             <p className="mt-6 inline-block px-4 py-2 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark">
               {lang === "nl" ? "Kortingscode" : "Promo code"}{" "}

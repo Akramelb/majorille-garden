@@ -2,6 +2,8 @@
 
 Everything else is built. This list is the only stuff that needs your accounts, credentials, or human judgment.
 
+> 🏖️ **Vakantiemodus (added 2026-07-14):** de site toont t/m 15 augustus 2026 automatisch vakantiemeldingen (banner, boeking, shop, contact) — zie `lib/vacation.ts`. Ze verdwijnen vanzelf op 16 augustus. **Wat alleen jij kunt doen:** blokkeer in Cal.com de beschikbaarheid t/m 15 augustus (Availability → beide schedules "Women hours" én "Men hours" → date override / out-of-office), anders kan een betalende klant een slot vóór 16 augustus boeken dat niemand kan leveren. Wil je andere datums? Pas de twee datums in `lib/vacation.ts` aan én de teksten onder `vacation` in `app/[lang]/dictionaries/{nl,en}.json`.
+>
 > ⏰ **Reminders (added 2026-05-22):**
 > - **Add your parents' email to Cal.com** (as team member / for booking notifications). Account: `minekram43@gmail.com`, username `majorillegarden`.
 > - **Add your parents' email to `ADMIN_EMAILS`** (Vercel env + `.env.local`) so they can log into `/admin`. Currently only `minekram43@gmail.com`.

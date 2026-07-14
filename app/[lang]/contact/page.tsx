@@ -6,6 +6,7 @@ import { ContactForm } from "@/components/sections/ContactForm";
 import { SITE, localized } from "@/lib/content";
 import { getDictionary, hasLocale } from "../dictionaries";
 import { buildMetadata } from "@/lib/seo";
+import { isVacationActive } from "@/lib/vacation";
 
 export async function generateMetadata(props: PageProps<"/[lang]/contact">) {
   const { lang } = await props.params;
@@ -28,6 +29,12 @@ export default async function ContactPage(
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
+  const vacation = isVacationActive();
+  // During the vacation window the form's success copy shouldn't promise a
+  // reply within 24 hours — swap in the slower-reply variant.
+  const contactDict = vacation
+    ? { ...dict.contactSection, success: dict.vacation.contactSuccess }
+    : dict.contactSection;
 
   return (
     <section className="py-24 lg:py-36">
@@ -41,6 +48,11 @@ export default async function ContactPage(
             <p className="reveal reveal-3 mt-8 text-lg lg:text-xl text-muted leading-relaxed max-w-md">
               {dict.contactSection.subtitle}
             </p>
+            {vacation && (
+              <p className="reveal reveal-3 mt-6 max-w-md px-4 py-3 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark leading-relaxed">
+                {dict.vacation.contactNotice}
+              </p>
+            )}
 
             <div className="mt-12 space-y-6 text-sm">
               <div className="flex items-start gap-4">
@@ -125,7 +137,7 @@ export default async function ContactPage(
           </div>
 
           <div className="bg-cream lg:p-10 lg:border lg:border-border/40">
-            <ContactForm dict={dict.contactSection} />
+            <ContactForm dict={contactDict} />
           </div>
         </div>
       </Container>

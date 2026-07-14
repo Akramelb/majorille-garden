@@ -108,6 +108,15 @@
     "success": "Thanks for subscribing.",
     "error": "Subscription failed — please try again."
   },
+  "vacation": {
+    "banner": "We're on holiday through 15 August — book ahead now for dates from 16 August.",
+    "bookingTitle": "Summer break through 15 August",
+    "bookingBody": "Majorille Garden is on holiday through 15 August. You can still reserve and pay now — after payment, pick a date from 16 August in the calendar.",
+    "bookingReturnNote": "Please note: due to our holiday, appointments are available from 16 August.",
+    "shopNotice": "Please note: due to our holiday, orders will be shipped from 16 August.",
+    "contactNotice": "We're on holiday through 15 August — replies may take a little longer than usual.",
+    "contactSuccess": "Thank you! As we're on holiday, our reply may take a little longer than usual — we'll get back to you."
+  },
   "booking": {
     "title": "Reserve your moment",
     "subtitle": "Choose who it's for, pick a treatment, and book a time directly.",

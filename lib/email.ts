@@ -5,6 +5,7 @@ import { centsToEuroString, siteUrl } from "./mollie";
 import { signOrderToken } from "./order-token";
 import { logEmail, type EmailLogKind } from "./email-log";
 import { SERVICES, SITE, localized } from "./content";
+import { isVacationActive } from "./vacation";
 
 const RESEND_API = "https://api.resend.com/emails";
 
@@ -277,8 +278,14 @@ export function contactAckHtml(input: {
   const { name, lang, message } = input;
   const greeting =
     lang === "nl" ? `Dag ${name},` : `Hi ${name},`;
-  const body =
-    lang === "nl"
+  // During the vacation window drop the "within 24 hours" promise — the owners
+  // are away and can't honour it. Evaluated per send (Server Action), so it
+  // auto-expires with the window; no redeploy. See lib/vacation.ts.
+  const body = isVacationActive()
+    ? lang === "nl"
+      ? "Bedankt voor je bericht — we hebben het goed ontvangen. We zijn t/m 15 augustus op vakantie, dus onze reactie kan iets langer duren dan je van ons gewend bent. Je hoort zeker van ons."
+      : "Thank you for reaching out — we've received your message. We're on holiday through 15 August, so our reply may take a little longer than usual, but we'll be in touch."
+    : lang === "nl"
       ? "Bedankt voor je bericht — we hebben het goed ontvangen. We nemen binnen 24 uur persoonlijk contact met je op."
       : "Thank you for reaching out — we've received your message and will get back to you personally within 24 hours.";
   const yourMessageLabel =
@@ -551,8 +558,14 @@ export function orderCustomerHtml(order: Order, lang: "nl" | "en"): string {
       : "Thank you for your order — we've received your payment and are carefully preparing your package.";
   const shippingHeading =
     lang === "nl" ? "Verzending" : "Shipping";
-  const shippingBody =
-    lang === "nl"
+  // Keep the delivery promise honest while the salon is on holiday: nothing
+  // ships until 16 August. Evaluated per send (Mollie webhook), so it expires
+  // with the window automatically. See lib/vacation.ts.
+  const shippingBody = isVacationActive()
+    ? lang === "nl"
+      ? "We zijn t/m 15 augustus op vakantie. Je bestelling versturen we binnen Nederland vanaf 16 augustus; daarna is het doorgaans binnen 2–4 werkdagen bij je."
+      : "We're on holiday through 15 August. We'll ship your order within the Netherlands from 16 August; after that it typically arrives in 2–4 business days."
+    : lang === "nl"
       ? "We versturen binnen Nederland en je bestelling is doorgaans binnen 2–4 werkdagen bij je."
       : "We ship within the Netherlands; your order typically arrives in 2–4 business days.";
   const heading = lang === "nl" ? "Je bestelling" : "Your order";

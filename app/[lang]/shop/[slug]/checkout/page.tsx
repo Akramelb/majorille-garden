@@ -5,6 +5,7 @@ import { ShopCheckoutForm } from "@/components/sections/ShopCheckoutForm";
 import { getDictionary, hasLocale } from "@/app/[lang]/dictionaries";
 import { buildMetadata } from "@/lib/seo";
 import { getPromo } from "@/lib/promos";
+import { isVacationActive } from "@/lib/vacation";
 
 export const dynamic = "force-dynamic";
 
@@ -54,6 +55,11 @@ export default async function ShopCheckout(
           <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-6xl text-deep-brown">
             {dict.shop.checkout.title}
           </h1>
+          {isVacationActive() && (
+            <p className="mt-6 inline-block px-4 py-2 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark">
+              {dict.vacation.shopNotice}
+            </p>
+          )}
         </div>
         <ShopCheckoutForm
           product={product}

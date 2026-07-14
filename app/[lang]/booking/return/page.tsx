@@ -7,6 +7,7 @@ import { SERVICES, SITE, localized } from "@/lib/content";
 import { getOrderById } from "@/lib/orders";
 import { verifyOrderToken } from "@/lib/order-token";
 import { getPromo } from "@/lib/promos";
+import { isVacationActive } from "@/lib/vacation";
 import { getDictionary, hasLocale } from "../../dictionaries";
 
 export const dynamic = "force-dynamic";
@@ -59,6 +60,11 @@ export default async function BookingReturn(
             <p className="mt-6 text-lg text-muted leading-relaxed">
               {dict.booking.afterPayment}
             </p>
+            {isVacationActive() && (
+              <p className="mt-5 inline-block px-4 py-2 bg-terracotta/10 border border-terracotta/40 text-sm text-terracotta-dark">
+                {dict.vacation.bookingReturnNote}
+              </p>
+            )}
           </div>
           <BookingEmbed
             calLink={calLink}

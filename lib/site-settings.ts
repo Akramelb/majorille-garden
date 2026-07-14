@@ -100,6 +100,18 @@ export async function getAnnouncement(
 }
 
 /**
+ * Whether the admin has toggled the announcement bar on, regardless of which
+ * locale texts are filled. Consumers use this to decide precedence: when the
+ * admin banner is enabled it owns the slot for BOTH locales, so a fallback
+ * (e.g. the vacation banner) never mixes with an admin banner that was only
+ * filled in one language. Shares the React-cached `getSiteSettings` read.
+ */
+export async function isAnnouncementEnabled(): Promise<boolean> {
+  const settings = await getSiteSettings();
+  return settings.announcement_enabled;
+}
+
+/**
  * Persist the announcement bar config. Upserts the singleton row. All three
  * fields are required even when one is unchanged — the admin form posts the
  * full state so there's no merge ambiguity.

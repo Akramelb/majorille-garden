@@ -45,7 +45,7 @@ The 8 treatment detail pages are a single `[slug]` route ([app/[lang]/services/[
 
 Bookings use **Cal.com** (`@calcom/embed-react`), not Calendly. Each `Service.bookingSlug` is the base for **two** per-audience Cal.com event types: `<bookingSlug>-women` and `<bookingSlug>-men`, each on its own availability schedule (Women vs Men hours). `calLinkForService(service, audience)` in [lib/content.ts](lib/content.ts) builds the `<username>/<bookingSlug>-<audience>` calLink; the booking form falls back to a call/email block when `SITE.bookingConfigured` is false (i.e. `NEXT_PUBLIC_CAL_USERNAME` unset). See [HANDOFF.md §2](HANDOFF.md) for the slug ↔ event mapping. The Cal.com account is `majorillegarden`, owned by `webforce.agencynl@gmail.com`, with the parents added as members.
 
-**Paywall (planned, Phase 3):** Cal.com's "require payment to book" feature is paid-tier only — we're on free. The plan is to gate the embed behind a Mollie payment ourselves: the booking page collects audience + service first, redirects to a Mollie checkout for a deposit (or full price), and only renders the Cal.com embed once the payment webhook flips the order to `paid`. The Cal.com `bookingSlug` stays the same; what changes is who's allowed to see the embed. See Phase 3 below — do **not** wire Mollie directly into Cal.com (no native integration on free tier); the gate has to be in our own UI + an `orders` table.
+**Paywall (shipped, Phase 3):** Cal.com's "require payment to book" feature is paid-tier only — we're on free — so the embed is gated behind a Mollie payment in *our* UI: the booking page collects audience + service, redirects to Mollie checkout, and only renders the Cal.com embed once the payment webhook flips the order to `paid`. Do **not** wire Mollie directly into Cal.com (no native integration on free tier); the gate lives in our UI + the `orders` table. Details under Phase 3 below.
 
 ### Server Actions with graceful Supabase fallback
 
@@ -67,8 +67,24 @@ Admin UI shell ([components/admin/AdminShell.tsx](components/admin/AdminShell.ts
 - **Reviews** ([app/admin/reviews/](app/admin/reviews/)) — moderate `pending` → `approved`/`rejected`.
 - **Journal/Blog** ([app/admin/blog/](app/admin/blog/)) — full CRUD on `blog_posts`, `react-markdown` body, cover image picker scanning `/public/images` via [lib/image-manifest.ts](lib/image-manifest.ts).
 - **FAQ** ([app/admin/faq/](app/admin/faq/)) — CRUD + reorder; falls back to `FAQS` in [lib/content.ts](lib/content.ts) when the table is empty.
+- **Orders** ([app/admin/orders/](app/admin/orders/)) — product + booking orders from the `orders` table, refunds via `refundOrder()`, Cal.com reconciliation.
+- **Promos** ([app/admin/promos/](app/admin/promos/)) — CRUD on `promo_codes` (see [lib/promos.ts](lib/promos.ts)).
+- **Banner** ([app/admin/banner/](app/admin/banner/)) — announcement bar toggle + NL/EN text, stored in `site_settings`.
+- **Images** ([app/admin/images/](app/admin/images/)) — hero image override URLs (home/promo/about), stored in `site_settings`.
+- **Inbox** ([app/admin/inbox/](app/admin/inbox/)) — unified activity feed ([lib/activity.ts](lib/activity.ts)) merging orders, contact, reviews, newsletter, `email_log` and inbound email.
+- **Workspace** ([app/admin/workspace/](app/admin/workspace/)) — live Vercel project/deploy/domain stats.
 
 When adding admin pages, mirror the pattern: `export const dynamic = "force-dynamic"`, `const user = await getAdminUser(); if (!user) redirect("/admin/login");`, then render inside `<AdminShell userEmail={user.email ?? null}><AdminPage title="...">`.
+
+### Supabase-backed runtime settings & logs
+
+Beyond the CMS tables, several small Supabase tables drive runtime behavior — all read through `hasSupabaseConfig()`-gated helpers that degrade to safe defaults when env is missing:
+
+- **`site_settings`** ([lib/site-settings.ts](lib/site-settings.ts)) — single row (`id = 'default'`) holding hero image override URLs and the announcement banner (enabled + NL/EN text). `getSiteSettings()` is wrapped in React `cache()` so layout + pages share one read per request. Adding a field = ALTER TABLE + extend the type + columns whitelist + a fallback in the consumer.
+- **`promo_codes`** ([lib/promos.ts](lib/promos.ts)) — percentage discounts scoped by `applies: 'product' | 'booking'`, enforced server-side in the checkout actions (a booking code can't be used in the shop). Seeded cross-sell defaults: `BEDANKT10` (products, shown on `/booking/return`) and `BOEK10` (bookings, shown on `/shop/return`).
+- **`email_log`** ([lib/email-log.ts](lib/email-log.ts)) — every outgoing Resend email recorded as `sent`/`failed`/`skipped`, linked to orders where relevant; surfaced in the Inbox feed.
+- **Inbound email** ([lib/inbound-email.ts](lib/inbound-email.ts)) — [app/api/inbound/email/route.ts](app/api/inbound/email/route.ts) accepts provider-agnostic webhook payloads, normalises to `{from, to, subject, text, html, external_id}`, dedupes on `external_id`, and always replies 200. Shown in `/admin/inbox`.
+- **Rate limiting** ([lib/ratelimit.ts](lib/ratelimit.ts)) — Upstash Redis, used by public-facing endpoints (Mollie webhook, inbound email, form actions); no-ops without `UPSTASH_*` env.
 
 ### Assets
 
@@ -82,6 +98,7 @@ Photos live under `public/images/<section>/...`. Service galleries follow `publi
 - The Moroccan-inspired palette (terracotta / sand / olive / deep-brown / cream) is defined as Tailwind tokens in `globals.css` — use the named utilities (`text-deep-brown`, `bg-cream`) rather than hex literals.
 - Display type is Fraunces (`.display`, `.serif`), body is Inter — both loaded via `next/font/google` in [app/[lang]/layout.tsx](app/[lang]/layout.tsx). `<Analytics />` + `<SpeedInsights />` from Vercel are mounted in the root layout.
 - Mobile safeguards: `html, body { overflow-x: clip }`; headings get `hyphens: auto`; form inputs are forced to `font-size: 16px` to suppress iOS zoom-on-focus. Don't override without thinking.
+- **Public pages are ISR, not fully static:** [app/[lang]/layout.tsx](app/[lang]/layout.tsx) exports `revalidate = 3600`, so every static `[lang]` page re-renders at most hourly — that's what lets the `site_settings` announcement/hero overrides and the time-boxed vacation mode ([lib/vacation.ts](lib/vacation.ts), active until 2026-08-16) propagate without a redeploy. Don't remove it casually.
 - **Canonical host:** any URL leaving the server (Supabase magic-link `emailRedirectTo`, Mollie return/webhook URLs, JSON-LD, OG meta) is derived from `siteUrl()` in [lib/seo.ts](lib/seo.ts) — never from request headers. Header-derived URLs land users on `*.vercel.app` previews where the cookie domain mismatches and the session breaks. Supabase dashboard's Site URL must match `siteUrl()` exactly or it silently rewrites the link.
 
 ## Phased roadmap
@@ -101,11 +118,10 @@ Magic-link auth, dashboard with live Vercel deploys + stats, reviews moderation,
 
 Live on production. Real e-commerce for the shop and full-price paywall in front of Cal.com bookings, both backed by a single `orders` table.
 
-- **Shop checkout** — Buy Now flow on [app/[lang]/shop/page.tsx](app/[lang]/shop/page.tsx) via [lib/shop-actions.ts](lib/shop-actions.ts) (`createShopPayment`). Mollie iDEAL + card, NL-only shipping address collected client-side, `line_items` stored as JSONB.
+- **Shop checkout** — [app/[lang]/shop/page.tsx](app/[lang]/shop/page.tsx) links each product to a dedicated checkout page at [app/[lang]/shop/[slug]/checkout/page.tsx](app/[lang]/shop/[slug]/checkout/page.tsx) (`dynamic = "force-dynamic"`, `index: false`), which submits via [lib/shop-actions.ts](lib/shop-actions.ts) (`createShopPayment`). Mollie iDEAL + card, NL-only shipping address collected client-side, `line_items` stored as JSONB, optional promo code applied server-side.
 - **Booking paywall** — [components/sections/BookingForm.tsx](components/sections/BookingForm.tsx) collects service + audience, [lib/booking-actions.ts](lib/booking-actions.ts) (`createBookingPayment`) creates a Mollie payment for `Service.variants[0].priceCents`, signs a return token via HMAC, redirects to Mollie checkout. The return page [app/[lang]/booking/return/page.tsx](app/[lang]/booking/return/page.tsx) verifies the token, polls until the webhook flips `status` to `paid`, then renders the Cal.com embed. Cal.com bookings are reconciled to the order by `customer_email + service` in [app/admin/orders/](app/admin/orders/) — no UUID is injected into Cal.com notes.
 - **Webhook** — [app/api/mollie/webhook/route.ts](app/api/mollie/webhook/route.ts) with content-type guard → rate-limit → local-lookup-before-SDK-fetch ordering. Always returns 200 to avoid Mollie's 24h retry storm. Atomic status flip via `updateOrderStatusIfChanged` so duplicate webhooks can't re-fire emails.
 - **Data model** — single `orders` table: `kind: 'product' | 'booking'`, `mollie_payment_id`, `status`, `amount_cents`, `service_slug` + `audience` + `booking_slug` (booking), `line_items` JSONB (product), `shipping_address` JSONB. Schema in [HANDOFF.md](HANDOFF.md).
-- **Money rules** — `Product.priceCents` / `Service.variants[].priceCents` always cents; `lib/mollie.ts:centsToEuroString()` converts at the API boundary.
 - **Money rules** — `Product.priceCents` / `Service.variants[].priceCents` always cents; `lib/mollie.ts:centsToEuroString()` converts at the API boundary. Refunds via [lib/admin-actions.ts](lib/admin-actions.ts) `refundOrder()`.
 - **Env** — `MOLLIE_API_KEY` (live), `ORDER_TOKEN_SECRET` (HMAC), `NEXT_PUBLIC_SITE_URL` (return + webhook URLs — MUST be the custom domain, never `*.vercel.app`).
 
