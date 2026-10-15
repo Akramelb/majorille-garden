@@ -26,7 +26,7 @@ export async function generateMetadata(
   return buildMetadata({
     locale: lang,
     path: `/journal/${slug}`,
-    title: `${postTitle(post, lang)} · Majorille Garden`,
+    title: postTitle(post, lang),
     description: postExcerpt(post, lang) || postTitle(post, lang),
     image: post.cover_image ?? undefined,
     type: "article",

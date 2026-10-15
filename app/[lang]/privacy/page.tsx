@@ -11,7 +11,7 @@ export async function generateMetadata(props: PageProps<"/[lang]/privacy">) {
   return buildMetadata({
     locale: lang,
     path: "/privacy",
-    title: `${doc.title} · Majorille Garden`,
+    title: doc.title,
     description:
       lang === "nl"
         ? "Hoe Majorille Garden met uw persoonsgegevens omgaat: welke gegevens we verwerken, waarom, hoe lang we ze bewaren en uw AVG-rechten."

@@ -14,12 +14,11 @@ export async function generateMetadata(props: PageProps<"/[lang]/contact">) {
   return buildMetadata({
     locale: lang,
     path: "/contact",
-    title:
-      lang === "nl" ? "Contact · Majorille Garden" : "Contact · Majorille Garden",
+    title: "Contact",
     description:
       lang === "nl"
-        ? "Neem contact op met Majorille Garden in Amsterdam — vragen, afspraken of meer informatie over onze behandelingen."
-        : "Get in touch with Majorille Garden in Amsterdam — questions, appointments, or more information about our treatments.",
+        ? "Neem contact op met Majorille Garden in Amsterdam: vragen, afspraken of meer informatie over onze behandelingen."
+        : "Get in touch with Majorille Garden in Amsterdam: questions, appointments, or more information about our treatments.",
   });
 }
 

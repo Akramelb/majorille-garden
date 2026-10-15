@@ -1,5 +1,6 @@
 import type { Locale } from "@/app/[lang]/dictionaries";
 import { SITE } from "@/lib/content";
+import { TIME_ZONE } from "@/lib/datetime";
 
 type LegalSection = {
   heading: string;
@@ -17,7 +18,7 @@ const kvkLineEN = `KVK: ${SITE.kvk} · BTW: ${SITE.btw ?? BTW_PLACEHOLDER_EN}`;
 export const PRIVACY: Record<Locale, { title: string; updated: string; sections: LegalSection[] }> = {
   nl: {
     title: "Privacyverklaring",
-    updated: "Laatst bijgewerkt: " + new Date().toLocaleDateString("nl-NL", { year: "numeric", month: "long" }),
+    updated: "Laatst bijgewerkt: " + new Date().toLocaleDateString("nl-NL", { timeZone: TIME_ZONE, year: "numeric", month: "long" }),
     sections: [
       {
         heading: "Bedrijfsgegevens",
@@ -34,7 +35,7 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
       {
         heading: "Welke gegevens wij verzamelen",
         body: [
-          "Wij verzamelen alleen de gegevens die u zelf bij ons achterlaat: uw naam, e-mailadres, telefoonnummer en bericht via het contactformulier, en uw e-mailadres bij aanmelding voor onze nieuwsbrief. Reserveringen verlopen via Cal.com — Cal.com verwerkt de daar ingevulde gegevens conform haar eigen privacybeleid.",
+          "Wij verzamelen alleen de gegevens die u zelf bij ons achterlaat: uw naam, e-mailadres, telefoonnummer en bericht via het contactformulier, en uw e-mailadres bij aanmelding voor onze nieuwsbrief. Reserveringen verlopen via Cal.com. Cal.com verwerkt de daar ingevulde gegevens conform haar eigen privacybeleid.",
         ],
       },
       {
@@ -47,12 +48,12 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
         heading: "Gegevensverwerkers",
         body: [
           "Wij delen je gegevens met de volgende verwerkers, die elk een verwerkersovereenkomst (DPA) hebben getekend conform AVG:",
-          "Vercel (hosting en serverless infrastructuur) — gevestigd in de Verenigde Staten. Overdracht is afgedekt door Standard Contractual Clauses (SCCs). DPA: vercel.com/legal/dpa.",
-          "Supabase (database, EU-regio) — gegevens worden opgeslagen binnen de EU. DPA: supabase.com/dpa.",
-          "Mollie (betalingsverwerker) — gevestigd in Nederland en volledig AVG-conform.",
-          "Cal.com (online afsprakenplanner) — gevestigd in de Verenigde Staten. Overdracht is afgedekt door SCCs. DPA: cal.com/legal.",
-          "Resend (transactionele e-mail) — gevestigd in de Verenigde Staten. Overdracht is afgedekt door SCCs. DPA: resend.com/legal/dpa.",
-          "Upstash (rate-limiting) — EU-regio (Frankfurt), AVG-conform.",
+          "Vercel (hosting en serverless infrastructuur), gevestigd in de Verenigde Staten. Overdracht is afgedekt door Standard Contractual Clauses (SCCs). DPA: vercel.com/legal/dpa.",
+          "Supabase (database, EU-regio), gegevens worden opgeslagen binnen de EU. DPA: supabase.com/dpa.",
+          "Mollie (betalingsverwerker), gevestigd in Nederland en volledig AVG-conform.",
+          "Cal.com (online afsprakenplanner), gevestigd in de Verenigde Staten. Overdracht is afgedekt door SCCs. DPA: cal.com/legal.",
+          "Resend (transactionele e-mail), gevestigd in de Verenigde Staten. Overdracht is afgedekt door SCCs. DPA: resend.com/legal/dpa.",
+          "Upstash (rate-limiting), EU-regio (Frankfurt), AVG-conform.",
         ],
       },
       {
@@ -66,20 +67,20 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
       {
         heading: "Uw rechten",
         body: [
-          `U heeft het recht om uw gegevens in te zien, te corrigeren of te laten verwijderen. Stuur hiervoor een e-mail naar ${SITE.email} — wij reageren binnen 30 dagen. U heeft ook het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl).`,
+          `U heeft het recht om uw gegevens in te zien, te corrigeren of te laten verwijderen. Stuur hiervoor een e-mail naar ${SITE.email}. Wij reageren binnen 30 dagen. U heeft ook het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl).`,
         ],
       },
       {
         heading: "Cookies",
         body: [
-          "Wij plaatsen alleen technische cookies die noodzakelijk zijn voor het functioneren van de website. Wij gebruiken privacyvriendelijke analytics (Vercel Analytics en Speed Insights) zonder cookies. Bij het plannen van een afspraak of het afrekenen worden ook cookies geplaatst door Cal.com en Mollie binnen hun eigen embed of checkout — zie hun respectievelijke privacyverklaringen.",
+          "Wij plaatsen alleen technische cookies die noodzakelijk zijn voor het functioneren van de website. Wij gebruiken privacyvriendelijke analytics (Vercel Analytics en Speed Insights) zonder cookies. Bij het plannen van een afspraak of het afrekenen worden ook cookies geplaatst door Cal.com en Mollie binnen hun eigen embed of checkout. Zie hun respectievelijke privacyverklaringen.",
         ],
       },
     ],
   },
   en: {
     title: "Privacy policy",
-    updated: "Last updated: " + new Date().toLocaleDateString("en-GB", { year: "numeric", month: "long" }),
+    updated: "Last updated: " + new Date().toLocaleDateString("en-GB", { timeZone: TIME_ZONE, year: "numeric", month: "long" }),
     sections: [
       {
         heading: "Company details",
@@ -109,12 +110,12 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
         heading: "Data processors",
         body: [
           "We share your data with the following sub-processors, each of whom has signed a Data Processing Agreement (DPA) compliant with the GDPR:",
-          "Vercel (hosting and serverless infrastructure) — based in the United States. Transfers are covered by Standard Contractual Clauses (SCCs). DPA: vercel.com/legal/dpa.",
-          "Supabase (database, EU region) — data is stored within the EU. DPA: supabase.com/dpa.",
-          "Mollie (payment processor) — based in the Netherlands and fully GDPR-compliant.",
-          "Cal.com (online appointment scheduling) — based in the United States. Transfers are covered by SCCs. DPA: cal.com/legal.",
-          "Resend (transactional email) — based in the United States. Transfers are covered by SCCs. DPA: resend.com/legal/dpa.",
-          "Upstash (rate-limiting) — EU region (Frankfurt), GDPR-compliant.",
+          "Vercel (hosting and serverless infrastructure), based in the United States. Transfers are covered by Standard Contractual Clauses (SCCs). DPA: vercel.com/legal/dpa.",
+          "Supabase (database, EU region), data is stored within the EU. DPA: supabase.com/dpa.",
+          "Mollie (payment processor), based in the Netherlands and fully GDPR-compliant.",
+          "Cal.com (online appointment scheduling), based in the United States. Transfers are covered by SCCs. DPA: cal.com/legal.",
+          "Resend (transactional email), based in the United States. Transfers are covered by SCCs. DPA: resend.com/legal/dpa.",
+          "Upstash (rate-limiting), EU region (Frankfurt), GDPR-compliant.",
         ],
       },
       {
@@ -128,13 +129,13 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
       {
         heading: "Your rights",
         body: [
-          `You have the right to access, correct, or delete your data. Email ${SITE.email} to exercise these rights — we respond within 30 days. You may also lodge a complaint with the Dutch Data Protection Authority (autoriteitpersoonsgegevens.nl).`,
+          `You have the right to access, correct, or delete your data. Email ${SITE.email} to exercise these rights. We respond within 30 days. You may also lodge a complaint with the Dutch Data Protection Authority (autoriteitpersoonsgegevens.nl).`,
         ],
       },
       {
         heading: "Cookies",
         body: [
-          "We only set technical cookies necessary for the website to function. We use privacy-friendly analytics (Vercel Analytics and Speed Insights) without cookies. When you schedule an appointment or check out, cookies are also set by Cal.com and Mollie inside their own embed or checkout — see their respective privacy policies.",
+          "We only set technical cookies necessary for the website to function. We use privacy-friendly analytics (Vercel Analytics and Speed Insights) without cookies. When you schedule an appointment or check out, cookies are also set by Cal.com and Mollie inside their own embed or checkout. See their respective privacy policies.",
         ],
       },
     ],
@@ -144,7 +145,7 @@ export const PRIVACY: Record<Locale, { title: string; updated: string; sections:
 export const TERMS: Record<Locale, { title: string; updated: string; sections: LegalSection[] }> = {
   nl: {
     title: "Algemene voorwaarden",
-    updated: "Laatst bijgewerkt: " + new Date().toLocaleDateString("nl-NL", { year: "numeric", month: "long" }),
+    updated: "Laatst bijgewerkt: " + new Date().toLocaleDateString("nl-NL", { timeZone: TIME_ZONE, year: "numeric", month: "long" }),
     sections: [
       {
         heading: "Bedrijfsgegevens",
@@ -168,7 +169,7 @@ export const TERMS: Record<Locale, { title: string; updated: string; sections: L
       {
         heading: "Gezondheid en contra-indicaties",
         body: [
-          "Sommige behandelingen (zoals moxibustie en hete steen massage) zijn niet geschikt bij koorts, acute ontstekingen of tijdens bepaalde fases van een zwangerschap. Meld eventuele gezondheidsklachten of medicatie altijd vooraf — wij adviseren u graag persoonlijk.",
+          "Sommige behandelingen (zoals moxibustie en hete steen massage) zijn niet geschikt bij koorts, acute ontstekingen of tijdens bepaalde fases van een zwangerschap. Meld eventuele gezondheidsklachten of medicatie altijd vooraf. Wij adviseren u graag persoonlijk.",
         ],
       },
       {
@@ -187,7 +188,7 @@ export const TERMS: Record<Locale, { title: string; updated: string; sections: L
   },
   en: {
     title: "Terms and conditions",
-    updated: "Last updated: " + new Date().toLocaleDateString("en-GB", { year: "numeric", month: "long" }),
+    updated: "Last updated: " + new Date().toLocaleDateString("en-GB", { timeZone: TIME_ZONE, year: "numeric", month: "long" }),
     sections: [
       {
         heading: "Company details",
@@ -211,7 +212,7 @@ export const TERMS: Record<Locale, { title: string; updated: string; sections: L
       {
         heading: "Health and contraindications",
         body: [
-          "Some treatments (such as moxibustion and hot stone massage) are not suitable during fever, acute inflammation, or certain phases of pregnancy. Please disclose any health concerns or medications beforehand — we'll be happy to advise.",
+          "Some treatments (such as moxibustion and hot stone massage) are not suitable during fever, acute inflammation, or certain phases of pregnancy. Please disclose any health concerns or medications beforehand. We'll be happy to advise.",
         ],
       },
       {

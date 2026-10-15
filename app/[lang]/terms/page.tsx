@@ -11,7 +11,7 @@ export async function generateMetadata(props: PageProps<"/[lang]/terms">) {
   return buildMetadata({
     locale: lang,
     path: "/terms",
-    title: `${doc.title} · Majorille Garden`,
+    title: doc.title,
     description:
       lang === "nl"
         ? "Algemene voorwaarden van Majorille Garden: afspraken en annuleren, betalingen, producten, retourbeleid en aansprakelijkheid."

@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { togglePromo, deletePromo } from "@/lib/promo-actions";
 import type { Promo } from "@/lib/promos";
+import { TIME_ZONE } from "@/lib/datetime";
 
 /**
  * One row in the promo list. Toggle = soft-disable (active flag), Delete =
@@ -79,6 +80,7 @@ export function PromoRow({ promo }: { promo: Promo }) {
           <span className="text-xs text-muted">
             verloopt{" "}
             {new Intl.DateTimeFormat("nl-NL", {
+              timeZone: TIME_ZONE,
               day: "numeric",
               month: "short",
               year: "numeric",

@@ -29,13 +29,13 @@ function ssrConsent(): string {
 const COPY: Record<Locale, { title: string; body: string; accept: string; learn: string }> = {
   nl: {
     title: "Cookies",
-    body: "Deze site gebruikt technische cookies en privacyvriendelijke analytics (Vercel) zonder cookies. Bij het plannen van een afspraak of afrekenen worden ook cookies geplaatst door Cal.com en Mollie — meer in onze privacyverklaring.",
+    body: "Deze site gebruikt technische cookies en privacyvriendelijke analytics (Vercel) zonder cookies. Bij het plannen van een afspraak of afrekenen worden ook cookies geplaatst door Cal.com en Mollie. Meer in onze privacyverklaring.",
     accept: "Begrepen",
     learn: "Privacy",
   },
   en: {
     title: "Cookies",
-    body: "This site uses technical cookies and privacy-friendly analytics (Vercel) without cookies. When you schedule an appointment or check out, cookies are also set by Cal.com and Mollie — see our privacy policy for details.",
+    body: "This site uses technical cookies and privacy-friendly analytics (Vercel) without cookies. When you schedule an appointment or check out, cookies are also set by Cal.com and Mollie. See our privacy policy for details.",
     accept: "Got it",
     learn: "Privacy",
   },

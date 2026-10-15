@@ -11,6 +11,7 @@ import { CookieBanner } from "@/components/layout/CookieBanner";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { getAnnouncement, isAnnouncementEnabled } from "@/lib/site-settings";
 import { isVacationActive } from "@/lib/vacation";
+import { TITLE_SUFFIX } from "@/lib/seo";
 import { LOCALES, getDictionary, hasLocale } from "./dictionaries";
 
 // ISR for the whole public subtree: statically generated pages re-render at
@@ -36,7 +37,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.majorillegarden.nl"),
   title: {
     default: "Majorille Garden · Marokkaanse wellness in Amsterdam",
-    template: "%s · Majorille Garden",
+    // Child pages pass a BARE title (see buildMetadata) — the brand is appended
+    // here, exactly once.
+    template: `%s${TITLE_SUFFIX}`,
   },
   description:
     "Marokkaans geïnspireerde wellness in Amsterdam: warme zandbad-therapie, bio head spa, traditionele massage, kruidenstempel en biologische producten.",

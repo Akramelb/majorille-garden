@@ -12,14 +12,17 @@ export async function generateMetadata(props: PageProps<"/[lang]/about">) {
   return buildMetadata({
     locale: lang,
     path: "/about",
+    // Brand is already part of the phrase ("Over Majorille Garden"), so this
+    // title stands alone rather than taking the suffix a second time.
+    titleAbsolute: true,
     title:
       lang === "nl"
         ? "Over Majorille Garden · Marokkaanse traditie, biologisch en eerlijk"
         : "About Majorille Garden · Moroccan tradition, organic and fair",
     description:
       lang === "nl"
-        ? "Ontdek het verhaal achter Majorille Garden — Marokkaanse rituelen, biologische producten en eerlijke samenwerkingen met Berbervrouwen uit Souss-Massa."
-        : "The story behind Majorille Garden — Moroccan rituals, organic products, and fair partnerships with Berber women from Souss-Massa.",
+        ? "Ontdek het verhaal achter Majorille Garden: Marokkaanse rituelen, biologische producten en eerlijke samenwerkingen met Berbervrouwen uit Souss-Massa."
+        : "The story behind Majorille Garden: Moroccan rituals, organic products, and fair partnerships with Berber women from Souss-Massa.",
   });
 }
 
@@ -54,8 +57,8 @@ export default async function AboutPage(props: PageProps<"/[lang]/about">) {
                   src={heroAbout}
                   alt={
                     lang === "nl"
-                      ? "Het interieur van Majorille Garden — warme Marokkaans-geïnspireerde sfeer"
-                      : "The interior of Majorille Garden — warm Moroccan-inspired atmosphere"
+                      ? "Het interieur van Majorille Garden, warme Marokkaans-geïnspireerde sfeer"
+                      : "The interior of Majorille Garden, warm Moroccan-inspired atmosphere"
                   }
                   fill
                   priority

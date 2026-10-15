@@ -37,7 +37,7 @@ House rules for this repo. Short, enforceable, project-specific. If a rule here 
 
 20. **The booking slug for an event is `<service.bookingSlug>-<audience>`.** Two events per service (women/men) with separate availability schedules. When adding a service, both events have to exist in Cal.com or the embed 404s.
 21. **`SITE.bookingConfigured` is the kill switch** for the embed — when `NEXT_PUBLIC_CAL_USERNAME` is unset, the booking page falls back to phone/email. Preserve that fallback when changing the form.
-22. **Cal.com account: `majorillegarden`,** owned by `webforce.agencynl@gmail.com`. The parents are members (not owners) so they can see bookings without renaming the account.
+22. **Cal.com account: `majorillegarden`,** owned by `majorillegarden@gmail.com` (changed from `minekram43@gmail.com` on 2026-09-03, verified via the v2 API). `organizationId` is `null`: there is no team, so there are no members and booking mail goes to the profile email only.
 
 ## Secrets
 

@@ -39,7 +39,7 @@ export async function generateMetadata(props: PageProps<"/[lang]/reviews">) {
   return buildMetadata({
     locale: lang,
     path: "/reviews",
-    title: lang === "nl" ? "Reviews · Majorille Garden" : "Reviews · Majorille Garden",
+    title: "Reviews",
     description: COPY[lang].intro,
   });
 }

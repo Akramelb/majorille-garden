@@ -6,6 +6,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { getAdminUser } from "@/lib/supabase/auth-server";
+import { TIME_ZONE, amsterdamHour } from "@/lib/datetime";
 import { getSupabaseServiceClient, hasSupabaseConfig } from "@/lib/supabase";
 import { getReviewStats, getReviewsByStatus } from "@/lib/reviews";
 import { getAllPosts } from "@/lib/blog";
@@ -201,7 +202,7 @@ export default async function AdminDashboard() {
 // Helpers + small server components
 
 function welcome(email: string) {
-  const hour = new Date().getHours();
+  const hour = amsterdamHour();
   const tod =
     hour < 6
       ? "Goedenacht"
@@ -215,6 +216,7 @@ function welcome(email: string) {
   return {
     title: cap ? `${tod}, ${cap}` : tod,
     subtitle: new Date().toLocaleDateString("nl-NL", {
+      timeZone: TIME_ZONE,
       weekday: "long",
       day: "numeric",
       month: "long",
@@ -225,6 +227,7 @@ function welcome(email: string) {
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleString("nl-NL", {
+    timeZone: TIME_ZONE,
     day: "2-digit",
     month: "short",
     hour: "2-digit",

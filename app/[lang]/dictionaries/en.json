@@ -18,7 +18,7 @@
   "intro": {
     "eyebrow": "The power of nature",
     "title": "Discover the healing power of natural therapy",
-    "body": "Welcome to Majorille Garden. We believe in the healing power of nature — our treatments and organic products are designed to restore balance and lasting wellbeing. A unique blend of massage, nature, and soul to bring you back into balance."
+    "body": "Welcome to Majorille Garden. We believe in the healing power of nature: our treatments and organic products are designed to restore balance and lasting wellbeing. A unique blend of massage, nature, and soul to bring you back into balance."
   },
   "loyaltySection": {
     "eyebrow": "Loyalty packages",
@@ -28,7 +28,7 @@
   "loyaltyBonus": {
     "eyebrow": "With every package",
     "title": "Complimentary Lunasea Luxe foot bath & massage",
-    "body": "With every loyalty package purchase, you'll receive a soothing Lunasea Luxe foot bath treatment with massage — entirely as our gift."
+    "body": "With every loyalty package purchase, you'll receive a soothing Lunasea Luxe foot bath treatment with massage, entirely as our gift."
   },
   "socialDeal": {
     "eyebrow": "Social Deal",
@@ -106,16 +106,16 @@
     "placeholder": "you@email.com",
     "subscribe": "Subscribe",
     "success": "Thanks for subscribing.",
-    "error": "Subscription failed — please try again."
+    "error": "Subscription failed. Please try again."
   },
   "vacation": {
-    "banner": "We're on holiday through 15 August — book ahead now for dates from 16 August.",
+    "banner": "We're on holiday through 15 August. Book ahead now for dates from 16 August.",
     "bookingTitle": "Summer break through 15 August",
-    "bookingBody": "Majorille Garden is on holiday through 15 August. You can still reserve and pay now — after payment, pick a date from 16 August in the calendar.",
+    "bookingBody": "Majorille Garden is on holiday through 15 August. You can still reserve and pay now. After payment, pick a date from 16 August in the calendar.",
     "bookingReturnNote": "Please note: due to our holiday, appointments are available from 16 August.",
     "shopNotice": "Please note: due to our holiday, orders will be shipped from 16 August.",
-    "contactNotice": "We're on holiday through 15 August — replies may take a little longer than usual.",
-    "contactSuccess": "Thank you! As we're on holiday, our reply may take a little longer than usual — we'll get back to you."
+    "contactNotice": "We're on holiday through 15 August. Replies may take a little longer than usual.",
+    "contactSuccess": "Thank you! As we're on holiday, our reply may take a little longer than usual. We'll get back to you."
   },
   "booking": {
     "title": "Reserve your moment",

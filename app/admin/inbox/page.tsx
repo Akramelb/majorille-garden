@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAdminUser } from "@/lib/supabase/auth-server";
+import { TIME_ZONE, amsterdamDayKey } from "@/lib/datetime";
 import { getActivityFeed, type ActivityItem, type ActivityKind } from "@/lib/activity";
 import { AdminShell, AdminPage } from "@/components/admin/AdminShell";
 
@@ -140,24 +141,28 @@ function Empty({ children }: { children: React.ReactNode }) {
 
 function fmtTime(iso: string): string {
   return new Intl.DateTimeFormat("nl-NL", {
+    timeZone: TIME_ZONE,
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(iso));
 }
 
 function fmtDayLabel(d: Date): string {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const that = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  // Compare calendar days as seen in Amsterdam, not in the runtime zone —
+  // otherwise a 01:00 Amsterdam entry is still "yesterday" to a UTC server.
+  const todayKey = amsterdamDayKey(new Date());
+  const thatKey = amsterdamDayKey(d);
   const diffDays = Math.round(
-    (today.getTime() - that.getTime()) / (1000 * 60 * 60 * 24),
+    (Date.parse(`${todayKey}T00:00:00Z`) - Date.parse(`${thatKey}T00:00:00Z`)) /
+      (1000 * 60 * 60 * 24),
   );
   if (diffDays === 0) return "Vandaag";
   if (diffDays === 1) return "Gisteren";
   return new Intl.DateTimeFormat("nl-NL", {
+    timeZone: TIME_ZONE,
     day: "2-digit",
     month: "short",
-    year: that.getFullYear() === today.getFullYear() ? undefined : "numeric",
+    year: thatKey.slice(0, 4) === todayKey.slice(0, 4) ? undefined : "numeric",
   }).format(d);
 }
 
@@ -167,7 +172,7 @@ function groupByDay(
   const groups = new Map<string, { label: string; items: ActivityItem[] }>();
   for (const item of items) {
     const d = new Date(item.ts);
-    const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    const key = amsterdamDayKey(d);
     const existing = groups.get(key);
     if (existing) {
       existing.items.push(item);

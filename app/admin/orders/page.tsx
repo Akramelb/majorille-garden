@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getAdminUser } from "@/lib/supabase/auth-server";
 import { listOrders, type Order, type OrderStatus } from "@/lib/orders";
 import { getServiceBySlug } from "@/lib/content";
+import { TIME_ZONE } from "@/lib/datetime";
 import { AdminShell, AdminPage } from "@/components/admin/AdminShell";
 import { RefundButton } from "./OrderRow";
 
@@ -245,6 +246,7 @@ function fmtAmount(order: Order): string {
 
 function fmtDate(iso: string): string {
   return new Intl.DateTimeFormat("nl-NL", {
+    timeZone: TIME_ZONE,
     dateStyle: "medium",
     timeStyle: "short",
   }).format(new Date(iso));

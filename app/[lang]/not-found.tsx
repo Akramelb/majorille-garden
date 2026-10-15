@@ -14,7 +14,7 @@ export default function NotFound() {
             Deze pagina is verdwaald in de tuin.
           </h1>
           <p className="mt-4 text-muted">
-            This page wandered off in the garden — laten we u terugbrengen.
+            This page wandered off in the garden. Laten we u terugbrengen.
           </p>
           <div className="mt-10 flex flex-wrap gap-4 justify-center">
             <Link href="/nl" className="btn-primary">

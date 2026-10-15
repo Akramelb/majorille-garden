@@ -13,10 +13,7 @@ export async function generateMetadata(
   return buildMetadata({
     locale: lang,
     path: "/services",
-    title:
-      lang === "nl"
-        ? "Behandelingen · Majorille Garden"
-        : "Treatments · Majorille Garden",
+    title: lang === "nl" ? "Behandelingen" : "Treatments",
     description:
       lang === "nl"
         ? "Onze behandelingen: warme zandbad, bio head spa, traditionele massage, hete steen, kruidenstempel, lichaamsscrub, dry cupping en voedingsadvies."

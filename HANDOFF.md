@@ -88,8 +88,11 @@ You get a preview URL like `majorille-garden-xyz.vercel.app`. Use it for smoke-t
 - All Dutch text is verbatim from the live site (I fixed a few obvious typos like "guur" → "geur"). Skim [lib/content.ts](lib/content.ts) once more.
 - All English text is my translation. Have someone who speaks both languages read through the service descriptions in particular.
 
-### 7. Decide canonical email — 5 min
-The old site used two: `info@majorillegarden.nl` and `majorillegarden@gmail.com`. I've set the build to `info@...`. If the gmail is the one your parents actually check, change `SITE.email` in [lib/content.ts](lib/content.ts) and `NOTIFY_TO` in `.env.local`.
+### 7. Canonical email — decided 2026-09-03
+The old site used two: `info@majorillegarden.nl` and `majorillegarden@gmail.com`. They now have **separate jobs**:
+
+- `NOTIFY_TO` = `majorillegarden@gmail.com` — where owner notifications land (contact form, newsletter, order alerts). Set in `.env.local` **and** in Vercel Production on 2026-09-03. Takes effect on the next deployment.
+- `SITE.email` in [lib/content.ts](lib/content.ts) = `info@majorillegarden.nl` — the public address in the footer, contact page and JSON-LD, and the `reply_to` on transactional mail. Unverified: if `info@` has no live mailbox, customer replies go nowhere — switch this to the gmail too.
 
 ### 8. Photos — review and trim
 50 photos downloaded from JouwWeb live in [public/images/](public/images/). Open the local site and check each page — if any look low-res or unflattering, swap them out. You can put higher-res versions in the same paths and they'll Just Work.

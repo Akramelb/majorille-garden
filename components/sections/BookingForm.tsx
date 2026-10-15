@@ -46,8 +46,8 @@ type Dict = {
 function errorCopy(code: string, locale: Locale): string {
   if (code === "payments-disabled") {
     return locale === "nl"
-      ? "Betalingen zijn momenteel niet beschikbaar — bel of mail ons om te boeken."
-      : "Payments are temporarily unavailable — please call or email us to book.";
+      ? "Betalingen zijn momenteel niet beschikbaar, bel of mail ons om te boeken."
+      : "Payments are temporarily unavailable, please call or email us to book.";
   }
   return locale === "nl"
     ? "Er ging iets mis, probeer opnieuw."
@@ -310,8 +310,8 @@ export function BookingForm({
                     </p>
                     <p className="mt-1 text-xs text-muted leading-relaxed">
                       {locale === "nl"
-                        ? "Open de kalender om te zien of er een geschikt moment vrij is. Je definitieve slot kies je hieronder na betaling — een boeking via deze preview wordt niet bevestigd."
-                        : "Open the calendar to verify a suitable slot is free. You'll lock in your time below after payment — bookings made via this preview will not be honoured."}
+                        ? "Open de kalender om te zien of er een geschikt moment vrij is. Je definitieve slot kies je hieronder na betaling. Een boeking via deze preview wordt niet bevestigd."
+                        : "Open the calendar to verify a suitable slot is free. You'll lock in your time below after payment. Bookings made via this preview will not be honoured."}
                     </p>
                   </div>
                 </div>

@@ -12,10 +12,7 @@ export async function generateMetadata(props: PageProps<"/[lang]/booking">) {
   return buildMetadata({
     locale: lang,
     path: "/booking",
-    title:
-      lang === "nl"
-        ? "Reserveren · Majorille Garden"
-        : "Booking · Majorille Garden",
+    title: lang === "nl" ? "Reserveren" : "Booking",
     description:
       lang === "nl"
         ? "Reserveer een behandeling bij Majorille Garden in Amsterdam. Kies een treatment en plan direct een geschikt moment."

@@ -5,11 +5,29 @@ import { SITE } from "./content";
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.majorillegarden.nl";
 
+/**
+ * Brand suffix appended to every page title. Single source of truth: the root
+ * layout builds its `title.template` from this, and `buildMetadata` uses it for
+ * the OG/Twitter titles (which do NOT inherit the layout's title template).
+ * Pages therefore pass a BARE title and the brand is appended exactly once.
+ */
+export const TITLE_SUFFIX = ` · ${SITE.name}`;
+
 export type PageSeoInput = {
   locale: Locale;
   /** Path WITHOUT locale prefix, e.g. "/about", "/services/bio-head-spa" */
   path: string;
+  /**
+   * Page title WITHOUT the brand suffix (e.g. "Behandelingen"). The root
+   * layout's `title.template` appends the brand to `<title>`, and this helper
+   * appends it to the OG/Twitter titles. Do not append it here or it doubles.
+   */
   title: string;
+  /**
+   * Set for titles that already read as a full brand statement (the home page),
+   * so the brand is not appended and the layout template is bypassed.
+   */
+  titleAbsolute?: boolean;
   description: string;
   /** Absolute or root-relative image URL for OG/Twitter. Defaults to the
    * per-locale ImageResponse route at `/<locale>/opengraph-image`. */
@@ -35,6 +53,7 @@ export function buildMetadata({
   locale,
   path,
   title,
+  titleAbsolute = false,
   description,
   image,
   type = "website",
@@ -47,9 +66,13 @@ export function buildMetadata({
   // Default to the per-locale ImageResponse route so every page gets a
   // valid OG image without callers having to opt in.
   const ogImage = toAbsolute(image ?? `/${locale}/opengraph-image`);
+  // `<title>` gets the brand from the root layout's template, so pass the bare
+  // title. OG/Twitter titles are resolved against their OWN template (unset
+  // here), so they need the brand spelled out.
+  const brandedTitle = titleAbsolute ? title : `${title}${TITLE_SUFFIX}`;
 
   return {
-    title,
+    title: titleAbsolute ? { absolute: title } : title,
     description,
     alternates: {
       canonical,
@@ -63,7 +86,7 @@ export function buildMetadata({
       ? { index: true, follow: true }
       : { index: false, follow: false },
     openGraph: {
-      title,
+      title: brandedTitle,
       description,
       url: canonical,
       siteName: SITE.name,
@@ -75,7 +98,7 @@ export function buildMetadata({
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: brandedTitle,
         },
       ],
       ...(type === "article" && article
@@ -88,7 +111,7 @@ export function buildMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: brandedTitle,
       description,
       images: [ogImage],
     },

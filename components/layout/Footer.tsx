@@ -56,9 +56,9 @@ export function Footer({
         </div>
 
         <div>
-          <h3 className="text-cream text-sm uppercase tracking-[0.18em] mb-5">
+          <h2 className="text-cream text-sm uppercase tracking-[0.18em] mb-5">
             {t.explore}
-          </h3>
+          </h2>
           <ul className="space-y-3 text-sm">
             <li>
               <Link href={base} className="hover:text-terracotta transition">
@@ -125,9 +125,9 @@ export function Footer({
         </div>
 
         <div>
-          <h3 className="text-cream text-sm uppercase tracking-[0.18em] mb-5">
+          <h2 className="text-cream text-sm uppercase tracking-[0.18em] mb-5">
             {t.address}
-          </h3>
+          </h2>
           <address className="not-italic space-y-3 text-sm">
             <div className="flex items-start gap-2">
               <MapPin size={14} className="mt-1 text-terracotta shrink-0" />
@@ -177,9 +177,9 @@ export function Footer({
         </div>
 
         <div>
-          <h3 className="text-cream text-sm uppercase tracking-[0.18em] mb-5">
+          <h2 className="text-cream text-sm uppercase tracking-[0.18em] mb-5">
             {t.hours}
-          </h3>
+          </h2>
           <ul className="space-y-3 text-sm">
             <li className="flex items-start gap-2">
               <Clock size={14} className="mt-1 text-terracotta shrink-0" />

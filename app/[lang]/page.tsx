@@ -34,6 +34,8 @@ export async function generateMetadata(
   return buildMetadata({
     locale: lang,
     path: "/",
+    // Brand-led tagline: it already carries the brand, so no suffix.
+    titleAbsolute: true,
     title:
       lang === "nl"
         ? "Majorille Garden · Marokkaanse wellness in Amsterdam"
@@ -274,7 +276,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
 
           {/* LOYALTY BONUS — Lunasea Luxe voetenbad + massage */}
           <div className="reveal-scroll mt-10 lg:mt-14 border border-gold/20 grid md:grid-cols-[1fr_2fr] gap-6 lg:gap-10 items-center p-6 lg:p-8">
-            <div className="relative aspect-[4/3] overflow-hidden bg-cream/5 rounded-lg shadow-[0_18px_45px_-18px_rgba(0,0,0,0.6)]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-cream/5">
               <Image
                 src="/images/promo/lunasea-voetenbad.webp"
                 alt={dict.loyaltyBonus.title}
@@ -358,7 +360,7 @@ export default async function Home(props: PageProps<"/[lang]">) {
                     {String(idx + 1).padStart(2, "0")}
                   </span>
                   <div className="min-w-0">
-                    <h3 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight group-hover:text-majorelle transition-colors duration-300">
+                    <h3 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight group-hover:text-terracotta transition-colors duration-300">
                       {localized(s.name, lang)}
                     </h3>
                     <p className="mt-2 text-sm text-muted leading-relaxed line-clamp-2">
@@ -389,8 +391,8 @@ export default async function Home(props: PageProps<"/[lang]">) {
                   src={heroAbout}
                   alt={
                     lang === "nl"
-                      ? "Interieur van Majorille Garden — sereen Marokkaans-geïnspireerd"
-                      : "Interior of Majorille Garden — serene Moroccan-inspired space"
+                      ? "Interieur van Majorille Garden, sereen Marokkaans-geïnspireerd"
+                      : "Interior of Majorille Garden, serene Moroccan-inspired space"
                   }
                   fill
                   sizes="(min-width:1024px) 45vw, 100vw"

@@ -31,7 +31,7 @@ export async function generateMetadata(
   return buildMetadata({
     locale: lang,
     path: `/services/${slug}`,
-    title: `${name} · Majorille Garden`,
+    title: name,
     description: tagline,
     image: service.heroImage,
   });
@@ -151,8 +151,8 @@ export default async function ServicePage(
                   src={service.heroImage}
                   alt={
                     lang === "nl"
-                      ? `${localized(service.name, lang)} — sfeerbeeld van de behandeling bij Majorille Garden`
-                      : `${localized(service.name, lang)} — atmosphere of the treatment at Majorille Garden`
+                      ? `${localized(service.name, lang)}: sfeerbeeld van de behandeling bij Majorille Garden`
+                      : `${localized(service.name, lang)}: atmosphere of the treatment at Majorille Garden`
                   }
                   fill
                   priority
@@ -230,8 +230,8 @@ export default async function ServicePage(
                     src={src}
                     alt={
                       lang === "nl"
-                        ? `Indruk van ${localized(service.name, lang)} bij Majorille Garden — beeld ${i + 1}`
-                        : `Impression of ${localized(service.name, lang)} at Majorille Garden — image ${i + 1}`
+                        ? `Indruk van ${localized(service.name, lang)} bij Majorille Garden, beeld ${i + 1}`
+                        : `Impression of ${localized(service.name, lang)} at Majorille Garden, image ${i + 1}`
                     }
                     fill
                     sizes="(min-width:1024px) 25vw, 50vw"

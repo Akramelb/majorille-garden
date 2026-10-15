@@ -109,8 +109,8 @@ export default async function BookingReturn(
           </h1>
           <p className="mt-6 text-lg text-muted leading-relaxed">
             {lang === "nl"
-              ? "Even geduld — we wachten op bevestiging van Mollie."
-              : "Hold on — we're waiting for confirmation from Mollie."}
+              ? "Even geduld, we wachten op bevestiging van Mollie."
+              : "Hold on, we're waiting for confirmation from Mollie."}
           </p>
         </Container>
       </section>
@@ -127,8 +127,8 @@ export default async function BookingReturn(
         </h1>
         <p className="mt-6 text-lg text-muted leading-relaxed">
           {lang === "nl"
-            ? "Geen zorgen — er is niets afgeschreven. Probeer het opnieuw of neem contact met ons op."
-            : "Don't worry — nothing has been charged. Try again or get in touch."}
+            ? "Geen zorgen, er is niets afgeschreven. Probeer het opnieuw of neem contact met ons op."
+            : "Don't worry, nothing has been charged. Try again or get in touch."}
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href={retryHref} className="btn-primary">

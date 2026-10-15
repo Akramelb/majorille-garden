@@ -11,10 +11,10 @@ import type { Locale } from "@/app/[lang]/dictionaries";
 const COPY: Record<Locale, Record<string, string>> = {
   nl: {
     title: "Deel uw ervaring",
-    subtitle: "Laat een review achter — na goedkeuring verschijnt deze op de site.",
+    subtitle: "Laat een review achter, na goedkeuring verschijnt deze op de site.",
     name: "Naam",
     email: "E-mail (optioneel)",
-    emailHint: "Voor een bevestiging — niet zichtbaar op de site.",
+    emailHint: "Voor een bevestiging, niet zichtbaar op de site.",
     invalidEmail: "Vul een geldig e-mailadres in.",
     rating: "Beoordeling",
     treatment: "Behandeling (optioneel)",
@@ -27,10 +27,10 @@ const COPY: Record<Locale, Record<string, string>> = {
   },
   en: {
     title: "Share your experience",
-    subtitle: "Leave a review — it appears on the site once approved.",
+    subtitle: "Leave a review, it appears on the site once approved.",
     name: "Name",
     email: "Email (optional)",
-    emailHint: "For a confirmation — never shown publicly.",
+    emailHint: "For a confirmation, never shown publicly.",
     invalidEmail: "Please enter a valid email address.",
     rating: "Rating",
     treatment: "Treatment (optional)",
@@ -80,7 +80,7 @@ export function ReviewForm({ locale }: { locale: Locale }) {
         aria-hidden
         className="absolute -left-[9999px] w-px h-px"
       />
-      <h3 className="serif text-2xl text-deep-brown">{t.title}</h3>
+      <h2 className="serif text-2xl text-deep-brown">{t.title}</h2>
       <p className="text-sm text-muted -mt-3">{t.subtitle}</p>
 
       <div className="grid sm:grid-cols-2 gap-5">

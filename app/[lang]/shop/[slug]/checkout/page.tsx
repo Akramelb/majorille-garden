@@ -21,8 +21,8 @@ export async function generateMetadata(
     path: `/shop/${slug}/checkout`,
     title:
       lang === "nl"
-        ? `Afrekenen — ${product.name.nl} · Majorille Garden`
-        : `Checkout — ${product.name.en} · Majorille Garden`,
+        ? `Afrekenen: ${product.name.nl}`
+        : `Checkout: ${product.name.en}`,
     description:
       lang === "nl"
         ? "Veilig afrekenen via Mollie."

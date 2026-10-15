@@ -283,11 +283,11 @@ export function contactAckHtml(input: {
   // auto-expires with the window; no redeploy. See lib/vacation.ts.
   const body = isVacationActive()
     ? lang === "nl"
-      ? "Bedankt voor je bericht — we hebben het goed ontvangen. We zijn t/m 15 augustus op vakantie, dus onze reactie kan iets langer duren dan je van ons gewend bent. Je hoort zeker van ons."
-      : "Thank you for reaching out — we've received your message. We're on holiday through 15 August, so our reply may take a little longer than usual, but we'll be in touch."
+      ? "Bedankt voor je bericht. We hebben het goed ontvangen. We zijn t/m 15 augustus op vakantie, dus onze reactie kan iets langer duren dan je van ons gewend bent. Je hoort zeker van ons."
+      : "Thank you for reaching out. We've received your message. We're on holiday through 15 August, so our reply may take a little longer than usual, but we'll be in touch."
     : lang === "nl"
-      ? "Bedankt voor je bericht — we hebben het goed ontvangen. We nemen binnen 24 uur persoonlijk contact met je op."
-      : "Thank you for reaching out — we've received your message and will get back to you personally within 24 hours.";
+      ? "Bedankt voor je bericht. We hebben het goed ontvangen. We nemen binnen 24 uur persoonlijk contact met je op."
+      : "Thank you for reaching out. We've received your message and will get back to you personally within 24 hours.";
   const yourMessageLabel =
     lang === "nl" ? "Jouw bericht" : "Your message";
   return `
@@ -495,16 +495,16 @@ export function orderCustomerHtml(order: Order, lang: "nl" | "en"): string {
     const variantText = lang === "nl" ? display.variantNl : display.variantEn;
     const intro =
       lang === "nl"
-        ? "Bedankt voor je betaling — je behandeling is voor je gereserveerd. Nu nog één laatste stapje: kies hieronder een moment dat jou past."
-        : "Thank you for your payment — your treatment is reserved. One final step: pick a time below that suits you.";
+        ? "Bedankt voor je betaling. Je behandeling is voor je gereserveerd. Nu nog één laatste stapje: kies hieronder een moment dat jou past."
+        : "Thank you for your payment. Your treatment is reserved. One final step: pick a time below that suits you.";
     const cta =
       lang === "nl"
         ? "Kies je moment"
         : "Pick your time";
     const ctaHint =
       lang === "nl"
-        ? "Geen zorgen als je de knop later opent — deze link blijft geldig."
-        : "No rush — this link stays valid if you'd like to come back to it later.";
+        ? "Geen zorgen als je de knop later opent, deze link blijft geldig."
+        : "No rush. This link stays valid if you'd like to come back to it later.";
     const summaryHeading =
       lang === "nl" ? "Je reservering" : "Your reservation";
     const refLabel = lang === "nl" ? "Referentie" : "Reference";
@@ -554,8 +554,8 @@ export function orderCustomerHtml(order: Order, lang: "nl" | "en"): string {
   // ---------- Product order ----------
   const intro =
     lang === "nl"
-      ? "Bedankt voor je bestelling — we hebben je betaling ontvangen en pakken je pakketje met zorg in."
-      : "Thank you for your order — we've received your payment and are carefully preparing your package.";
+      ? "Bedankt voor je bestelling. We hebben je betaling ontvangen en pakken je pakketje met zorg in."
+      : "Thank you for your order. We've received your payment and are carefully preparing your package.";
   const shippingHeading =
     lang === "nl" ? "Verzending" : "Shipping";
   // Keep the delivery promise honest while the salon is on holiday: nothing

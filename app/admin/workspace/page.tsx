@@ -9,6 +9,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { getAdminUser } from "@/lib/supabase/auth-server";
+import { TIME_ZONE } from "@/lib/datetime";
 import {
   getProjectInfo,
   getRecentDeployments,
@@ -472,6 +473,7 @@ function DomainStatusPill({ status }: { status: DomainStatus }) {
 
 function fmtDate(ms: number): string {
   return new Date(ms).toLocaleDateString("nl-NL", {
+    timeZone: TIME_ZONE,
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -489,6 +491,7 @@ function fmtRelative(ms: number): string {
   const d = Math.round(h / 24);
   if (d < 30) return `${d}d ago`;
   return new Date(ms).toLocaleDateString("nl-NL", {
+    timeZone: TIME_ZONE,
     day: "numeric",
     month: "short",
   });

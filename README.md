@@ -118,7 +118,7 @@ Phase 2 introduces a Supabase-backed admin at `/admin` so your parents can edit 
 
 - Original site is in Dutch only — English copy in this build is freshly translated. Have a Dutch speaker review the English service descriptions before launch.
 - Original site had a few typos ("guur" → "geur", "wanner" → "wanneer", "Maan" → "Man" on the booking page). Those have been silently fixed in `content.ts`.
-- The site used two contact emails (`info@majorillegarden.nl` and `majorillegarden@gmail.com`). This build standardises on `info@...` — change in `lib/content.ts` (`SITE.email`) if you'd prefer the gmail.
+- The site used two contact emails, now with separate jobs: `SITE.email` in `lib/content.ts` is `info@majorillegarden.nl` (public address + `reply_to`), while `NOTIFY_TO` is `majorillegarden@gmail.com` (where owner notifications are delivered). See [HANDOFF.md](HANDOFF.md) §7.
 - All photos were re-downloaded from the JouwWeb CDN at the highest available width and now live in `public/images/`. The new site no longer depends on JouwWeb.
 
 ## Project structure

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { AdminShell, AdminPage } from "@/components/admin/AdminShell";
 import { getAdminUser } from "@/lib/supabase/auth-server";
+import { TIME_ZONE } from "@/lib/datetime";
 import {
   getSupabaseServiceClient,
   hasSupabaseConfig,
@@ -45,6 +46,7 @@ export default async function InboundEmailDetail(
     row.subject.startsWith("Re:") ? row.subject : `Re: ${row.subject}`,
   )}`;
   const receivedAt = new Intl.DateTimeFormat("nl-NL", {
+    timeZone: TIME_ZONE,
     dateStyle: "long",
     timeStyle: "short",
   }).format(new Date(row.created_at));

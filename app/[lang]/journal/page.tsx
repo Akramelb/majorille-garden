@@ -16,7 +16,7 @@ const COPY = {
     eyebrow: "Journal",
     title: "Rituelen, kruiden & verhalen",
     intro:
-      "Verhalen over Marokkaanse wellness-tradities, biologische ingrediënten en het ritme van rust — uit de tuin van Majorille.",
+      "Verhalen over Marokkaanse wellness-tradities, biologische ingrediënten en het ritme van rust, uit de tuin van Majorille.",
     empty: "Binnenkort verschijnen hier de eerste verhalen.",
     read: "Lees verder",
   },
@@ -24,7 +24,7 @@ const COPY = {
     eyebrow: "Journal",
     title: "Rituals, herbs & stories",
     intro:
-      "Stories on Moroccan wellness traditions, organic ingredients, and the rhythm of rest — from the Majorille garden.",
+      "Stories on Moroccan wellness traditions, organic ingredients, and the rhythm of rest, from the Majorille garden.",
     empty: "The first stories will appear here soon.",
     read: "Read more",
   },
@@ -36,7 +36,7 @@ export async function generateMetadata(props: PageProps<"/[lang]/journal">) {
   return buildMetadata({
     locale: lang,
     path: "/journal",
-    title: lang === "nl" ? "Journal · Majorille Garden" : "Journal · Majorille Garden",
+    title: "Journal",
     description: COPY[lang].intro,
   });
 }

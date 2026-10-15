@@ -156,7 +156,7 @@ export const SERVICES: Service[] = [
             "Welkom bij de unieke Gouden Zandtherapie ervaring in Nederland. Onze gezuiverde, goudkleurige mineraalrijke zand omhult uw lichaam, stimuleert de bloedsomloop en biedt een diepe ontspanning die u nergens anders vindt.",
           ],
           en: [
-            "You recline in a purpose-built sand bath with lighting, music, and fragrance of your choice — a desert atmosphere, served with a cup of herbal tea.",
+            "You recline in a purpose-built sand bath with lighting, music, and fragrance of your choice: a desert atmosphere, served with a cup of herbal tea.",
             "Welcome to a one-of-a-kind golden sand therapy in the Netherlands. Our purified, mineral-rich golden sand envelops the body, stimulating circulation and offering a depth of relaxation you won't find elsewhere.",
           ],
         },
@@ -170,17 +170,17 @@ export const SERVICES: Service[] = [
         body: {
           nl: [
             "Onze holistische zandbehandeling is een effectieve, natuurlijke methode om uw welzijn te verbeteren:",
-            "Pijnverlichting & spierontspanning — de droge warmte dringt diep door en helpt bij gewrichtspijn (reuma, artrose) en gespannen spieren.",
-            "Diepe stressvermindering — het omhullende gevoel stimuleert de aanmaak van endorfine en brengt u in een diepe, meditatieve rust.",
-            "Natuurlijke detox — de gelijkmatige warmte bevordert gezonde transpiratie waardoor het lichaam toxines afvoert.",
-            "Huidverbetering — het fijne zand werkt als een zachte exfoliant en maakt uw huid zijdezacht.",
+            "Pijnverlichting & spierontspanning: de droge warmte dringt diep door en helpt bij gewrichtspijn (reuma, artrose) en gespannen spieren.",
+            "Diepe stressvermindering: het omhullende gevoel stimuleert de aanmaak van endorfine en brengt u in een diepe, meditatieve rust.",
+            "Natuurlijke detox: de gelijkmatige warmte bevordert gezonde transpiratie waardoor het lichaam toxines afvoert.",
+            "Huidverbetering: het fijne zand werkt als een zachte exfoliant en maakt uw huid zijdezacht.",
           ],
           en: [
             "Our holistic sand treatment is an effective, natural way to improve your wellbeing:",
-            "Pain relief & muscle relaxation — dry heat penetrates deeply, easing joint pain (rheumatism, arthrosis) and tense muscles.",
-            "Deep stress reduction — the enveloping warmth stimulates endorphins and brings you into a meditative calm.",
-            "Natural detox — even warmth promotes healthy perspiration and supports the body's natural detox.",
-            "Skin renewal — the fine sand acts as a gentle exfoliant, leaving skin silky.",
+            "Pain relief & muscle relaxation: dry heat penetrates deeply, easing joint pain (rheumatism, arthrosis) and tense muscles.",
+            "Deep stress reduction: the enveloping warmth stimulates endorphins and brings you into a meditative calm.",
+            "Natural detox: even warmth promotes healthy perspiration and supports the body's natural detox.",
+            "Skin renewal: the fine sand acts as a gentle exfoliant, leaving skin silky.",
           ],
         },
         image: "/images/services/warme-zandbad/02.jpg",
@@ -231,7 +231,7 @@ export const SERVICES: Service[] = [
             "De traditionele massage is een uitnodiging om even te ontsnappen aan de drukte van het dagelijks leven. Deze eeuwenoude technieken brengen lichaam en geest opnieuw in evenwicht. Vanaf het eerste moment ervaart u een diep gevoel van rust, terwijl stress plaatsmaakt voor comfort.",
           ],
           en: [
-            "An invitation to step away from the noise of daily life. Centuries-old techniques bring body and mind back into balance — from the first minute you feel stress softening into comfort.",
+            "An invitation to step away from the noise of daily life. Centuries-old techniques bring body and mind back into balance: from the first minute you feel stress softening into comfort.",
           ],
         },
         image: "/images/services/traditionele-massage/01.jpg",
@@ -243,7 +243,7 @@ export const SERVICES: Service[] = [
             "Met gerichte kneed-, druk- en strijktechnieken laat de massage spierspanning los en stimuleert de bloedsomloop. De behandeling bevordert lichamelijk herstel én mentale ontspanning, en het resultaat is een soepel lichaam en een kalme, vernieuwde geest.",
           ],
           en: [
-            "Targeted kneading, pressure, and gliding strokes release muscle tension and stimulate circulation. The treatment supports physical recovery and mental ease — leaving a supple body and a quietly renewed mind.",
+            "Targeted kneading, pressure, and gliding strokes release muscle tension and stimulate circulation. The treatment supports physical recovery and mental ease, leaving a supple body and a quietly renewed mind.",
           ],
         },
         image: "/images/services/traditionele-massage/02.jpg",
@@ -255,8 +255,8 @@ export const SERVICES: Service[] = [
         durationMin: 30,
         priceCents: 4000,
         description: {
-          nl: "Een gerichte massage met traditionele Marokkaanse oliën — ideaal voor het verlichten van spanning in schouders, nek en rug.",
-          en: "A focused massage with traditional Moroccan oils — ideal for releasing tension in the shoulders, neck and back.",
+          nl: "Een gerichte massage met traditionele Marokkaanse oliën, ideaal voor het verlichten van spanning in schouders, nek en rug.",
+          en: "A focused massage with traditional Moroccan oils, ideal for releasing tension in the shoulders, neck and back.",
         },
       },
       {
@@ -292,10 +292,10 @@ export const SERVICES: Service[] = [
     ],
     intro: {
       nl: [
-        "Bij Majorille Garden staat verfijning centraal. Onze private headspa is geworteld in de rust en tijdloze esthetiek van de tuinen aan de voet van het Atlasgebergte — een plek waar natuur, stilte en pure schoonheid samenkomen.",
+        "Bij Majorille Garden staat verfijning centraal. Onze private headspa is geworteld in de rust en tijdloze esthetiek van de tuinen aan de voet van het Atlasgebergte, een plek waar natuur, stilte en pure schoonheid samenkomen.",
       ],
       en: [
-        "Refinement is the heart of Majorille Garden. Our private headspa is rooted in the calm and timeless aesthetic of the gardens at the foot of the Atlas mountains — where nature, silence, and pure beauty meet.",
+        "Refinement is the heart of Majorille Garden. Our private headspa is rooted in the calm and timeless aesthetic of the gardens at the foot of the Atlas mountains, where nature, silence, and pure beauty meet.",
       ],
     },
     sections: [
@@ -326,7 +326,7 @@ export const SERVICES: Service[] = [
           ],
           en: [
             "True beauty begins with inner and outer balance. A healthy, nourished scalp is the foundation for strong, vibrant hair.",
-            "Years of scalp expertise meet refined massage techniques that stimulate circulation and ease tension. We use only Morocco's most precious organic ingredients: hand-pressed argan oil from Souss-Massa and mineral-rich rhassoul — celebrated for their purifying, deeply nourishing, and restorative effects.",
+            "Years of scalp expertise meet refined massage techniques that stimulate circulation and ease tension. We use only Morocco's most precious organic ingredients: hand-pressed argan oil from Souss-Massa and mineral-rich rhassoul, celebrated for their purifying, deeply nourishing, and restorative effects.",
           ],
         },
       },
@@ -361,8 +361,8 @@ export const SERVICES: Service[] = [
         durationMin: 120,
         priceCents: 9000,
         description: {
-          nl: "Onze meest exclusieve behandeling: volledige detox, premium haartherapie, uitgebreide ontspanningsmassage en een complete hoofd-, nek- en schouderbehandeling — de ultieme wellnessbeleving.",
-          en: "Our most exclusive treatment: full detox, premium hair therapy, an extended relaxation massage, and a complete head, neck and shoulder ritual — the ultimate wellness experience.",
+          nl: "Onze meest exclusieve behandeling: volledige detox, premium haartherapie, uitgebreide ontspanningsmassage en een complete hoofd-, nek- en schouderbehandeling. De ultieme wellnessbeleving.",
+          en: "Our most exclusive treatment: full detox, premium hair therapy, an extended relaxation massage, and a complete head, neck and shoulder ritual. The ultimate wellness experience.",
         },
       },
     ],
@@ -383,7 +383,7 @@ export const SERVICES: Service[] = [
     ],
     intro: {
       nl: [
-        "Stap binnen in een oase van rust en ervaar de diep ontspannende kracht van de hete steen massage. Gladde, verwarmde basaltstenen worden op specifieke punten van het lichaam geplaatst — de doordringende warmte verzacht de spieren, waardoor uw masseur dieper en effectiever kan werken.",
+        "Stap binnen in een oase van rust en ervaar de diep ontspannende kracht van de hete steen massage. Gladde, verwarmde basaltstenen worden op specifieke punten van het lichaam geplaatst. De doordringende warmte verzacht de spieren, waardoor uw masseur dieper en effectiever kan werken.",
       ],
       en: [
         "Step into a calm where warm, smooth basalt stones rest on the body. The radiant warmth softens muscle tissue, letting your therapist work more deeply and effectively.",
@@ -417,7 +417,7 @@ export const SERVICES: Service[] = [
             "We gebruiken uitsluitend natuurlijke, biologische oliën die passen bij uw huid en wensen. Meer dan een massage: een complete wellnesservaring die het zelfherstellende vermogen van uw lichaam activeert.",
           ],
           en: [
-            "We use only natural, organic oils chosen for your skin and intentions. More than a massage — a complete wellness experience that activates your body's natural capacity to heal.",
+            "We use only natural, organic oils chosen for your skin and intentions. More than a massage: a complete wellness experience that activates your body's natural capacity to heal.",
           ],
         },
         image: "/images/services/hete-steen-massage/02.jpg",
@@ -464,8 +464,8 @@ export const SERVICES: Service[] = [
     sections: [
       {
         title: {
-          nl: "Moxibustie — traditionele warmtetherapie",
-          en: "Moxibustion — traditional heat therapy",
+          nl: "Moxibustie: traditionele warmtetherapie",
+          en: "Moxibustion: traditional heat therapy",
         },
         body: {
           nl: [
@@ -518,8 +518,8 @@ export const SERVICES: Service[] = [
         durationMin: 30,
         priceCents: 5000,
         description: {
-          nl: "Verwarmde kruidenstempels met arganolie en Marokkaanse kruiden glijden over rug en schouders — kort maar verkwikkend.",
-          en: "Warm herbal stamps with argan oil and Moroccan herbs glide over the back and shoulders — short but invigorating.",
+          nl: "Verwarmde kruidenstempels met arganolie en Marokkaanse kruiden glijden over rug en schouders, kort maar verkwikkend.",
+          en: "Warm herbal stamps with argan oil and Moroccan herbs glide over the back and shoulders, short but invigorating.",
         },
       },
       {
@@ -527,8 +527,8 @@ export const SERVICES: Service[] = [
         durationMin: 60,
         priceCents: 8500,
         description: {
-          nl: "Een volledige behandeling waarbij verwarmde kruidenstempels het gehele lichaam masseren — een diep ontspannende combinatie van warmte, geur en gerichte drukpunten.",
-          en: "A full ritual where warm herbal stamps work across the entire body — a deeply relaxing blend of heat, aroma and targeted pressure.",
+          nl: "Een volledige behandeling waarbij verwarmde kruidenstempels het gehele lichaam masseren: een diep ontspannende combinatie van warmte, geur en gerichte drukpunten.",
+          en: "A full ritual where warm herbal stamps work across the entire body: a deeply relaxing blend of heat, aroma and targeted pressure.",
         },
       },
     ],
@@ -552,7 +552,7 @@ export const SERVICES: Service[] = [
         "Bij Majorille Garden bieden we scrubs die zorgvuldig zijn samengesteld om uw huid te vernieuwen en te revitaliseren. Onze unieke formules combineren de kracht van de natuur met de expertise van traditionele schoonheidsrituelen.",
       ],
       en: [
-        "Majorille Garden's scrubs are carefully composed to renew and revitalise the skin — natural ingredients meet centuries of beauty ritual.",
+        "Majorille Garden's scrubs are carefully composed to renew and revitalise the skin: natural ingredients meet centuries of beauty ritual.",
       ],
     },
     sections: [
@@ -575,7 +575,7 @@ export const SERVICES: Service[] = [
             "Onze scrubs bevatten een rijke mix van natuurlijke en biologische ingrediënten: voedende kokosolie, verzachtende honing, kalmerende lavendel en revitaliserend zeezout. Samen hydrateren, beschermen en herstellen ze de huid, terwijl een subtiele geur en zijdezachte textuur de behandeling tot een echte rustmoment maken.",
           ],
           en: [
-            "A rich blend of natural, organic ingredients: nourishing coconut oil, soothing honey, calming lavender, and revitalising sea salt. Together they hydrate, protect, and restore — with a subtle scent and silky finish that turns the treatment into a true moment of pause.",
+            "A rich blend of natural, organic ingredients: nourishing coconut oil, soothing honey, calming lavender, and revitalising sea salt. Together they hydrate, protect, and restore, with a subtle scent and silky finish that turns the treatment into a true moment of pause.",
           ],
         },
         image: "/images/services/lichaam-scrub/02.jpg",
@@ -606,10 +606,10 @@ export const SERVICES: Service[] = [
     ],
     intro: {
       nl: [
-        "Dry Cupping is een effectieve, traditionele therapie gericht op het mobiliseren en detoxificeren van het onderhuids bindweefsel. Door een lokaal vacuüm te creëren worden cups op de huid geplaatst en vervolgens bewogen — dit stimuleert de doorbloeding en lymfedrainage en helpt afvalstoffen efficiënt af te voeren.",
+        "Dry Cupping is een effectieve, traditionele therapie gericht op het mobiliseren en detoxificeren van het onderhuids bindweefsel. Door een lokaal vacuüm te creëren worden cups op de huid geplaatst en vervolgens bewogen. Dit stimuleert de doorbloeding en lymfedrainage en helpt afvalstoffen efficiënt af te voeren.",
       ],
       en: [
-        "Dry Cupping is an effective traditional therapy that mobilises and detoxifies the connective tissue beneath the skin. A local vacuum lifts the tissue and the cups are moved across — stimulating circulation and lymphatic drainage to flush out built-up waste.",
+        "Dry Cupping is an effective traditional therapy that mobilises and detoxifies the connective tissue beneath the skin. A local vacuum lifts the tissue and the cups are moved across, stimulating circulation and lymphatic drainage to flush out built-up waste.",
       ],
     },
     sections: [
@@ -620,10 +620,10 @@ export const SERVICES: Service[] = [
         },
         body: {
           nl: [
-            "We gebruiken uitsluitend hoogwaardige biologische oliën — koudgeperste arganolie of jojoba — die voorkomen dat de huid geïrriteerd raakt en zorgen voor een soepele beweging van de cups. Deze oliën hebben van nature voedende en hydraterende eigenschappen, en kunnen worden verrijkt met etherische oliën voor extra effect.",
+            "We gebruiken uitsluitend hoogwaardige biologische oliën (koudgeperste arganolie of jojoba) die voorkomen dat de huid geïrriteerd raakt en zorgen voor een soepele beweging van de cups. Deze oliën hebben van nature voedende en hydraterende eigenschappen, en kunnen worden verrijkt met etherische oliën voor extra effect.",
           ],
           en: [
-            "Only high-quality cold-pressed organic oils — argan or jojoba — prevent irritation and let the cups glide smoothly. They nourish and hydrate the skin, and can be enriched with pure essential oils when extra therapeutic effect is desired.",
+            "Only high-quality cold-pressed organic oils (argan or jojoba) prevent irritation and let the cups glide smoothly. They nourish and hydrate the skin, and can be enriched with pure essential oils when extra therapeutic effect is desired.",
           ],
         },
         image: "/images/services/dry-cupping/01.jpg",
@@ -638,7 +638,7 @@ export const SERVICES: Service[] = [
             "De combinatie van mechanische vacuümwerking en voedende oliën levert een tweeledig voordeel: het lichaam ontspant diep, terwijl huid en bindweefsel worden gestimuleerd tot regeneratie. Lichte tijdelijke verkleuringen zijn normaal; het resultaat is een duurzaam gevoel van energie en soepelheid.",
           ],
           en: [
-            "The combination of vacuum action and nourishing oils brings a dual benefit: deep bodily relaxation while the skin and connective tissue are stimulated to regenerate. Light, temporary marks are normal — the lasting impression is one of energy and ease.",
+            "The combination of vacuum action and nourishing oils brings a dual benefit: deep bodily relaxation while the skin and connective tissue are stimulated to regenerate. Light, temporary marks are normal. The lasting impression is one of energy and ease.",
           ],
         },
         image: "/images/services/dry-cupping/02.jpg",
@@ -686,12 +686,12 @@ export const SERVICES: Service[] = [
         },
         body: {
           nl: [
-            "Onze adviseurs werken vanuit een holistische visie — geen standaard dieetlijst, maar persoonlijk advies dat rekening houdt met uw unieke constitutie. We richten ons op natuurlijke, onbewerkte en biologische producten die de basis vormen van de Majorille Garden filosofie.",
+            "Onze adviseurs werken vanuit een holistische visie: geen standaard dieetlijst, maar persoonlijk advies dat rekening houdt met uw unieke constitutie. We richten ons op natuurlijke, onbewerkte en biologische producten die de basis vormen van de Majorille Garden filosofie.",
             "Of u nu uw haar en huid wilt versterken, uw energie wilt verbeteren of uw spijsvertering wilt ondersteunen: een plan op maat legt de fundering voor een gezonde levensstijl.",
           ],
           en: [
-            "Our advisors work holistically — no generic diet list, but personalised guidance tuned to your constitution. We focus on natural, unprocessed, organic ingredients that sit at the heart of Majorille Garden's philosophy.",
-            "Whether you want stronger hair and skin, more energy, or better digestion — a plan made for you lays the foundation for a durable healthy lifestyle.",
+            "Our advisors work holistically: no generic diet list, but personalised guidance tuned to your constitution. We focus on natural, unprocessed, organic ingredients that sit at the heart of Majorille Garden's philosophy.",
+            "Whether you want stronger hair and skin, more energy, or better digestion, a plan made for you lays the foundation for a durable healthy lifestyle.",
           ],
         },
         image: "/images/services/voedingsadvies/01.jpg",
@@ -790,8 +790,8 @@ export const FAQS: FAQ[] = [
       en: "What kinds of treatments do you offer?",
     },
     answer: {
-      nl: "Wij combineren traditionele Marokkaanse rituelen met biologische producten — onder andere warme zandbad-therapie, traditionele massage, bio head spa, hete steen massage, kruidenstempel massage, lichaamsscrub, dry cupping en voedingsadvies.",
-      en: "We combine traditional Moroccan rituals with organic products — including warm sand bath therapy, traditional massage, bio head spa, hot stone, herbal stamp, body scrub, dry cupping and nutritional advice.",
+      nl: "Wij combineren traditionele Marokkaanse rituelen met biologische producten: onder andere warme zandbad-therapie, traditionele massage, bio head spa, hete steen massage, kruidenstempel massage, lichaamsscrub, dry cupping en voedingsadvies.",
+      en: "We combine traditional Moroccan rituals with organic products, including warm sand bath therapy, traditional massage, bio head spa, hot stone, herbal stamp, body scrub, dry cupping and nutritional advice.",
     },
   },
   {
@@ -800,8 +800,8 @@ export const FAQS: FAQ[] = [
       en: "Are your organic products certified?",
     },
     answer: {
-      nl: "Ja — al onze biologische producten zijn gecertificeerd en duurzaam geproduceerd, vaak in samenwerking met Berbervrouwen die hun eeuwenoude kennis met ons delen.",
-      en: "Yes — all of our organic products are certified and sustainably produced, often in partnership with Berber women who share their centuries-old knowledge.",
+      nl: "Ja, al onze biologische producten zijn gecertificeerd en duurzaam geproduceerd, vaak in samenwerking met Berbervrouwen die hun eeuwenoude kennis met ons delen.",
+      en: "Yes, all of our organic products are certified and sustainably produced, often in partnership with Berber women who share their centuries-old knowledge.",
     },
   },
   {
@@ -810,8 +810,8 @@ export const FAQS: FAQ[] = [
       en: "How do I make an appointment?",
     },
     answer: {
-      nl: "Reserveer eenvoudig via onze boekingspagina, of neem contact op via telefoon (+31 6 4128 4643) of e-mail (info@majorillegarden.nl). Behandelingen zijn op afspraak — men-to-men en woman-to-woman.",
-      en: "Book directly via our booking page, or get in touch by phone (+31 6 4128 4643) or email (info@majorillegarden.nl). Treatments are by appointment — men-to-men and woman-to-woman.",
+      nl: "Reserveer eenvoudig via onze boekingspagina, of neem contact op via telefoon (+31 6 4128 4643) of e-mail (info@majorillegarden.nl). Behandelingen zijn op afspraak, men-to-men en woman-to-woman.",
+      en: "Book directly via our booking page, or get in touch by phone (+31 6 4128 4643) or email (info@majorillegarden.nl). Treatments are by appointment, men-to-men and woman-to-woman.",
     },
   },
   {
@@ -830,8 +830,8 @@ export const FAQS: FAQ[] = [
       en: "Are there treatments I should avoid?",
     },
     answer: {
-      nl: "Sommige behandelingen — zoals moxibustie, hete steen massage en de warme zandbad-therapie — zijn niet geschikt bij koorts, acute ontstekingen of in bepaalde fases van een zwangerschap. Meld eventuele gezondheidsklachten of medicatie altijd vooraf; wij adviseren u graag persoonlijk.",
-      en: "Some treatments — such as moxibustion, hot stone massage, and the warm sand bath — aren't suitable during fever, acute inflammation, or certain phases of pregnancy. Always disclose any health concerns or medications in advance; we're happy to advise personally.",
+      nl: "Sommige behandelingen (zoals moxibustie, hete steen massage en de warme zandbad-therapie) zijn niet geschikt bij koorts, acute ontstekingen of in bepaalde fases van een zwangerschap. Meld eventuele gezondheidsklachten of medicatie altijd vooraf; wij adviseren u graag persoonlijk.",
+      en: "Some treatments (such as moxibustion, hot stone massage, and the warm sand bath) aren't suitable during fever, acute inflammation, or certain phases of pregnancy. Always disclose any health concerns or medications in advance; we're happy to advise personally.",
     },
   },
   {
@@ -840,8 +840,8 @@ export const FAQS: FAQ[] = [
       en: "Which languages do you speak?",
     },
     answer: {
-      nl: "Wij ontvangen u graag in het Nederlands, Engels, Frans of Arabisch — voel u vrij om uw voorkeur aan te geven bij het reserveren.",
-      en: "We're happy to welcome you in Dutch, English, French, or Arabic — feel free to mention your preference when booking.",
+      nl: "Wij ontvangen u graag in het Nederlands, Engels, Frans of Arabisch. Voel u vrij om uw voorkeur aan te geven bij het reserveren.",
+      en: "We're happy to welcome you in Dutch, English, French, or Arabic. Feel free to mention your preference when booking.",
     },
   },
   {
@@ -879,7 +879,7 @@ export const FAQS: FAQ[] = [
 export const TESTIMONIAL: Testimonial = {
   quote: {
     nl: "Ik ben zo dankbaar voor de geweldige ervaring die ik heb gehad bij Majorille Garden. De natuurlijke behandelingen hebben mijn gezondheid echt verbeterd en ik voel me herboren.",
-    en: "I'm so grateful for the wonderful experience I had at Majorille Garden. The natural treatments truly improved my health — I feel reborn.",
+    en: "I'm so grateful for the wonderful experience I had at Majorille Garden. The natural treatments truly improved my health. I feel reborn.",
   },
   author: "Jan Jansen",
 };
@@ -887,10 +887,10 @@ export const TESTIMONIAL: Testimonial = {
 export const ABOUT = {
   hero: {
     nl: [
-      "Bij Majorille Garden geloven we in de kracht van de natuur en in eerlijke handel. Onze missie is om de authentieke geheimen van de Marokkaanse natuur toegankelijk te maken — voor uw welzijn, en in directe samenwerking met de gemeenschappen die deze kennis al eeuwen bewaren.",
+      "Bij Majorille Garden geloven we in de kracht van de natuur en in eerlijke handel. Onze missie is om de authentieke geheimen van de Marokkaanse natuur toegankelijk te maken: voor uw welzijn, en in directe samenwerking met de gemeenschappen die deze kennis al eeuwen bewaren.",
     ],
     en: [
-      "At Majorille Garden we believe in the power of nature and in fair trade. Our mission is to make Morocco's authentic natural secrets accessible — for your wellbeing, and in direct partnership with the communities that have safeguarded this knowledge for centuries.",
+      "At Majorille Garden we believe in the power of nature and in fair trade. Our mission is to make Morocco's authentic natural secrets accessible: for your wellbeing, and in direct partnership with the communities that have safeguarded this knowledge for centuries.",
     ],
   } as LocalizedRichText,
   sections: [
@@ -898,10 +898,10 @@ export const ABOUT = {
       title: { nl: "Onze producten", en: "Our products" } as LocalizedString,
       body: {
         nl: [
-          "Onze producten zijn biologisch en vrij van chemicaliën. Ze worden op traditionele wijze met de hand gemaakt, recht uit de bron. Ons doel is om iedereen toegang te geven tot echte biologische producten — zoals arganolie die zorgt voor een duurzame huid en haar. We bieden natuurlijke behandelingen met onze producten, recepten en advies aan in onze winkel.",
+          "Onze producten zijn biologisch en vrij van chemicaliën. Ze worden op traditionele wijze met de hand gemaakt, recht uit de bron. Ons doel is om iedereen toegang te geven tot echte biologische producten, zoals arganolie die zorgt voor een duurzame huid en haar. We bieden natuurlijke behandelingen met onze producten, recepten en advies aan in onze winkel.",
         ],
         en: [
-          "Our products are organic and free from chemicals — made traditionally and by hand, straight from the source. We want everyone to have access to truly organic essentials, like argan oil that nurtures lasting skin and hair. In our shop we offer natural treatments alongside the products, recipes, and the guidance to use them well.",
+          "Our products are organic and free from chemicals, made traditionally and by hand, straight from the source. We want everyone to have access to truly organic essentials, like argan oil that nurtures lasting skin and hair. In our shop we offer natural treatments alongside the products, recipes, and the guidance to use them well.",
         ],
       } as LocalizedRichText,
       image: "/images/about/producten.jpg",
@@ -910,10 +910,10 @@ export const ABOUT = {
       title: { nl: "Onze diensten", en: "Our treatments" } as LocalizedString,
       body: {
         nl: [
-          "Deze bijzondere, natuurlijke en traditionele behandelingen worden van oudsher in de woestijnen van Marokko gehouden. Bij Majorille Garden brengen wij dezelfde ritmes en rituelen naar Amsterdam — uitgevoerd met onze eigen biologische producten in een luxe, comfortabele setting. Een eerbetoon aan de traditionele Marokkaanse rituelen, ontworpen om lichaam en geest in perfecte harmonie te brengen.",
+          "Deze bijzondere, natuurlijke en traditionele behandelingen worden van oudsher in de woestijnen van Marokko gehouden. Bij Majorille Garden brengen wij dezelfde ritmes en rituelen naar Amsterdam, uitgevoerd met onze eigen biologische producten in een luxe, comfortabele setting. Een eerbetoon aan de traditionele Marokkaanse rituelen, ontworpen om lichaam en geest in perfecte harmonie te brengen.",
         ],
         en: [
-          "These natural, traditional treatments are rooted in the deserts of Morocco. At Majorille Garden we bring the same rhythms and rituals to Amsterdam — performed with our own organic products in a luxurious, comfortable setting. A tribute to traditional Moroccan rituals, designed to bring body and mind into harmony.",
+          "These natural, traditional treatments are rooted in the deserts of Morocco. At Majorille Garden we bring the same rhythms and rituals to Amsterdam, performed with our own organic products in a luxurious, comfortable setting. A tribute to traditional Moroccan rituals, designed to bring body and mind into harmony.",
         ],
       } as LocalizedRichText,
       image: "/images/about/behandeling.jpg",
@@ -922,12 +922,12 @@ export const ABOUT = {
       title: { nl: "Onze filosofie", en: "Our philosophy" } as LocalizedString,
       body: {
         nl: [
-          "Wij geloven in de kracht van de natuur en in eerlijke handel. Door uitsluitend te werken met fair-trade en ethisch verantwoorde ingrediënten garanderen we niet alleen de hoogste kwaliteit, maar ondersteunen we ook de lokale gemeenschappen — vooral de Berbervrouwen die hun eeuwenoude kennis over het oogsten en verwerken van arganolie met ons delen.",
+          "Wij geloven in de kracht van de natuur en in eerlijke handel. Door uitsluitend te werken met fair-trade en ethisch verantwoorde ingrediënten garanderen we niet alleen de hoogste kwaliteit, maar ondersteunen we ook de lokale gemeenschappen, vooral de Berbervrouwen die hun eeuwenoude kennis over het oogsten en verwerken van arganolie met ons delen.",
           "Bij Majorille Garden koopt u niet enkel een product. U investeert in zuiverheid, traditie, en een gezondere toekomst.",
         ],
         en: [
-          "We believe in the power of nature and in fair trade. By working exclusively with fair-trade and ethically sourced ingredients we guarantee the highest quality and support the communities that share their craft — particularly the Berber women whose centuries-old knowledge of harvesting and pressing argan oil makes our work possible.",
-          "At Majorille Garden, you don't just buy a product — you invest in purity, tradition, and a healthier future.",
+          "We believe in the power of nature and in fair trade. By working exclusively with fair-trade and ethically sourced ingredients we guarantee the highest quality and support the communities that share their craft, particularly the Berber women whose centuries-old knowledge of harvesting and pressing argan oil makes our work possible.",
+          "At Majorille Garden, you don't just buy a product: you invest in purity, tradition, and a healthier future.",
         ],
       } as LocalizedRichText,
       image: "/images/about/filosofie.jpg",

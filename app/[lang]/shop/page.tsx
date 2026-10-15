@@ -16,8 +16,7 @@ export async function generateMetadata(props: PageProps<"/[lang]/shop">) {
   return buildMetadata({
     locale: lang,
     path: "/shop",
-    title:
-      lang === "nl" ? "Shop · Majorille Garden" : "Shop · Majorille Garden",
+    title: "Shop",
     description:
       lang === "nl"
         ? "Biologische producten van Majorille Garden: arganolie, jojoba-olie en nila poeder, recht uit Marokko."
@@ -65,8 +64,8 @@ export default async function ShopPage(props: PageProps<"/[lang]/shop">) {
                 {promoBanner.code}
               </code>{" "}
               {lang === "nl"
-                ? "is actief — wordt automatisch toegepast bij het afrekenen."
-                : "is active — applied automatically at checkout."}
+                ? "is actief, wordt automatisch toegepast bij het afrekenen."
+                : "is active, applied automatically at checkout."}
             </p>
           )}
         </div>
@@ -87,9 +86,9 @@ export default async function ShopPage(props: PageProps<"/[lang]/shop">) {
                   </span>
                 )}
               </div>
-              <h3 className="mt-5 serif text-2xl text-deep-brown">
+              <h2 className="mt-5 serif text-2xl text-deep-brown">
                 {localized(p.name, lang)}
-              </h3>
+              </h2>
               <p className="mt-1 text-sm text-muted">
                 {localized(p.shortDescription, lang)}
               </p>

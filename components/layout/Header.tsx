@@ -122,7 +122,7 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
         <Link
           href={base}
           className="flex items-center gap-2.5 leading-none"
-          aria-label="Majorille Garden — home"
+          aria-label="Majorille Garden, home"
         >
           <svg viewBox="0 0 48 48" className="h-9 w-9 shrink-0" aria-hidden="true">
             <path
@@ -183,7 +183,7 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
                       : "text-cream/75 hover:text-cream"
                     : active
                       ? "text-deep-brown"
-                      : "text-deep-brown/70 hover:text-majorelle",
+                      : "text-deep-brown/70 hover:text-terracotta",
                 )}
               >
                 {l.label}

@@ -98,8 +98,8 @@ export async function submitReview(
       to: authorEmail,
       subject:
         lang === "nl"
-          ? "Bedankt voor je review — Majorille Garden"
-          : "Thanks for your review — Majorille Garden",
+          ? "Bedankt voor je review · Majorille Garden"
+          : "Thanks for your review · Majorille Garden",
       html: reviewAckHtml({ name: author, lang }),
       replyTo: SITE.email,
       logKind: "other",
@@ -153,8 +153,8 @@ export async function submitContact(
       to: email,
       subject:
         ackLang === "nl"
-          ? "We hebben je bericht ontvangen — Majorille Garden"
-          : "We've received your message — Majorille Garden",
+          ? "We hebben je bericht ontvangen · Majorille Garden"
+          : "We've received your message · Majorille Garden",
       html: contactAckHtml({ name, lang: ackLang, message }),
       replyTo: SITE.email,
       logKind: "other",
