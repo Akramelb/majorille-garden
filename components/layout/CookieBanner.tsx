@@ -61,7 +61,7 @@ export function CookieBanner({ locale }: { locale: Locale }) {
     <div
       role="region"
       aria-label={locale === "nl" ? "Cookie melding" : "Cookie notice"}
-      className="fixed bottom-4 left-4 right-4 sm:left-6 sm:bottom-6 sm:right-auto sm:max-w-sm z-50 bg-deep-brown text-cream shadow-2xl"
+      className="fixed top-[calc(var(--bar-h)+5.75rem)] left-4 right-4 sm:left-auto sm:max-w-sm lg:top-auto lg:bottom-6 lg:right-6 z-50 bg-deep-brown text-cream shadow-2xl"
     >
       <div className="p-5 pr-12">
         <p className="text-xs uppercase tracking-[0.18em] text-terracotta mb-2">

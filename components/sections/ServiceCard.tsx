@@ -34,9 +34,9 @@ export function ServiceCard({
         />
       </div>
       <div className="mt-6">
-        <h2 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight group-hover:text-terracotta transition-colors duration-300">
+        <h3 className="serif text-2xl lg:text-[1.7rem] text-deep-brown leading-tight group-hover:text-terracotta transition-colors duration-300">
           {localized(service.name, locale)}
-        </h2>
+        </h3>
         <p className="mt-2 text-sm text-muted leading-relaxed line-clamp-2">
           {localized(service.tagline, locale)}
         </p>

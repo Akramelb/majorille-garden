@@ -5,7 +5,14 @@ import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
 import type { Locale } from "@/app/[lang]/dictionaries";
 
-export function LangSwitch({ locale }: { locale: Locale }) {
+export function LangSwitch({
+  locale,
+  onDark = false,
+}: {
+  locale: Locale;
+  /** Rendered over the dark home hero: cream instead of brown. */
+  onDark?: boolean;
+}) {
   const pathname = usePathname() ?? "/";
   const swap = (target: Locale) => {
     const parts = pathname.split("/").filter(Boolean);
@@ -20,21 +27,21 @@ export function LangSwitch({ locale }: { locale: Locale }) {
         className={clsx(
           "px-2 py-1 transition-colors",
           locale === "nl"
-            ? "text-deep-brown font-semibold"
-            : "text-muted hover:text-deep-brown",
+            ? onDark ? "text-cream font-semibold" : "text-deep-brown font-semibold"
+            : onDark ? "text-cream/70 hover:text-cream" : "text-muted hover:text-deep-brown",
         )}
         aria-current={locale === "nl" ? "page" : undefined}
       >
         NL
       </Link>
-      <span className="text-muted/50">·</span>
+      <span className={onDark ? "text-cream/50" : "text-muted/50"}>·</span>
       <Link
         href={swap("en")}
         className={clsx(
           "px-2 py-1 transition-colors",
           locale === "en"
-            ? "text-deep-brown font-semibold"
-            : "text-muted hover:text-deep-brown",
+            ? onDark ? "text-cream font-semibold" : "text-deep-brown font-semibold"
+            : onDark ? "text-cream/70 hover:text-cream" : "text-muted hover:text-deep-brown",
         )}
         aria-current={locale === "en" ? "page" : undefined}
       >

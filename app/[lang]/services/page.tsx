@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { SERVICES } from "@/lib/content";
+import { localized, servicesByDepartment } from "@/lib/content";
 import { Container, Eyebrow } from "@/components/ui/Container";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { getDictionary, hasLocale } from "../dictionaries";
@@ -40,15 +40,29 @@ export default async function ServicesIndex(
             {dict.servicesSection.subtitle}
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
-          {SERVICES.map((s) => (
-            <ServiceCard
-              key={s.slug}
-              service={s}
-              locale={lang}
-              fromLabel={dict.servicesSection.from}
-              minutesLabel={dict.servicesSection.minutes}
-            />
+        <div className="space-y-24 lg:space-y-32">
+          {servicesByDepartment().map((d) => (
+            <div key={d.id} id={d.anchor} className="scroll-mt-32">
+              <div className="mb-10 lg:mb-14 border-t border-border pt-8">
+                <h2 className="serif text-3xl lg:text-4xl text-deep-brown">
+                  {localized(d.name, lang)}
+                </h2>
+                <p className="mt-3 text-xs uppercase tracking-[0.22em] text-muted">
+                  {localized(d.tagline, lang)}
+                </p>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
+                {d.services.map((s) => (
+                  <ServiceCard
+                    key={s.slug}
+                    service={s}
+                    locale={lang}
+                    fromLabel={dict.servicesSection.from}
+                    minutesLabel={dict.servicesSection.minutes}
+                  />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </Container>

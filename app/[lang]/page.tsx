@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { getDictionary, hasLocale } from "./dictionaries";
 import {
   SERVICES,
-  TESTIMONIAL,
   PRODUCTS,
   ABOUT,
   SITE,
@@ -17,7 +16,6 @@ import { getHeroImageUrl } from "@/lib/site-settings";
 import { Container, Eyebrow } from "@/components/ui/Container";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { ContactForm } from "@/components/sections/ContactForm";
-import { NewsletterForm } from "@/components/sections/NewsletterForm";
 import { buildMetadata } from "@/lib/seo";
 import { getApprovedReviews, getReviewStats } from "@/lib/reviews";
 import { ReviewsList } from "@/components/sections/ReviewsList";
@@ -95,14 +93,14 @@ export default async function Home(props: PageProps<"/[lang]">) {
         <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-deep-brown/80 via-deep-brown/30 to-transparent" />
 
         <Container className="absolute inset-x-0 bottom-0 pb-14 sm:pb-20 lg:pb-28">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl xl:max-w-5xl">
             <div className="reveal flex items-center gap-3">
               <span className="h-px w-8 bg-gold/70" aria-hidden="true" />
               <p className="text-[0.72rem] uppercase tracking-[0.32em] text-cream/85">
                 {dict.hero.eyebrow}
               </p>
             </div>
-            <h1 className="reveal reveal-2 display mt-5 sm:mt-7 text-balance text-cream text-[2.5rem] leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] [text-shadow:0_2px_28px_rgba(42,24,16,0.3)]">
+            <h1 className="reveal reveal-2 display mt-5 sm:mt-7 text-balance text-cream text-[2rem] leading-[1.08] sm:text-[2.75rem] md:text-5xl lg:text-6xl xl:text-[4.25rem] [text-shadow:0_2px_28px_rgba(42,24,16,0.3)]">
               {heroBrandIdx === -1 ? (
                 heroTitle
               ) : (
@@ -473,66 +471,40 @@ export default async function Home(props: PageProps<"/[lang]">) {
         </Container>
       </section>
 
-      {/* TESTIMONIAL / REVIEWS */}
+      {/* REVIEWS — only real, approved reviews. No placeholder quote when
+          there are none; the footer still links to /reviews. */}
+      {reviews.length > 0 && (
       <section className="py-32 lg:py-48 bg-cream">
-        <Container size={reviews.length > 0 ? "lg" : "md"}>
-          {reviews.length > 0 ? (
-            <>
-              <div className="text-center mb-14">
-                <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
-                {stats && (
-                  <div className="mt-6 inline-flex flex-col items-center gap-3">
-                    <StarRating rating={Math.round(stats.avg)} size={22} />
-                    <p className="text-sm text-muted">
-                      <span className="serif text-2xl text-deep-brown align-middle mr-2">
-                        {stats.avg.toFixed(1)}
-                      </span>
-                      {lang === "nl"
-                        ? `gebaseerd op ${stats.count} ${stats.count === 1 ? "review" : "reviews"}`
-                        : `based on ${stats.count} ${stats.count === 1 ? "review" : "reviews"}`}
-                    </p>
-                  </div>
-                )}
+        <Container size="lg">
+          <div className="text-center mb-14">
+            <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
+            {stats && (
+              <div className="mt-6 inline-flex flex-col items-center gap-3">
+                <StarRating rating={Math.round(stats.avg)} size={22} />
+                <p className="text-sm text-muted">
+                  <span className="serif text-2xl text-deep-brown align-middle mr-2">
+                    {stats.avg.toFixed(1)}
+                  </span>
+                  {lang === "nl"
+                    ? `gebaseerd op ${stats.count} ${stats.count === 1 ? "review" : "reviews"}`
+                    : `based on ${stats.count} ${stats.count === 1 ? "review" : "reviews"}`}
+                </p>
               </div>
-              <ReviewsList reviews={reviews} locale={lang} />
-              <div className="mt-12 text-center">
-                <Link
-                  href={`/${lang}/reviews`}
-                  className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-deep-brown hover:text-terracotta"
-                >
-                  {lang === "nl" ? "Alle reviews" : "All reviews"}
-                  <ArrowRight size={14} />
-                </Link>
-              </div>
-            </>
-          ) : (
-            <div className="text-center">
-              <Eyebrow>{dict.testimonial.eyebrow}</Eyebrow>
-              <span
-                className="block mt-8 serif text-[5rem] leading-[0.5] text-gold select-none"
-                aria-hidden="true"
-              >
-                &ldquo;
-              </span>
-              <blockquote className="mt-6 display text-3xl lg:text-5xl text-deep-brown leading-[1.2] max-w-4xl mx-auto">
-                {localized(TESTIMONIAL.quote, lang)}
-              </blockquote>
-              <p className="mt-12 text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
-                — {TESTIMONIAL.author}
-              </p>
-              <div className="mt-12">
-                <Link
-                  href={`/${lang}/reviews`}
-                  className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-deep-brown hover:text-terracotta"
-                >
-                  {lang === "nl" ? "Laat een review achter" : "Leave a review"}
-                  <ArrowRight size={14} />
-                </Link>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
+          <ReviewsList reviews={reviews} locale={lang} />
+          <div className="mt-12 text-center">
+            <Link
+              href={`/${lang}/reviews`}
+              className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-deep-brown hover:text-terracotta"
+            >
+              {lang === "nl" ? "Alle reviews" : "All reviews"}
+              <ArrowRight size={14} />
+            </Link>
+          </div>
         </Container>
       </section>
+      )}
 
       {/* FAQ */}
       <section className="py-32 lg:py-40 bg-sand/30">
@@ -564,9 +536,6 @@ export default async function Home(props: PageProps<"/[lang]">) {
                   {dict.vacation.contactNotice}
                 </p>
               )}
-              <div className="mt-16">
-                <NewsletterForm dict={dict.newsletter} />
-              </div>
             </div>
             <div>
               <ContactForm dict={contactDict} />

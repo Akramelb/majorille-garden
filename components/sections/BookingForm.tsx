@@ -11,6 +11,7 @@ import {
   calLinkForService,
   formatPriceEUR,
   localized,
+  servicesByDepartment,
   type Audience,
   type Service,
 } from "@/lib/content";
@@ -205,30 +206,39 @@ export function BookingForm({
           <p className="text-xs uppercase tracking-[0.22em] text-terracotta mb-3">
             {dict.step1}
           </p>
-          <div className="space-y-2">
-            {SERVICES.map((s) => (
-              <button
-                key={s.slug}
-                type="button"
-                onClick={() => {
-                  setService(s);
-                  setVariantIdx(0);
-                }}
-                aria-pressed={service?.slug === s.slug}
-                className={clsx(
-                  "w-full text-left flex items-center justify-between gap-3 px-4 py-3 border transition-all min-w-0",
-                  service?.slug === s.slug
-                    ? "border-deep-brown bg-deep-brown text-cream"
-                    : "border-border bg-cream text-deep-brown hover:border-deep-brown",
-                )}
-              >
-                <span className="serif text-base break-words min-w-0">
-                  {localized(s.name, locale)}
-                </span>
-                {service?.slug === s.slug && (
-                  <Check size={14} className="text-cream shrink-0" aria-hidden="true" />
-                )}
-              </button>
+          <div className="space-y-6">
+            {servicesByDepartment().map((d) => (
+              <div key={d.id} role="group" aria-label={localized(d.name, locale)}>
+                <p className="text-[0.7rem] uppercase tracking-[0.18em] text-muted mb-2">
+                  {localized(d.name, locale)}
+                </p>
+                <div className="space-y-2">
+                  {d.services.map((s) => (
+                    <button
+                      key={s.slug}
+                      type="button"
+                      onClick={() => {
+                        setService(s);
+                        setVariantIdx(0);
+                      }}
+                      aria-pressed={service?.slug === s.slug}
+                      className={clsx(
+                        "w-full text-left flex items-center justify-between gap-3 px-4 py-3 border transition-all min-w-0",
+                        service?.slug === s.slug
+                          ? "border-deep-brown bg-deep-brown text-cream"
+                          : "border-border bg-cream text-deep-brown hover:border-deep-brown",
+                      )}
+                    >
+                      <span className="serif text-base break-words min-w-0">
+                        {localized(s.name, locale)}
+                      </span>
+                      {service?.slug === s.slug && (
+                        <Check size={14} className="text-cream shrink-0" aria-hidden="true" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>

@@ -193,7 +193,7 @@ export function Header({ locale, nav }: { locale: Locale; nav: NavStrings }) {
         </nav>
 
         <div className="hidden lg:flex items-center gap-7">
-          <LangSwitch locale={locale} />
+          <LangSwitch locale={locale} onDark={overHero} />
           <Link
             href={`${base}/booking`}
             className={clsx(

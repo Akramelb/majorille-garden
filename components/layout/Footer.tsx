@@ -59,16 +59,16 @@ export function Footer({
           <h2 className="text-cream text-sm uppercase tracking-[0.18em] mb-5">
             {t.explore}
           </h2>
-          <ul className="space-y-3 text-sm">
+          <ul className="space-y-1 text-sm">
             <li>
-              <Link href={base} className="hover:text-terracotta transition">
+              <Link href={base} className="inline-block py-1 hover:text-terracotta transition">
                 {navT.home}
               </Link>
             </li>
             <li>
               <Link
                 href={`${base}/about`}
-                className="hover:text-terracotta transition"
+                className="inline-block py-1 hover:text-terracotta transition"
               >
                 {navT.about}
               </Link>
@@ -76,7 +76,7 @@ export function Footer({
             <li>
               <Link
                 href={`${base}/services`}
-                className="hover:text-terracotta transition"
+                className="inline-block py-1 hover:text-terracotta transition"
               >
                 {navT.services}
               </Link>
@@ -84,7 +84,7 @@ export function Footer({
             <li>
               <Link
                 href={`${base}/shop`}
-                className="hover:text-terracotta transition"
+                className="inline-block py-1 hover:text-terracotta transition"
               >
                 {navT.shop}
               </Link>
@@ -92,7 +92,7 @@ export function Footer({
             <li>
               <Link
                 href={`${base}/booking`}
-                className="hover:text-terracotta transition"
+                className="inline-block py-1 hover:text-terracotta transition"
               >
                 {navT.booking}
               </Link>
@@ -100,7 +100,7 @@ export function Footer({
             <li>
               <Link
                 href={`${base}/journal`}
-                className="hover:text-terracotta transition"
+                className="inline-block py-1 hover:text-terracotta transition"
               >
                 Journal
               </Link>
@@ -108,7 +108,7 @@ export function Footer({
             <li>
               <Link
                 href={`${base}/reviews`}
-                className="hover:text-terracotta transition"
+                className="inline-block py-1 hover:text-terracotta transition"
               >
                 Reviews
               </Link>
@@ -116,7 +116,7 @@ export function Footer({
             <li>
               <Link
                 href={`${base}/contact`}
-                className="hover:text-terracotta transition"
+                className="inline-block py-1 hover:text-terracotta transition"
               >
                 {navT.contact}
               </Link>

@@ -31,8 +31,13 @@ export type Service = {
   // per-audience: `<bookingSlug>-women` and `<bookingSlug>-men`, each attached to
   // the matching availability schedule (Women vs Men hours).
   bookingSlug: string;
+  // Which of the two departments the treatment is listed under. Presentation
+  // only: grouping on /services and in the booking picker. Cal.com never sees it.
+  department: Department;
   closingQuote?: LocalizedString;
 };
+
+export type Department = "wellness" | "alternatief";
 
 export type Audience = "women" | "men";
 
@@ -49,11 +54,6 @@ export type Product = {
 export type FAQ = {
   question: LocalizedString;
   answer: LocalizedString;
-};
-
-export type Testimonial = {
-  quote: LocalizedString;
-  author: string;
 };
 
 export const SITE = {
@@ -121,6 +121,45 @@ export function calLinkForService(
   audience: Audience,
 ): string {
   return `${SITE.calUsername}/${service.bookingSlug}-${audience}`;
+}
+
+/**
+ * The two departments the treatments are grouped under (the owners' plan of
+ * Oct 2026). Same brand, same pages: only the listing is split. `anchor` is the
+ * id on /services so a department can be linked to directly.
+ */
+export const DEPARTMENTS: Array<{
+  id: Department;
+  anchor: string;
+  name: LocalizedString;
+  tagline: LocalizedString;
+}> = [
+  {
+    id: "wellness",
+    anchor: "wellness",
+    name: { nl: "Wellness & Lichaamsverzorging", en: "Wellness & Body Care" },
+    tagline: {
+      nl: "Ontspanning · Verzorging · Schoonheid",
+      en: "Relaxation · Care · Beauty",
+    },
+  },
+  {
+    id: "alternatief",
+    anchor: "alternatieve-geneeswijzen",
+    name: { nl: "Alternatieve Geneeswijzen", en: "Alternative Therapies" },
+    tagline: {
+      nl: "Persoonlijke begeleiding · Traditionele behandelmethoden · Welzijn",
+      en: "Personal guidance · Traditional methods · Well-being",
+    },
+  },
+];
+
+/** DEPARTMENTS with their treatments attached, in SERVICES order. */
+export function servicesByDepartment() {
+  return DEPARTMENTS.map((d) => ({
+    ...d,
+    services: SERVICES.filter((s) => s.department === d.id),
+  }));
 }
 
 export const SERVICES: Service[] = [
@@ -194,6 +233,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "warm-sand-bath",
+    department: "wellness",
     closingQuote: {
       nl: "Verwen uw lichaam met de kracht van zand. Boek nu uw therapeutisch moment.",
       en: "Treat your body to the healing power of sand. Book your therapeutic moment.",
@@ -270,6 +310,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "traditional-massage",
+    department: "wellness",
     closingQuote: {
       nl: "Traditionele massage is de kunst om het lichaam te ontspannen en de geest tot rust te brengen.",
       en: "Traditional massage is the art of relaxing the body and quieting the mind.",
@@ -367,6 +408,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "bio-head-spa",
+    department: "wellness",
   },
   {
     slug: "hete-steen-massage",
@@ -431,6 +473,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "hot-stone-massage",
+    department: "wellness",
     closingQuote: {
       nl: "Warmte ontspant niet alleen de spieren; het nodigt de geest uit los te laten en het lichaam opnieuw te verbinden met zijn eigen helende kracht.",
       en: "Warmth doesn't only relax the muscles; it invites the mind to let go and the body to reconnect with its own healing power.",
@@ -533,6 +576,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "herbal-stamp-massage",
+    department: "wellness",
   },
   {
     slug: "lichaam-scrub",
@@ -589,6 +633,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "body-scrub",
+    department: "wellness",
   },
   {
     slug: "dry-cupping",
@@ -652,6 +697,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "dry-cupping",
+    department: "alternatief",
     closingQuote: {
       nl: "Waar er stagnatie is, is er pijn. Cupping brengt beweging, herstelt de doorstroming en brengt het lichaam terug in balans.",
       en: "Where there is stagnation, there is pain. Cupping brings movement, restores flow, and returns the body to balance.",
@@ -717,6 +763,7 @@ export const SERVICES: Service[] = [
       },
     ],
     bookingSlug: "nutritional-advice",
+    department: "alternatief",
     closingQuote: {
       nl: "Gezondheid is geen bestemming, maar een reis die begint met de dagelijkse, bewuste keuzes die je op je bord maakt.",
       en: "Health is not a destination but a journey that begins with the conscious choices you make on your plate every day.",
@@ -875,14 +922,6 @@ export const FAQS: FAQ[] = [
     },
   },
 ];
-
-export const TESTIMONIAL: Testimonial = {
-  quote: {
-    nl: "Ik ben zo dankbaar voor de geweldige ervaring die ik heb gehad bij Majorille Garden. De natuurlijke behandelingen hebben mijn gezondheid echt verbeterd en ik voel me herboren.",
-    en: "I'm so grateful for the wonderful experience I had at Majorille Garden. The natural treatments truly improved my health. I feel reborn.",
-  },
-  author: "Jan Jansen",
-};
 
 export const ABOUT = {
   hero: {
