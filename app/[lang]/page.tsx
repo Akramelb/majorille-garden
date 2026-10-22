@@ -127,39 +127,34 @@ export default async function Home(props: PageProps<"/[lang]">) {
         </Container>
       </section>
 
-      {/* SOCIAL DEAL PROMO — between hero and intro */}
+      {/* BOOK NOW — direct prompt to book, between hero and intro */}
       <section className="py-16 lg:py-24 bg-sand/40 border-y border-terracotta/20">
         <Container size="md">
           <div className="max-w-2xl mx-auto text-center reveal-scroll">
-            <p className="text-[0.72rem] uppercase tracking-[0.32em] text-terracotta">
-              {dict.socialDeal.eyebrow}
-            </p>
-            <h2 className="display mt-5 text-3xl lg:text-4xl text-deep-brown">
-              {dict.socialDeal.title}
+            <h2 className="display text-3xl lg:text-4xl text-deep-brown">
+              {dict.bookNow.title}
             </h2>
             <p className="mt-5 text-muted text-base lg:text-lg leading-relaxed">
-              {dict.socialDeal.body}
+              {dict.bookNow.body}
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-5 sm:gap-8">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <Link href={`/${lang}/booking`} className="btn-primary">
+                {dict.hero.ctaPrimary}
+              </Link>
               <a
-                href={`${SITE.whatsappLink}?text=${encodeURIComponent(dict.socialDeal.whatsappMessage)}`}
+                href={`${SITE.whatsappLink}?text=${encodeURIComponent(dict.bookNow.whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary"
+                className="btn-secondary"
               >
-                {dict.socialDeal.ctaWhatsapp}
+                {dict.bookNow.ctaWhatsapp}
               </a>
-              {SITE.socialDealUrl && (
-                <a
-                  href={SITE.socialDealUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-edit"
-                >
-                  {dict.socialDeal.ctaView}
-                </a>
-              )}
             </div>
+            <p className="mt-8 text-sm text-muted leading-relaxed">
+              {dict.booking.hoursWomen}
+              <br />
+              {dict.booking.hoursMen}
+            </p>
           </div>
         </Container>
       </section>
