@@ -37,6 +37,8 @@ const limiters = {
   otp: make("rl:otp", 3, "10 m"),
   // Inbound email webhook — generous: forwarded threads + provider batching.
   inbound: make("rl:inbound", 120, "1 m"),
+  // Public availability proxy — cached upstream, so a generous per-IP cap.
+  availability: make("rl:avail", 60, "1 m"),
 };
 
 export type LimitName = keyof typeof limiters;

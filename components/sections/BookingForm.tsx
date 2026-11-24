@@ -1,14 +1,12 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { clsx } from "clsx";
-import { Check, CalendarDays } from "lucide-react";
-import { getCalApi } from "@calcom/embed-react";
+import { Check } from "lucide-react";
 import {
   SERVICES,
   SITE,
-  calLinkForService,
   formatPriceEUR,
   localized,
   servicesByDepartment,
@@ -20,6 +18,7 @@ import {
   type FormState,
 } from "@/lib/booking-actions";
 import type { Locale } from "@/app/[lang]/dictionaries";
+import { AvailabilityDialog } from "@/components/sections/AvailabilityDialog";
 
 type Dict = {
   title: string;
@@ -103,31 +102,6 @@ export function BookingForm({
     null,
   );
 
-  // Initialise Cal.com so the `data-cal-link` button can open a modal-style
-  // overlay (no new tab). Cal.com auto-binds on click against any element
-  // carrying `data-cal-link` once `cal("ui")` has run. This is a *preview*
-  // surface: bookings completed here without payment are not honoured — see
-  // the warning copy in the panel below.
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const cal = await getCalApi();
-      if (cancelled) return;
-      cal("ui", {
-        theme: "light",
-        cssVarsPerTheme: {
-          light: { "cal-brand": "#C4633A" },
-          dark: { "cal-brand": "#C4633A" },
-        },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   const variant = service?.variants[variantIdx] ?? service?.variants[0];
   const ready = Boolean(service && audience && variant);
   const priceLabel = variant
@@ -171,6 +145,8 @@ export function BookingForm({
 
   return (
     <form action={formAction} className="grid lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16 min-w-0">
+      <StepBar locale={locale} />
+
       {/* LEFT: picker */}
       <div className="min-w-0">
         {/* Step 1 — audience */}
@@ -302,45 +278,27 @@ export function BookingForm({
 
         {ready ? (
           <div className="bg-cream border border-border/60 p-6 lg:p-8 space-y-5">
-            {/* Availability preview — opens Cal.com as an in-page modal overlay
-                via the `data-cal-link` attribute (Cal.com's popup embed mode).
-                No tab-switching. Strong copy spells out that bookings completed
-                here without payment will NOT be honoured; the actual booking
-                happens on the return page after the webhook flips the order to
-                `paid`. Parents cancel any ghost bookings that slip through. */}
+            {/* Read-only availability: rendered by us from /api/availability.
+                Nothing here can create a Cal.com booking; the guest picks the
+                real slot on the return page after payment. */}
             {service && audience && (
-              <div className="bg-sand/30 border border-border/50 p-4 sm:p-5 -mb-1">
-                <div className="flex items-start gap-3 mb-3">
-                  <CalendarDays size={16} className="mt-1 text-terracotta shrink-0" aria-hidden="true" />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm text-deep-brown font-medium leading-snug">
-                      {locale === "nl"
-                        ? "Check eerst de beschikbaarheid"
-                        : "Check availability first"}
-                    </p>
-                    <p className="mt-1 text-xs text-muted leading-relaxed">
-                      {locale === "nl"
-                        ? "Open de kalender om te zien of er een geschikt moment vrij is. Je definitieve slot kies je hieronder na betaling. Een boeking via deze preview wordt niet bevestigd."
-                        : "Open the calendar to verify a suitable slot is free. You'll lock in your time below after payment. Bookings made via this preview will not be honoured."}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  data-cal-link={calLinkForService(service, audience)}
-                  data-cal-config={JSON.stringify({
-                    layout: "month_view",
-                    language: locale,
-                  })}
-                  className="inline-flex items-center gap-2 text-sm text-deep-brown border border-deep-brown px-4 py-2 hover:bg-deep-brown hover:text-cream transition-all"
-                >
-                  <CalendarDays size={13} aria-hidden="true" />
-                  <span>
-                    {locale === "nl"
-                      ? "Bekijk kalender"
-                      : "Open calendar"}
-                  </span>
-                </button>
+              <div className="bg-sand/30 border border-border/50 p-4 sm:p-5 -mb-1 space-y-3">
+                <p className="text-sm text-deep-brown leading-snug">
+                  {locale === "nl"
+                    ? "Benieuwd wanneer we vrij zijn? Bekijk de vrije dagen. Je tijd kies je na de betaling."
+                    : "Curious when we're free? See the free days. You pick your time after payment."}
+                </p>
+                <AvailabilityDialog
+                  key={`${service.slug}-${audience}`}
+                  serviceSlug={service.slug}
+                  audience={audience}
+                  locale={locale}
+                  onContinue={() =>
+                    document
+                      .querySelector<HTMLInputElement>('input[name="email"]')
+                      ?.focus()
+                  }
+                />
               </div>
             )}
 
@@ -417,6 +375,48 @@ export function BookingForm({
         )}
       </div>
     </form>
+  );
+}
+
+function StepBar({ locale }: { locale: Locale }) {
+  const nl = locale === "nl";
+  const steps = [
+    { label: nl ? "Behandeling" : "Treatment", current: true },
+    { label: nl ? "Betalen" : "Payment" },
+    {
+      label: nl ? "Tijd kiezen" : "Choose time",
+      note: nl ? "na betaling" : "after payment",
+    },
+  ];
+  return (
+    <ol className="lg:col-span-2 flex items-start gap-2 sm:gap-3 text-xs sm:text-sm">
+      {steps.map((s, i) => (
+        <li
+          key={s.label}
+          aria-current={s.current ? "step" : undefined}
+          className={clsx(
+            "flex items-start gap-2 sm:gap-3 min-w-0",
+            s.note ? "text-muted" : s.current ? "text-deep-brown font-medium" : "text-deep-brown",
+          )}
+        >
+          {i > 0 && (
+            <span aria-hidden="true" className="text-border">
+              /
+            </span>
+          )}
+          <span className="min-w-0">
+            <span className="block">
+              {i + 1} {s.label}
+            </span>
+            {s.note && (
+              <span className="block text-[0.65rem] uppercase tracking-[0.12em]">
+                {s.note}
+              </span>
+            )}
+          </span>
+        </li>
+      ))}
+    </ol>
   );
 }
 
